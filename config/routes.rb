@@ -1,9 +1,14 @@
 DotaMarket::Application.routes.draw do
+  
+
+  get "users/auth_callback"
+
   root to: 'static_pages#home'
 
   match "/faq", to: "static_pages#faq"
   match "/about", to: "static_pages#about"
   match "/contact", to: "static_pages#contact"
+  post 'auth/steam/callback' => 'sessions#create'
 
 
   # The priority is based upon order of creation:
