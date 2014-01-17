@@ -6,9 +6,13 @@ class Item < ActiveRecord::Base
   attr_accessible :capabilities, :defindex, :image_inventory, :image_url, 
   :image_url_large, :item_class, :item_description, :item_quality, 
   :item_type_name, :max_ilevel, :min_ilevel, :name, :tools, :proper_name, 
-  :item_name
+  :item_name, :attributes, :item_slot, :drop_type, :item_set, :model_player,
+  :holiday_restrictions, :craft_class, :craft_material_type, :tool, 
+  :used_by_classes, :per_class_loadout_slots, :styles
 
   #possibly need to add more attributes: attributes
+
+  private
 
   def self.get_dota_items
     url = "http://api.steampowered.com/IEconItems_570/GetSchema/v0001/?&key=" + ENV["STEAM_WEB_API_KEY"] + "&language=en"
@@ -21,7 +25,7 @@ class Item < ActiveRecord::Base
 
   def self.populate_database
     self.all_dota_items.each do |item|
-    new_item = Item.new()
+    new_item = Item.new(item)
     new_item.save
     end
 =begin ##### Note: Inefficient way of adding Items to the DB. 
