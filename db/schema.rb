@@ -11,7 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114060433) do
+ActiveRecord::Schema.define(:version => 20140117053812) do
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.string   "defindex"
+    t.string   "item_class"
+    t.string   "item_type_name"
+    t.string   "item_description"
+    t.integer  "item_quality"
+    t.string   "image_inventory"
+    t.string   "min_ilevel"
+    t.string   "max_ilevel"
+    t.string   "image_url"
+    t.string   "image_url_large"
+    t.string   "capabilities"
+    t.string   "tools"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.string   "item_name"
+    t.string   "proper_name"
+    t.string   "item_slot"
+    t.string   "drop_type"
+    t.string   "item_set"
+    t.string   "holiday_restrictions"
+    t.string   "model_player"
+    t.string   "craft_class"
+    t.string   "craft_material_type"
+    t.string   "attributes"
+    t.string   "tool"
+    t.string   "used_by_classes"
+    t.string   "per_class_loadout_slots"
+    t.string   "styles"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "steam_name"

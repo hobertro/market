@@ -1,6 +1,8 @@
 DotaMarket::Application.routes.draw do
   
 
+  get "items/index"
+
   get "users/auth_callback"
 
   root to: 'static_pages#home'

@@ -4,6 +4,8 @@ gem 'rails', '3.2.7'
 gem 'bootstrap-sass', '2.0.0'
 gem 'omniauth-steam'
 gem 'figaro'
+gem 'safe_attributes' # so I can use "attributes" attribute in the DB
+
 
 
 # Bundle edge Rails instead:
@@ -14,6 +16,10 @@ gem 'sqlite3'
 
 # Gems used only for assets and not required
 # in production environments by default.
+group :development do
+  gem 'awesome_print'
+  gem 'annotate'
+end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
