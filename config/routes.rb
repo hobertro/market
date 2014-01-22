@@ -1,5 +1,7 @@
 DotaMarket::Application.routes.draw do
-  
+  resources :users
+  resources :items
+  resources :sessions
 
   get "items/index"
 
@@ -10,7 +12,7 @@ DotaMarket::Application.routes.draw do
   match "/faq", to: "static_pages#faq"
   match "/about", to: "static_pages#about"
   match "/contact", to: "static_pages#contact"
-  post 'auth/steam/callback' => 'sessions#create'
+  post 'auth/steam/callback' => 'users#auth_callback'
 
 
   # The priority is based upon order of creation:
