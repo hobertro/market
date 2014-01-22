@@ -15,25 +15,41 @@ require 'awesome_print'
 class User < ActiveRecord::Base
   extend GetData
   attr_accessible :steam_id, :steam_name
+  has_many :user_items # foreign_key: "item_id"
+  has_many :items, through: :user_items
+
 
   def self.get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
     parsed_data(url)  # reading HTTP request using open-uri
   end
 
-  def self.test
-    Item.find_by_defindex("5129").defindex
-  end
-
-  def self.translate_items
+  def test
     id = "76561198033544098"
     item_hash ||= User.get_user_items(id)
-    translated_hash = {}
     item_hash["result"]["items"].each do |item|
     item_defindex = item["defindex"]
+    item_from_db = Item.find_by_defindex(item_defindex)
+    self.user_items.create
     # convert defindex to a string, are originally numbers
-      if item_defindex.to_s == Item.find_by_defindex(item_defindex).defindex
+      if item_defindex.to_s == item_from_db.defindex
           # create player items
+          self.user_items.create(item_id: item_from_db.id)
+      end
+    end
+    return "Done! :D"
+  end
+
+  def create_player_items(steam_id)
+    item_hash = User.get_user_items(steam_id)
+    item_hash["result"]["items"].each do |item|
+    item_defindex = item["defindex"]
+    item_from_db = Item.find_by_defindex(item_defindex)
+    self.user_items.create
+    # convert defindex to a string, are originally numbers
+      if item_defindex.to_s == item_from_db.defindex
+          # create player items
+          self.user_items.create(item_id: item_from_db.id)
       end
     end
     return "Done! :D"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117053812) do
+ActiveRecord::Schema.define(:version => 20140122075741) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(:version => 20140117053812) do
     t.string   "per_class_loadout_slots"
     t.string   "styles"
   end
+
+  create_table "user_items", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_items", ["item_id"], :name => "index_user_items_on_item_id"
+  add_index "user_items", ["user_id"], :name => "index_user_items_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "steam_name"

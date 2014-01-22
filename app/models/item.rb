@@ -9,6 +9,9 @@ class Item < ActiveRecord::Base
   :item_name, :attributes, :item_slot, :drop_type, :item_set, :model_player,
   :holiday_restrictions, :craft_class, :craft_material_type, :tool, 
   :used_by_classes, :per_class_loadout_slots, :styles
+  
+  has_many :user_items, foreign_key: "user_id"
+  has_many :users, through: :user_items, source: :item
 
   #possibly need to add more attributes: attributes
 
