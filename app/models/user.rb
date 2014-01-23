@@ -24,28 +24,11 @@ class User < ActiveRecord::Base
     parsed_data(url)  # reading HTTP request using open-uri
   end
 
-  def test
-    id = "76561198033544098"
-    item_hash ||= User.get_user_items(id)
-    item_hash["result"]["items"].each do |item|
-    item_defindex = item["defindex"]
-    item_from_db = Item.find_by_defindex(item_defindex)
-    self.user_items.create
-    # convert defindex to a string, are originally numbers
-      if item_defindex.to_s == item_from_db.defindex
-          # create player items
-          self.user_items.create(item_id: item_from_db.id)
-      end
-    end
-    return "Done! :D"
-  end
-
   def create_player_items(steam_id)
     item_hash = User.get_user_items(steam_id)
     item_hash["result"]["items"].each do |item|
     item_defindex = item["defindex"]
     item_from_db = Item.find_by_defindex(item_defindex)
-    self.user_items.create
     # convert defindex to a string, are originally numbers
       if item_defindex.to_s == item_from_db.defindex
           # create player items
@@ -58,10 +41,8 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     @authorization = User.find_by_steam_id(auth["uid"])
     if @authorization
-       puts "We are in authorization"
         return @authorization
     else
-        puts  "We are in else"
         self.create_from_omniauth(auth)
     end
   end

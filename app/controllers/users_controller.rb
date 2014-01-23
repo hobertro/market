@@ -3,16 +3,17 @@ class UsersController < ApplicationController
     auth = request.env['omniauth.auth']
     # render :text => auth.info.to_hash.inspect
     @user = User.from_omniauth(auth)
-    @items ||= @user.create_player_items(@user.steam_id)
-    #render :show
-    test = @user.items
-    render :show
+    if @user.user_items.empty?
+      @items = @user.create_player_items(@user.steam_id)
+    else 
+    redirect_to action: :show, id: @user.id
+    end
   end
 
   def index
   end
 
   def show
-    render :text => "Hello" 
+    @user = User.find(params[:id])
   end
 end

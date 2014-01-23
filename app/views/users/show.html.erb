@@ -2,9 +2,9 @@
     <h1>Welcome <%= @user.steam_name %></h1>
     <ul>
       <% @user.items.each do |item| %>
-
+        <div class="item">    
             <img src="<%= item.image_url %>">
-
+        </div>
       <% end %>
     </ul>
 </div>
