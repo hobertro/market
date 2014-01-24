@@ -27,9 +27,12 @@ class User < ActiveRecord::Base
   def create_player_items(steam_id)
     item_hash = User.get_user_items(steam_id)
     item_hash["result"]["items"].each do |item|
-    item_defindex = item["defindex"]
-    item_from_db = Item.find_by_defindex(item_defindex)
-    # convert defindex to a string, are originally numbers
+      item_defindex = item["defindex"]
+      #create array of item indexes
+      item_from_db = Item.find_by_defindex(item_defindex)
+      # eliminate N queries with 1 query
+      # make a hash where all the keys are the def indexes, and values are the objects
+      # convert defindex to a string, are originally numbers
       if item_defindex.to_s == item_from_db.defindex
           # create player items
           self.user_items.create(item_id: item_from_db.id)
@@ -40,11 +43,11 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     @authorization = User.find_by_steam_id(auth["uid"])
-    if @authorization
+      if @authorization
         return @authorization
-    else
+      else
         self.create_from_omniauth(auth)
-    end
+      end
   end
 
   def self.create_from_omniauth(auth)

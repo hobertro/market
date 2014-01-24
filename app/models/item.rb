@@ -28,8 +28,8 @@ class Item < ActiveRecord::Base
 
   def self.populate_database
     self.all_dota_items.each do |item|
-    new_item = Item.new(item)
-    new_item.save
+      new_item = Item.new(item)
+      new_item.save
     end
 =begin ##### Note: Inefficient way of adding Items to the DB. 
       new_item = Item.new()
