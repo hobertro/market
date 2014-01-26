@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   def auth_callback
     auth = request.env['omniauth.auth']
     @user = User.from_omniauth(auth)
+    sign_in @user
     if @user.user_items.empty?
       @items = @user.create_player_items(@user.steam_id)
       # create item_id_if_not_exist, if exists, then return, make it indempotent

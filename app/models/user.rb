@@ -15,6 +15,9 @@ require 'awesome_print'
 class User < ActiveRecord::Base
   extend GetData
   attr_accessible :steam_id, :steam_name
+
+  before_save :create_remember_token
+
   has_many :user_items # foreign_key: "item_id"
   has_many :items, through: :user_items
 
@@ -24,8 +27,9 @@ class User < ActiveRecord::Base
     parsed_data(url)  # reading HTTP request using open-uri
   end
 
-  def create_player_items(steam_id)
+  def old_create_player_items(steam_id)
     item_hash = User.get_user_items(steam_id)
+    # defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  } 
     item_hash["result"]["items"].each do |item|
       item_defindex = item["defindex"]
       #create array of item indexes
@@ -41,6 +45,19 @@ class User < ActiveRecord::Base
     return "Done! :D"
   end
 
+  def create_player_items(steam_id)
+    # steam_id = "76561198033544098"
+    # get player items
+    item_hash = User.get_user_items(steam_id)
+    # create an array of the items based on defindex numbers
+    defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  }
+    # find and create an array based on the defindexs in the Items table defindex 
+    items = Item.where(:defindex => defindex_ids).to_a
+    # items_dict = {}
+    # items.each { |item| items_dict[item["defindex"].to_s] = item }
+    items.each { |item| self.user_items.first_or_create(item_id: item.id) }
+  end
+
   def self.from_omniauth(auth)
     @authorization = User.find_by_steam_id(auth["uid"])
       if @authorization
@@ -52,5 +69,11 @@ class User < ActiveRecord::Base
 
   def self.create_from_omniauth(auth)
     User.create!({"steam_id" => auth["uid"], "steam_name" => auth.info.name})
+  end
+
+  private
+
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
   end
 end

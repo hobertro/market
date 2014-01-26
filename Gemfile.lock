@@ -33,7 +33,8 @@ GEM
       rake (>= 0.8.7)
     arel (3.0.3)
     awesome_print (1.2.0)
-    bootstrap-sass (2.0.0)
+    bootstrap-sass (2.3.2.0)
+      sass (~> 3.2)
     builder (3.0.4)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -128,7 +129,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   awesome_print
-  bootstrap-sass (= 2.0.0)
+  bootstrap-sass (= 2.3.2)
   coffee-rails (~> 3.2.1)
   figaro
   jquery-rails
