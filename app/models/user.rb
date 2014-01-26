@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
     parsed_data(url)  # reading HTTP request using open-uri
   end
 
+=begin
   def old_create_player_items(steam_id)
     item_hash = User.get_user_items(steam_id)
     # defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  } 
@@ -44,6 +45,7 @@ class User < ActiveRecord::Base
     end
     return "Done! :D"
   end
+=end
 
   def create_player_items(steam_id)
     # steam_id = "76561198033544098"
