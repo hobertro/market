@@ -3,4 +3,46 @@
     width: 150px;
     height: 150px;
     margin: 0 10px;
+
+}
+
+/* sidebar */
+
+.mini {
+    background-color: gray; 
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.avatar {
+    border: 10px solid;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.user-name {
+    color: white;
+    background-color: red;
+}
+
+.mini-stats {
+    background-color: black;
+    overflow: hidden;
+}
+
+.mini-stats ul {
+
+}
+
+.mini-stats ul li {
+    float: left;
+    margin-left: 20px;
+    list-style-type: none;
+    color: white;
+
+
+}
+
+.mini-stats ul li strong{
+    float: left;
 }

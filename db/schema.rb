@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140124072811) do
+ActiveRecord::Schema.define(:version => 20140128035632) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -58,9 +58,20 @@ ActiveRecord::Schema.define(:version => 20140124072811) do
   create_table "users", :force => true do |t|
     t.string   "steam_name"
     t.string   "steam_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "remember_token"
+    t.integer  "community_visibility"
+    t.integer  "profile_state"
+    t.integer  "last_logoff"
+    t.string   "profile_url"
+    t.string   "avatar"
+    t.string   "avatar_medium"
+    t.string   "avatar_full"
+    t.integer  "primary_clanid"
+    t.integer  "time_created"
+    t.integer  "persona_stateflags"
+    t.integer  "person_state"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"

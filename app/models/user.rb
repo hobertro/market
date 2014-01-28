@@ -14,7 +14,8 @@ require 'awesome_print'
 
 class User < ActiveRecord::Base
   extend GetData
-  attr_accessible :steam_id, :steam_name
+  attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, :profile_state,
+  :last_logoff, :avatar, :avatar_medium, :avatar_full, :primary_clanid, :time_created, :person_state
 
   before_save :create_remember_token
 
@@ -53,11 +54,14 @@ class User < ActiveRecord::Base
     item_hash = User.get_user_items(steam_id)
     # create an array of the items based on defindex numbers
     defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  }
+
     # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
     # items_dict = {}
     # items.each { |item| items_dict[item["defindex"].to_s] = item }
-    items.each { |item| self.user_items.first_or_create(item_id: item.id) }
+    items.each do |item| 
+      self.user_items.create(item_id: item.id)
+    end
   end
 
   def self.from_omniauth(auth)
@@ -70,7 +74,13 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_omniauth(auth)
-    User.create!({"steam_id" => auth["uid"], "steam_name" => auth.info.name})
+    info = auth["extra"]["raw_info"]
+    User.create!({"steam_id" => info["steamid"], "steam_name" => info["personaname"],
+      "community_visibility" => info["communityvisibilitystate"], "profile_state" =>
+      info["profilestate"], "last_logoff" => info["lastlogoff"], "profile_url" => 
+      info["profileurl"], "avatar" => info["avatar"],"avatar_medium" => info["avatarmedium"], 
+      "avatar_full" => info["avatarfull"], "primary_clanid" => info["primaryclanid"], 
+      "time_created" => info["timecreated"], "person_state" => info["personastate"]})
   end
 
   private
