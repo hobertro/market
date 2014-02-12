@@ -1,7 +1,11 @@
 DotaMarket::Application.routes.draw do
-  resources :users
+  resources :users do
+    resources :user_listings
+  end
+
   resources :items
   resources :sessions, only: [:create, :destroy]
+  resources :user_listings
 
   root to: 'static_pages#home'
 
@@ -11,7 +15,7 @@ DotaMarket::Application.routes.draw do
 
   post 'auth/steam/callback' => 'sessions#create'
   match '/signin', to: redirect('/auth/steam')
-  match '/signout', to: 'sessions#destroy', via: :delete
+  match '/signout', to: 'sessions#destroy', via: :delete  
 
 
   # The priority is based upon order of creation:

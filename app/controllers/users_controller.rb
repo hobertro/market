@@ -1,4 +1,7 @@
- class UsersController < ApplicationController
+class UsersController < ApplicationController
+=begin
+
+
   def auth_callback
     auth = request.env['omniauth.auth']
     @user = User.from_omniauth(auth)
@@ -10,8 +13,11 @@
       # code should be in the model, not the controller
       # create if_not_exist_method
     end
+
       redirect_to action: :show, id: @user.id
-  end
+end
+=end
+
 
   def index
   end

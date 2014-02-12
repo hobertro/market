@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+            <h1>Welcome <%= @user.steam_name %></h1>
+              <!-- <div class="row"> -->
+              <div class="span5">
+                <div class="mini span3">
+                    <div class="center">
+                        <img class="avatar" src=<%= @user.avatar_medium %> />
+                        <div class="user-data user-name" data-user-id=<%= @user.id %>>
+                            <b><%= @user.steam_name %></b>
+                        </div>
+                    </div>
+                        <div class="items-offered">
+                            <h1>Items Offered</h1>
+                        </div>
+
+                        <div class="items-wanted">
+                            <h1>Items Wanted</h1>
+                        </div>
+                    
+                        <button type="submit" id="test" value="test" class="btn btn-primary">Submit</button>
+                        <div class="test"></div>
+                </div>
+
+                <div class="response span2">
+                    <h1>Response</h1>
+                </div>
+            </div>
+
+            <div class="span6">
+                <ul>
+                  <% @user.items.each do |item| %>
+                    <div class="item" data-item-id="<%= item.id%>" id="<%= item.id%>">
+                        <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
+                    </div>
+                  <% end %>
+                </ul>
+            </div>
+          <!-- </div> -->
+  </div>
+</div>

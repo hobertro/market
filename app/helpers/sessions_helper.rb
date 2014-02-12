@@ -21,5 +21,9 @@ module SessionsHelper
       self.current_user = nil
       cookies.delete(:remember_token)
     end
-    
+
+    def find_item(item_id)
+      Item.find_by_defindex(item_id.to_s)
+    end
 end
+  

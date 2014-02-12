@@ -23,8 +23,8 @@
         <div class="span8">
             <ul>
               <% @user.items.each do |item| %>
-                <div class="item">    
-                    <img src="<%= item.image_url %>">
+                <div class="item">
+                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
                 </div>
               <% end %>
             </ul>

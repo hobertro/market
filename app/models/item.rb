@@ -10,8 +10,15 @@ class Item < ActiveRecord::Base
   :holiday_restrictions, :craft_class, :craft_material_type, :tool, 
   :used_by_classes, :per_class_loadout_slots, :styles
   
+
   has_many :user_items, foreign_key: "user_id"
   has_many :users, through: :user_items, source: :item
+
+  has_many :user_listings
+  has_many :users, through: :user_listings
+
+  has_many :item_listings, foreign_key: "user_listing_id"
+  has_many :user_listings, through: :item_listings
 
   #possibly need to add more attributes: attributes
 

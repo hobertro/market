@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
-  has_many :user_items # foreign_key: "item_id"
+  has_many :user_items, dependent: :destroy # foreign_key: "item_id",
   has_many :items, through: :user_items
+  has_many :user_listings
 
 
   def self.get_user_items(steam_id)
@@ -51,17 +52,22 @@ class User < ActiveRecord::Base
   def create_player_items(steam_id)
     # steam_id = "76561198033544098"
     # get player items
-    item_hash = User.get_user_items(steam_id)
+    player_item_hash = User.get_user_items(steam_id)["result"]["items"]
     # create an array of the items based on defindex numbers
-    defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  }
-
+    defindex_ids = player_item_hash.map { |item| item["defindex"]  }
     # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
-    # items_dict = {}
-    # items.each { |item| items_dict[item["defindex"].to_s] = item }
-    items.each do |item| 
-      self.user_items.create(item_id: item.id)
+    #items_dict = {}
+    #items.each { |item| items_dict[item["defindex"].to_s] = item }
+    items.each do |item|
+      player_item_hash.each do |hash_item|
+        if hash_item["defindex"].to_s == item.defindex
+        self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
+          quality: hash_item["quality"])
+        end
+      end
     end
+    return "hi"
   end
 
   def self.from_omniauth(auth)

@@ -1,7 +1,7 @@
-        <header class="navbar navbar-fixed-top">
+        <header class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <%= link_to "DOTA MARKET", "#", id: "logo" %>
+                    <%= link_to "DOTA MARKET", "#", id: "logo", class: "" %></%>
                     <nav>
                         <ul class="nav pull-right">
                             <li><%= link_to "Home", root_path %></li>
@@ -9,6 +9,7 @@
                             <li><%= link_to "FAQ", faq_path %></li>
                             <% if signed_in? %>
                               <!-- <li><%= link_to "Users", '#' %></li> -->
+                                  <li><%= link_to "Player Listings", user_user_listings_path(current_user) %></li>
                                   <li id="fat-menu" class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         Account <b class="caret"></b>
@@ -22,6 +23,7 @@
                                         </li>
                                     </ul>
                                   </li>
+
                             <% else %>
                                 <li><%= link_to "Sign in", "/auth/steam" %></li>
                             <% end %>

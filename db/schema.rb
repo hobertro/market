@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140128035632) do
+ActiveRecord::Schema.define(:version => 20140209074705) do
+
+  create_table "item_listings", :force => true do |t|
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "user_listing_id"
+    t.integer  "item_id"
+    t.string   "status"
+  end
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -48,12 +56,28 @@ ActiveRecord::Schema.define(:version => 20140128035632) do
   create_table "user_items", :force => true do |t|
     t.integer  "user_id"
     t.integer  "item_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "equipped_class"
+    t.integer  "equipped_slot"
+    t.integer  "quality"
+    t.string   "equipped"
   end
 
   add_index "user_items", ["item_id"], :name => "index_user_items_on_item_id"
   add_index "user_items", ["user_id"], :name => "index_user_items_on_user_id"
+
+  create_table "user_listings", :force => true do |t|
+    t.string   "item_want"
+    t.string   "item_have"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.string   "status"
+    t.integer  "item_id"
+  end
+
+  add_index "user_listings", ["user_id"], :name => "index_user_listings_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "steam_name"
@@ -72,6 +96,9 @@ ActiveRecord::Schema.define(:version => 20140128035632) do
     t.integer  "time_created"
     t.integer  "persona_stateflags"
     t.integer  "person_state"
+    t.integer  "equipped_class"
+    t.integer  "equipped_slot"
+    t.integer  "quality"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
