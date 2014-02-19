@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
   has_many :user_listings
   has_many :users, through: :user_listings
 
-  has_many :item_listings, foreign_key: "user_listing_id"
+  has_many :item_listings
   has_many :user_listings, through: :item_listings
 
   #possibly need to add more attributes: attributes

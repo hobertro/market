@@ -1,41 +1,66 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-            <h1>Welcome <%= @user.steam_name %></h1>
-              <!-- <div class="row"> -->
-              <div class="span5">
-                <div class="mini span3">
-                    <div class="center">
-                        <img class="avatar" src=<%= @user.avatar_medium %> />
-                        <div class="user-data user-name" data-user-id=<%= @user.id %>>
-                            <b><%= @user.steam_name %></b>
-                        </div>
-                    </div>
-                        <div class="items-offered">
-                            <h1>Items Offered</h1>
-                        </div>
-
-                        <div class="items-wanted">
-                            <h1>Items Wanted</h1>
-                        </div>
-                    
-                        <button type="submit" id="test" value="test" class="btn btn-primary">Submit</button>
-                        <div class="test"></div>
-                </div>
-
-                <div class="response span2">
-                    <h1>Response</h1>
-                </div>
+<div class="container">
+    <h1>Welcome <%= @user.steam_name %></h1>
+    <div class="user-info span6">
+        <div>
+          <img class="avatar" src=<%= @user.avatar_medium %> />
+            <div class="user-data user-name" data-user-id=<%= @user.id %>>
+              <b><%= @user.steam_name %></b>
             </div>
+        </div>
+    </div>
 
-            <div class="span6">
+    <div class="row">
+      <div class="span12">
+        <div class="span5">
+            <div class="items-offered">
+                <h1>Items Offered</h1>
+                <ul>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="span5">
+            <div class="items-wanted">
+                <h1>Items Wanted</h1>
+                <ul>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                    <li class="item-slot"></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" id="test" value="test" class="btn btn-primary">Submit</button>
+
+    <div class="test">
+        
+    </div>
+
+    <div class="response span6">
+        <h1>Response</h1>
+    </div>
+
+    <div class="row">
+            <div class="span12">
                 <ul>
                   <% @user.items.each do |item| %>
-                    <div class="item" data-item-id="<%= item.id%>" id="<%= item.id%>">
-                        <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
-                    </div>
+                    <li class="item-div" data-item-id="<%= item.id%>" id="<%= item.id%>">
+                        <a href="/items/<%= item.id %>"><img class="item-img" src="<%= item.image_url %>"></a>
+                    </li>
                   <% end %>
                 </ul>
             </div>
           <!-- </div> -->
-  </div>
+    </div>
 </div>

@@ -5,7 +5,7 @@ DotaMarket::Application.routes.draw do
 
   resources :items
   resources :sessions, only: [:create, :destroy]
-  resources :user_listings
+  #resources :user_listings
 
   root to: 'static_pages#home'
 

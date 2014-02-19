@@ -1,3 +1,33 @@
 // Place all the styles related to the Items controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*** Listings ***/
+
+.listng {
+    margin: 0;
+}
+
+.listing h3 {
+    margin-left: 25px;
+}
+
+/*** Items ***/
+
+.item-div {
+    float: left;
+    background-color: red;
+    padding: 5px;
+}
+
+
+.item-img {
+    height: 70px;
+    width: 100px;
+}
+
+li {
+    list-style-type: none;
+}
+
+

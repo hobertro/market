@@ -1,26 +1,24 @@
-<div class="listings">
-    <h1>All listings</h1>
-    <% user_listing(current_user).each do |listing| %>
-        <% listing.item_listings.each do |item_listing| %>
-            <% item = item_listing.item_id %>
-            <div class="singleListing center">
-                <div class="span6">
-                    <% if item_listing.status == "have" %>
-                        <div class="item" data-item-id="<%= item %>" id="<%= item %>">
-                            <a href="/items/<%= item %>">
-                                <img src="<%= item_url %>">
-                            </a>
-                        </div>
-                    <% end %>
-                </div>
-                <div class="span6">
-                    Bye
-                     <% if item_listing.status == "want" %>
-                      <%= item %>
-                    <% end %>
-                </div>
+<div class="container">
+    <% @user_listings.each do |listings| %>
+        <div class="listing row">
+            <h3>Listing</h3>
+            <div class="span5 items-offered">
+              <h3>Items Offered:</h3>
+              <% listings.items_offered.each do |item| %>
+                     <div class="item-div" id="<%= item.id%>">
+                        <img class="item-img" src="<%= item.image_url %>">
+                     </div>
+              <% end %>
             </div>
-        <% end %>
+            <div class="span5 items-wanted">
+              <h3>Items Wanted:</h3>
+              <% listings.items_wanted.each do |item| %>
+                     <div class="item-div" id="<%= item.id%>">
+                        <img class="item-img" src="<%= item.image_url %>">
+                     </div>
+              <% end %>
+            </div>
+        </div>
     <% end %>
 </div>
 

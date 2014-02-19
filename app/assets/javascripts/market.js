@@ -1,27 +1,37 @@
 (function(){
-    $('.item').click(function(e){
-        // get item model
-    var test = $('.items-offered').append($(this));
-        // add to .items-wanted class
-        e.preventDefault();
-        // create ajax function to send data from .items-wanted class to server
-    });
+
 
     // get data item id
 
+
+    /* Creating an listing function */
+
     $("#test").click(function(e){
         var userID = $(".user-data").attr("data-user-id");
-        var data = $('.items-offered > .item');
+        var itemsOfferedArray = $('.items-offered .item-div');
+        var itemsWantedArray = $('.items-wanted .item-div');
         var itemsOffered = [];
+        var itemsWanted = [];
 
-        var special = data.each(function(x){
-            itemsOffered.push($(this).attr("data-item-id"));
+        itemsOfferedArray.each(function(x){
+            // validation
+            itemsOffered.push($(this).attr("id"));
         });
+
+        itemsWantedArray.each(function(x){
+            // validation
+        itemsWanted.push($(this).attr("id"));
+        });
+
+    // ajax request to the server
+
+        /* Have to figure out how to make the URLs dynamic */
 
         var request = $.ajax({
             type: "POST",
-            url: "/users/13/user_listings/",
-            data: {"offer": JSON.stringify(itemsOffered), "user_current_id": userID}
+            url: "../user_listings",
+            data: {"offer": JSON.stringify(itemsOffered),
+                   "wanted": JSON.stringify(itemsWanted)}
         });
 
         request.done(function(response, textStatus, jqXHR){
@@ -31,17 +41,23 @@
        e.preventDefault();
     });
 
-    function jsonStringify(argument){
-        if (argument.class === "Object"){
-            alert("object");
+    /* End of creating a listing function */
+
+    //Function to add classes to the item-slots
+
+    $(".item-slot").click(function(){
+        if ($(this).hasClass("highlighted")){
+            alert("works");
         }
-        else if (argument.class == "Array"){
-            alert("array");
-        } else {
-            alert("every thing else");
-        }
-    }
+        $(this).toggleClass("highlighted");
+    });
+
+    // For .highlighted class
+
+
+    // Function to add clicked item to the item-slot
+    $(".item-div").click(function(e){
+       e.preventDefault();
+       $(".highlighted").html($(this)).toggleClass("highlighted");
+    });
 })();
-
-// After user clicks on the item, it recreates the item in the items-wanted box
-

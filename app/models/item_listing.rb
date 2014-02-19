@@ -5,5 +5,4 @@ class ItemListing < ActiveRecord::Base
   belongs_to :user_listing
   belongs_to :item
 
-
 end
