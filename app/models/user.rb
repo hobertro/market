@@ -67,7 +67,18 @@ class User < ActiveRecord::Base
         end
       end
     end
-    return "hi"
+    add_attr_to_items
+  end
+
+  def add_attr_to_items
+    self.user_items.each do |user_item|
+      user_item[:name] = user_item.item.name
+      user_item[:defindex] = user_item.item.defindex
+      user_item[:image_url] = user_item.item.image_url
+      user_item[:item_description] = user_item.item.item_description
+      user_item[:item_set] = user_item.item.item_set
+      user_item.save
+    end
   end
 
   def self.from_omniauth(auth)

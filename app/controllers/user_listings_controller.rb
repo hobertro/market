@@ -2,13 +2,12 @@ class UserListingsController < ApplicationController
 
     def index
        @user = current_user
-       puts @user
        @user_listings = current_user.user_listings
-       puts @user_listings
     end
 
     def new
         @user = current_user
+        @user_items = current_user.user_items
     end
 
     def destroy
@@ -35,6 +34,10 @@ class UserListingsController < ApplicationController
         end
         render :text => "The offered items hash is: #{@offered_items} while the wanted_items hash
         is #{@wanted_items}"
+    end
+
+    def user_items
+        @user_items = current_user.user_items
     end
 
     private

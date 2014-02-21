@@ -58,6 +58,12 @@
     // Function to add clicked item to the item-slot
     $(".item-div").click(function(e){
        e.preventDefault();
-       $(".highlighted").html($(this)).toggleClass("highlighted");
+       var clone = $(this).clone();
+       $(".highlighted").html(clone).toggleClass("highlighted");
     });
+
+    
+
+    // Backbone
+
 })();

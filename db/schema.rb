@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140209074705) do
+ActiveRecord::Schema.define(:version => 20140220204053) do
 
   create_table "item_listings", :force => true do |t|
     t.datetime "created_at",      :null => false
@@ -56,12 +56,17 @@ ActiveRecord::Schema.define(:version => 20140209074705) do
   create_table "user_items", :force => true do |t|
     t.integer  "user_id"
     t.integer  "item_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "equipped_class"
     t.integer  "equipped_slot"
     t.integer  "quality"
     t.string   "equipped"
+    t.string   "name"
+    t.string   "defindex"
+    t.string   "image_url"
+    t.string   "item_description"
+    t.string   "item_set"
   end
 
   add_index "user_items", ["item_id"], :name => "index_user_items_on_item_id"
