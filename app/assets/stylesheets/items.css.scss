@@ -18,6 +18,8 @@
     float: left;
     background-color: red;
     padding: 5px;
+    position: relative;
+    display: inline-block;
 }
 
 
@@ -30,4 +32,12 @@ li {
     list-style-type: none;
 }
 
+.clone {
+    position: relative;
+    margin: 5px;
+    width: 80%;
+    height: 80%;
+}
+
+/*** Icons ***/
 

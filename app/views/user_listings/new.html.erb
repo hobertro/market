@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="market">
     <h1>Welcome <%= @user.steam_name %></h1>
     <div class="user-info span6">
         <div>
@@ -66,11 +66,13 @@
 -->                 </div>
                 </div>
               <!-- </div> -->
-        </div> 
+        </div>
+    
 </div>
 
 <script type="text/javascript">
 
+    var appView = new Market.Views.App()
     var playerItems  = new Market.Collections.Item;
     playerItems.reset(<%= raw @user.user_items.to_json %>);
     var playerItemsView = new Market.Views.ItemCollection({collection: playerItems});
