@@ -12,8 +12,10 @@
     <div class="row">
       <div class="span12">
         <div class="span5">
+            <h1>Items Offered</h1>
             <div class="items-offered">
-                <h1>Items Offered</h1>
+                
+<!--
                 <ul>
                     <li class="item-slot"></li>
                     <li class="item-slot"></li>
@@ -22,12 +24,15 @@
                     <li class="item-slot"></li>
                     <li class="item-slot"></li>
                 </ul>
+-->
             </div>
         </div>
         
         <div class="span5">
+            <h1>Items Wanted</h1>
             <div class="items-wanted">
-                <h1>Items Wanted</h1>
+                
+<!--
                 <ul>
                     <li class="item-slot"></li>
                     <li class="item-slot"></li>
@@ -36,7 +41,12 @@
                     <li class="item-slot"></li>
                     <li class="item-slot"></li>
                 </ul>
+-->
             </div>
+
+
+                  <button type="submit" class="btn test-btn">Search</button>
+
         </div>
       </div>
     </div>
@@ -46,6 +56,17 @@
     <div class="test">
         
     </div>
+
+            <div class="rails-search">
+
+              <%= form_tag("/search", method: "get", remote: true, id: "item-search") do %>
+              <%= label_tag(:search, "Search for:") %>
+              <%= text_field_tag(:search, params[:search]) %>
+              <%= submit_tag("Search", class: "btn search-btn") %>
+
+              <% end %>
+
+            </div>
 
     <div class="response span6">
         <h1>Response</h1>
@@ -72,11 +93,24 @@
 
 <script type="text/javascript">
 
+    // AppView
+
     var appView = new Market.Views.App()
-    var playerItems  = new Market.Collections.Item;
-    playerItems.reset(<%= raw @user.user_items.to_json %>);
-    var playerItemsView = new Market.Views.ItemCollection({collection: playerItems});
+
+    // creating the Backpack
+
+    var backpack  = new Market.Collections.Item(); 
+    backpack.reset(<%= raw @user.user_items.to_json %>);
+    var backpackView = new Market.Views.ItemCollection({collection: backpack});
+
+    // items offered
+
+    var itemsOfferedCollection = new Market.Collections.ItemSlots();
+    var itemsOfferedCollectionView = new Market.Views.ItemsOfferedCollection({collection: itemsOfferedCollection});
+
+    // items wanted
+
+    var itemsWantedCollection = new Market.Collections.ItemSlots();
+    var itemsWantedCollectionView = new Market.Views.ItemsWantedCollection({collection: itemsWantedCollection});
 
 </script>
-
-

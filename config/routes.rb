@@ -17,6 +17,8 @@ DotaMarket::Application.routes.draw do
   match '/signin', to: redirect('/auth/steam')
   match '/signout', to: 'sessions#destroy', via: :delete  
 
+  match '/search', to: "user_listings#search"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

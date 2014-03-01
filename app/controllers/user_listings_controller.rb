@@ -40,6 +40,18 @@ class UserListingsController < ApplicationController
         @user_items = current_user.user_items
     end
 
+    def search
+        search_params = params[:search]
+        puts search_params
+        if search_params
+           item_results = Item.where('name LIKE ?', "%#{search_params}%")
+        else
+            render :user_path
+        end
+        puts item_results
+        render :text => item_results.to_json
+    end
+
     private
     helper_method :SessionHelper
 end

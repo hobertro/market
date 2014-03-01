@@ -9,7 +9,7 @@
     $("#test").click(function(e){
         var userID = $(".user-data").attr("data-user-id");
         var itemsOfferedArray = $('.items-offered .item-div');
-        var itemsWantedArray = $('.items-wanted .item-div');
+        var itemsWantedArray = $('.items-wanted .search-item-div');
         var itemsOffered = [];
         var itemsWanted = [];
 
@@ -41,6 +41,29 @@
        e.preventDefault();
     });
 
+    // Search Stuff
+
+    /*
+
+    $(".search-btn").on("click", function(e){
+        e.preventDefault();
+
+        var searchAJAX = $.ajax({
+            type: "GET",
+            url: "../user_listings",
+            data: {"offer": $(".search-btn").val()}
+        });
+
+        searchAJAX.done(function(response, textStatus, jqXHR){
+            console.log("Search worked!");
+            $(".response").append(response);
+        });
+    });
+
+    */
+
+
+
     /* End of creating a listing function */
 
     //Function to add classes to the item-slots
@@ -57,16 +80,30 @@
     // Function to add clicked item to the item-slot
 
     $(".item-div").click(function(e){
+/*
         var clone = $(this).clone();
         $(".highlighted").html(clone.addClass("clone img-rounded"));
         $(".highlighted").append($("<button class='item-close'>&times;</button>")).toggleClass("highlighted");
+*/
         e.preventDefault();
+
      });
 
+    // Backbone
+
+    $("#item-search").on("ajax:success", function(e, data, status, xhr){
+        var searchItems = JSON.parse(data);
+        var newSearchCollection = new Market.Collections.SearchItems(searchItems);
+        var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
+    });
+/*
     $(document).on("click", ".item-close", function(e){
             $(".highlighted").html("").toggleClass("highlighted");
         });
-
+*/
     // Backbone
+
+    // Search button
+
 
 })();
