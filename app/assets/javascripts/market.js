@@ -41,27 +41,6 @@
        e.preventDefault();
     });
 
-    // Search Stuff
-
-    /*
-
-    $(".search-btn").on("click", function(e){
-        e.preventDefault();
-
-        var searchAJAX = $.ajax({
-            type: "GET",
-            url: "../user_listings",
-            data: {"offer": $(".search-btn").val()}
-        });
-
-        searchAJAX.done(function(response, textStatus, jqXHR){
-            console.log("Search worked!");
-            $(".response").append(response);
-        });
-    });
-
-    */
-
 
 
     /* End of creating a listing function */
@@ -90,12 +69,13 @@
      });
 
     // Backbone
-
+/*
     $("#item-search").on("ajax:success", function(e, data, status, xhr){
         var searchItems = JSON.parse(data);
         var newSearchCollection = new Market.Collections.SearchItems(searchItems);
         var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
     });
+*/
 /*
     $(document).on("click", ".item-close", function(e){
             $(".highlighted").html("").toggleClass("highlighted");
