@@ -14,44 +14,30 @@
         <div class="span5">
             <h1>Items Offered</h1>
             <div class="items-offered">
-                
-<!--
-                <ul>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                </ul>
--->
+                 
             </div>
         </div>
         
         <div class="span5">
             <h1>Items Wanted</h1>
             <div class="items-wanted">
-                
-<!--
-                <ul>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                    <li class="item-slot"></li>
-                </ul>
--->
-            </div>
+        
+        </div>
 
-
-                  <button type="submit" class="btn test-btn">Search</button>
 
         </div>
       </div>
     </div>
 
+    <%= form_for @user_listing, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+
+            <%= f.submit "Create Button", class: "btn btn-primary" %>
+    <% end %>
+
     <button type="submit" id="test" value="test" class="btn btn-primary">Submit</button>
+
+
+    <button type="submit" id="reload" value="test" class="btn btn-danger">Reload</button>
 
     <div class="test">
         
@@ -67,6 +53,12 @@
               <% end %>
 
             </div>
+
+    <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
+        <%= hidden_field_tag(:offer) %>
+        <%= hidden_field_tag(:wanted) %>
+        <%= submit_tag("Test1", class: "test1") %>
+    <% end %>
 
     <div class="response span6">
         <h1>Response</h1>
@@ -99,8 +91,10 @@
 
     // creating the Backpack
 
-    var backpack  = new Market.Collections.Item(); 
+    var backpack  = new Market.Collections.Item();
     backpack.reset(<%= raw @user.user_items.to_json %>);
+    console.log(<%= raw @user.user_items.to_json %>);
+    console.log(backpack);
     var backpackView = new Market.Views.ItemCollection({collection: backpack});
 
     // items offered

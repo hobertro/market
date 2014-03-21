@@ -19,7 +19,6 @@
             <% end %>
           </div>
           <button class="listing-button" type="button">Click</button>
-          <button class="comment-button" type="button">Comments</button>
         </div>
 
         <div class="listing-notes row">
@@ -36,36 +35,26 @@
         </div>
       </div>
         
-    <div class="commenting-area">
+      <div class="commenting-area">
         <h2>Comments</h2>
         <h3>Comment here:</h3>
-            <%= form_for([@listings, Comment.new]) do |f| %>
+            <%= form_for([@listings, @listings.comments.build]) do |f| %>
+                    <%= f.label :description %><br />
                     <%= f.text_area :description, size: "10x4" %>
                     <%= hidden_field_tag(:listing_id, @listings.id) %>
                     <%= hidden_field_tag(:user_id, @user.id) %>
                     <%= f.submit "Add Comment" %>
             <% end %>
-        <div class="individual-comment">
-          <% @listings.comments.each do |comment| %>
-              <div class="comment-header group">
-                <ul class="left-comment">
-                    <li class="comment-username"><%= comment.user.steam_name%>:</li>
-                    <li class="time-ago"> Posted <%= time_ago_in_words(comment.created_at) %> ago</li>
-                </ul>
-                <% if comment.user == current_user %>
-                <ul class="right-comment">
-                  <li class="edit-comment">Edit</li>
-                  <%= comment.id %>
-                  <li class="delete-comment"><%= link_to 'Delete', url_for([@user, comment]), method: :delete,
-                                                                                              data: { confirm: "are you sure?"} %></li>
-                </ul>
-                <% end %>
-              </div>
-              <div class="comment-description">
-                <%= comment.description %>
-              </div>
-            <% end %>
-        </div>  
-     </div>
+         <!-- <textarea class="comment-box" rows="5"></textarea>
+         <button class="btn btn-primary comment-btn" type="button">Submit</button> -->
+      <div class="listing-comments">
+          <div class="span6">
+                    <% @listings.comments.each do |c| %>
+                    <%= c %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+
 </div>
 

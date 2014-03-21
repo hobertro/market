@@ -1,0 +1,62 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Rule 1
+.comment-header {
+    display: block;
+}
+*/
+.comment-header {
+
+    margin-top: 5px;
+    margin-left: -10px;
+}
+
+.comment-username {
+    background-color: grey;
+}
+
+.comment-description {
+    background-color: red;
+}
+
+.left-comment,
+.left-comment li,
+.right-comment li {
+    float: left;
+}
+
+.right-comment {
+    float: right;
+}
+
+.left-comment,
+.right-comment li {
+    margin: 0 10px;
+}
+
+.comment-description {
+    margin: 20px 0;
+}
+
+.group::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Rule 1
+
+.left-comment,
+.left-comment li,
+.right-comment li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.right-comment {
+    float: right;
+}
+
+*/

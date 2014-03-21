@@ -21,36 +21,22 @@ class User < ActiveRecord::Base
 
   has_many :user_items, dependent: :destroy # foreign_key: "item_id",
   has_many :items, through: :user_items
+
   has_many :user_listings
 
+  has_many :comments
+
+  def reload_player_items    
+    self.user_items.delete_all
+    create_player_items(self.steam_id)
+  end
 
   def self.get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
     parsed_data(url)  # reading HTTP request using open-uri
   end
 
-=begin
-  def old_create_player_items(steam_id)
-    item_hash = User.get_user_items(steam_id)
-    # defindex_ids = item_hash["result"]["items"].map { |item| item["defindex"]  } 
-    item_hash["result"]["items"].each do |item|
-      item_defindex = item["defindex"]
-      #create array of item indexes
-      item_from_db = Item.find_by_defindex(item_defindex)
-      # eliminate N queries with 1 query
-      # make a hash where all the keys are the def indexes, and values are the objects
-      # convert defindex to a string, are originally numbers
-      if item_defindex.to_s == item_from_db.defindex
-          # create player items
-          self.user_items.create(item_id: item_from_db.id)
-      end
-    end
-    return "Done! :D"
-  end
-=end
-
   def create_player_items(steam_id)
-    # steam_id = "76561198033544098"
     # get player items
     player_item_hash = User.get_user_items(steam_id)["result"]["items"]
     # create an array of the items based on defindex numbers
@@ -68,6 +54,7 @@ class User < ActiveRecord::Base
       end
     end
     add_attr_to_items
+    self.user_items
   end
 
   def add_attr_to_items
@@ -82,9 +69,9 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    @authorization = User.find_by_steam_id(auth["uid"])
-      if @authorization
-        return @authorization
+    authorization = User.find_by_steam_id(auth["uid"])
+      if authorization
+           authorization
       else
         self.create_from_omniauth(auth)
       end

@@ -93,6 +93,7 @@
 
         initialize: function(){
             this.listenTo(appView, "createSearchCollection", this.addToCollection);
+            console.log("created from search items");
         },
         addToCollection: function(data){
             this.reset([]);
@@ -303,8 +304,8 @@
             "click .item-div": "addItemToSlot",
             "click .search-item-div": "addSearchItemToSlot",
             "click .search-btn": "removeView",
-            "ajax:success": "createSearchCollection"
-
+            "ajax:success": "createSearchCollection",
+            "click #reload": "reloadItems"
         },
 
         addItemToSlot: function(e){
@@ -318,15 +319,30 @@
             this.trigger("search-item-div:click", itemId);
         },
         createSearchCollection: function(e, data, status, xhr){
-            var searchItems = JSON.parse(data);
+            var searchItems = data;
+            console.log(data);
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
         },
         // global view remover
         removeView: function(){
             this.trigger("removeView:click");
+        },
+        reloadItems: function(){
+            var request = $.ajax({
+            type: "POST",
+            url: "/reload"
+        });
+            request.done(function(response, textStatus, jqXHR){
+                // Re-render the backpack
+                backpackView.unbind();
+                backpackView.remove();
+                backpack.reset(response) ;
+                backpackView = new Market.Views.ItemCollection({collection: backpack});
+            });
+            request.fail(function(){
+            console.log("Fail");
+             });
         }
-
-        
     });
 })();

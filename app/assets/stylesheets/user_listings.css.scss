@@ -45,5 +45,30 @@
 
 .search-div {
     margin: 100px;
-    
+}
+
+/* Player Listings */
+
+.list-view {
+    background-color: red;
+    margin: 20px 0;
+}
+
+.listing-notes {
+    background-color: red;
+    display: none;
+    margin-top: 10px;
+}
+
+.row.listing-notes {
+    margin-left: 0;
+}
+
+.listing-comments {
+    background-color: red;
+    margin-top: 10px;
+}
+
+.commenting-area textarea {
+    width: 100%;
 }

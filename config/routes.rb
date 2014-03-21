@@ -1,7 +1,16 @@
 DotaMarket::Application.routes.draw do
   resources :users do
-    resources :user_listings
+    resources :user_listings 
   end
+
+  resources :user_listings do
+    resources :comments, only: [:create, :destroy]
+  end
+
+  resources :users do
+    resources :comments, only: [:create, :destroy]
+  end
+
 
   resources :items
   resources :sessions, only: [:create, :destroy]
@@ -18,6 +27,7 @@ DotaMarket::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete  
 
   match '/search', to: "user_listings#search"
+  match '/reload', to: "user_listings#reload"
 
 
   # The priority is based upon order of creation:

@@ -13,10 +13,10 @@ class UserListing < ActiveRecord::Base
            :source => :item,
            :conditions => ["status = ?",  "offered"]
 
-  attr_accessible :status, :item_id
+  has_many :comments, dependent: :destroy
 
-  def all_listings
-    current
-  end
 
+  attr_accessible :status, :item_id, :comments
+
+  accepts_nested_attributes_for :comments 
 end

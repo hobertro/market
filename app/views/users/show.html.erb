@@ -1,20 +1,19 @@
 <div class="row-fluid">
-    <h1>Welcome <%= @user.steam_name %></h1>
-      <!-- <div class="row"> -->
+    <h1>Welcome <%= current_user.steam_name %></h1>
         <div class="mini span3">
             <div class="center">
-                <img class="avatar" src=<%= @user.avatar_medium %> />
+                <img class="avatar" src=<%= current_user.avatar_medium %> />
                 <div class="user-name">
-                    <b><%= @user.steam_name %></b>
+                    <b><%= current_user.steam_name %></b>
                 </div>
             </div>
             <div class="mini-stats">
                 <ul class="mini-stats-ul">
                     <li class="mini-stats-li">Item Count: 
-                        <strong><%= @user.user_items.count %></strong>
+                        <strong><%= current_user.user_items.count %></strong>
                     </li>                 
                     <li class="mini-stats-li">Steam ID:
-                        <strong><%= @user.steam_id %></strong>
+                        <strong><%= current_user.steam_id %></strong>
                     </li>
                 </ul>
             </div>
@@ -22,12 +21,11 @@
 
         <div class="span8">
             <ul>
-              <% @user.items.each do |item| %>
+              <% current_user.items.each do |item| %>
                 <div class="item">
                     <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
                 </div>
               <% end %>
             </ul>
         </div>
-      <!-- </div> -->
 </div>
