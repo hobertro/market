@@ -15,7 +15,7 @@ class UserListingsController < ApplicationController
     end
 
     def destroy
-
+        
     end
 
     def show

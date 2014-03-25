@@ -7,6 +7,12 @@ DotaMarket::Application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+   resources :users do
+     resources :messages do
+        get "sent_messages", :on => :collection
+      end
+  end
+
   resources :users do
     resources :comments, only: [:create, :destroy]
   end
@@ -14,6 +20,8 @@ DotaMarket::Application.routes.draw do
 
   resources :items
   resources :sessions, only: [:create, :destroy]
+
+
   #resources :user_listings
 
   root to: 'static_pages#home'

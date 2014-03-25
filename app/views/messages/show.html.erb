@@ -1,0 +1,18 @@
+<div class="container">
+    <%= render 'layouts/messages_side_bar' %>
+
+    <div class="span8">    
+        <h1>Conversation</h1>
+        <ul><% @conversation.each do |message| %>
+                <% if message.messenger.steam_name %>
+                    <li><img src="<%= message.messenger.avatar_medium %>"></li>
+                    <li>Name:<%= message.messenger.steam_name %></li>
+                <% else %>
+                    <li><img src="<%= message.messenger.avatar_medium %>"></li>
+                    <li>Name:<%= message.recipient.steam_name %></li>
+                <% end %>
+                    <li>Content:<%= message.content %></li>
+            <% end %>
+        </ul>
+    </div>
+</div>

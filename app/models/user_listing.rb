@@ -18,5 +18,5 @@ class UserListing < ActiveRecord::Base
 
   attr_accessible :status, :item_id, :comments
 
-  accepts_nested_attributes_for :comments 
+  accepts_nested_attributes_for :comments   
 end

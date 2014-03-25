@@ -1,0 +1,13 @@
+<div class="container">
+    <%= render 'layouts/messages_side_bar' %>
+    <div class="span8">
+        <%= form_for([@user, @message], html: {class: "message_form"}) do |f| %>
+           <h1>Write message here:</h1>
+                <p>To: <%= @recipient.steam_name %></p>
+                <%= f.text_area :content, size: "15x10" %>
+                <%= hidden_field_tag(:recipient_id, @recipient.id) %>
+                <br />
+                <%= f.submit "Submit Message" %>
+        <% end %>
+    </div>
+</div>

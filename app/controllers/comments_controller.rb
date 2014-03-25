@@ -2,7 +2,6 @@ class CommentsController < ApplicationController
     before_filter :signed_in_user, only: [:create, :destroy]
     before_filter :correct_user, only: [:create, :destroy]
 
-
     def create
         @user = User.find(params[:user_id])
         @user_listing = UserListing.find(params[:listing_id])

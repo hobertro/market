@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140313060515) do
+ActiveRecord::Schema.define(:version => 20140321171301) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_listing_id"
@@ -63,6 +63,14 @@ ActiveRecord::Schema.define(:version => 20140313060515) do
     t.string   "used_by_classes"
     t.string   "per_class_loadout_slots"
     t.string   "styles"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.text     "content"
+    t.integer  "messenger_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_items", :force => true do |t|

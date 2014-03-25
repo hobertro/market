@@ -1,0 +1,23 @@
+<div class="container">
+    <%= render 'layouts/messages_side_bar' %>
+    
+    <h1>Sent Messages</h1>
+    <div class="span8">
+         <% @user.messages.each do |message| %>
+                <div class="user-avy span2">
+                    <img src="<%= message.recipient.avatar_medium %>">
+                </div>
+
+                <div class="user-message span6">
+                    <ul class="row">
+                        <li>To: <%= message.recipient.steam_id %></li>
+                        <li>Content: <%= message.content %></li>
+                        <li><%= link_to "Message", user_message_path({:id => message.id}) %></li>
+                        <li><%= link_to "Respond", new_user_message_path({recipient: message.recipient}) %></li>
+                        <li><%= link_to "Delete Message", user_message_path(@user, :id => message.id), method: :delete,
+                                                           data: { confirm: "are you sure?"} %></li>
+                    </ul>
+                </div>
+         <% end %>
+    </div>
+</div>

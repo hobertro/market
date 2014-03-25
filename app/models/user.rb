@@ -15,7 +15,7 @@ require 'awesome_print'
 class User < ActiveRecord::Base
   extend GetData
   attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, :profile_state,
-  :last_logoff, :avatar, :avatar_medium, :avatar_full, :primary_clanid, :time_created, :person_state
+  :last_logoff, :avatar, :avatar_medium, :avatar_full, :primary_clanid, :time_created, :person_state, :received_messages
 
   before_save :create_remember_token
 
@@ -25,6 +25,13 @@ class User < ActiveRecord::Base
   has_many :user_listings
 
   has_many :comments
+
+  has_many :messages, 
+           foreign_key: "messenger_id"
+  has_many :received_messages, 
+           class_name: "Message",
+           foreign_key: "recipient_id"
+
 
   def reload_player_items    
     self.user_items.delete_all
