@@ -1,0 +1,15 @@
+<div class="sidebar center">
+    <div class="sidebar-avatar">
+            <img class="img-thumbnail" src="<%= current_user.avatar_medium %>">
+            <p class="user-name"><%= current_user.steam_name %></p>
+    </div>
+
+    <div class="sidebar-menu clearfix">
+        <ul>
+            <li><span><i class="fa fa-pencil-square-o"></i></span><%= link_to "New Listing", new_user_user_listing_path(current_user) %></li>
+            <li><span><i class="fa fa-th-list"></i></span><%= link_to "Listings", user_user_listings_path(current_user) %></li>
+            <li><span><i class="fa fa-briefcase"></i></i></span><%= link_to "Backpack", user_path(current_user) %></li>
+            <li><span><i class="fa fa-comments"></i></i></span><%= link_to "Messages", user_messages_path(current_user) %></li>
+        </ul>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-        <header class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <%= link_to "DOTA MARKET", "#", id: "logo" %>
-                    <nav>
-                        <ul class="nav pull-right">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">         
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">DOTA MARKET</a>
+                    </div>
+                        <ul class="nav navbar-nav navbar-right">
                             <li><%= link_to "Home", root_path %></li>
                             <li><%= link_to "About", about_path %></li>
                             <li><%= link_to "FAQ", faq_path %></li>
@@ -29,7 +29,5 @@
                                 <li><%= link_to "Sign in", "/auth/steam" %></li>
                             <% end %>
                         </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
+                    </div>
+        </nav>

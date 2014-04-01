@@ -9,8 +9,8 @@
     $(".super-form").submit(function(e){
         console.log("begin");
         var userID = $(".user-data").attr("data-user-id");
-        var itemsOfferedArray = $('.items-offered .item-div');
-        var itemsWantedArray = $('.items-wanted .search-item-div');
+        var itemsOfferedArray = $('.items-offered .item-li');
+        var itemsWantedArray = $('.items-wanted .search-item-li');
         var itemsOffered = [];
         var itemsWanted = [];
 
@@ -50,8 +50,21 @@
     });
 
     $(".item-slot").click(function(){
-        $(this).siblings().removeClass("highlighted");
+        $(".item-slot").removeClass("highlighted");
         $(this).toggleClass("highlighted");
+    });
+
+
+// User Listings 
+
+    $(".items-offered").click(function(){
+        $(".search-main").fadeOut();
+        $(".backpack-section").fadeIn();
+    });
+
+    $(".items-wanted").click(function(){
+        $(".search-main").fadeIn();
+        $(".backpack-section").fadeOut();
     });
 
 
@@ -64,6 +77,7 @@
                     .find(".listing-notes")
                         .toggle();
     });
+
 
     $(".comment-button").click(function(){
         $(this)

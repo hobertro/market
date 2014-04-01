@@ -2,7 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+/* main */
+
 /* items */
+
+/*
 
 .item {
     float: left;    
@@ -13,16 +17,28 @@
 
 
 .item-slot {
-    background-color: #95a5a6;
-    width: 100px;
-    height: 100px;
+    background-color: #2A2A2A;
+    width: 90px;
+    height: 70px;
     float: left;
     border: 2px solid;
     margin: 1px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
+}
 
+.item-slot li {
+    margin-top: 3px;
+}
+
+.item-slot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 .item-slot:hover {
@@ -41,13 +57,39 @@
     background-color: red;
 }
 
+*/
+
 /* Search Form */
+
+/*
 
 .search-div {
     margin: 100px;
 }
 
+.response,
+.response-body,
+.backpack {
+    min-width: 920px;
+}
+
+.response-body {
+    height: 200px;
+    margin: 50px 0;
+    border: 5px solid black;
+    overflow: scroll;
+    min-width: 920px;
+}
+
+*/
+
 /* Player Listings */
+
+/*
+
+h2 {
+    color: #34495E;
+}
 
 .list-view {
     background-color: red;
@@ -71,4 +113,188 @@
 
 .commenting-area textarea {
     width: 100%;
+}
+
+.selections {
+    background-color: red;
+    min-width: 920px;
+    margin-bottom: 50px;
+    border: 2px solid black;
+}
+
+.items-offered {
+    width: 40%;
+}
+
+.items-wanted {
+    width: 40%;
+}
+
+.main-view {
+    margin-left: 5 0px; 
+}
+
+.items-section {
+    padding-left: 150px;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
+.backpack {
+    border: 1px solid black;
+}
+
+*/
+
+/*** MAIN VIEW ***/
+
+body {
+    background-color: #ECF0F1;
+}
+
+.main-div {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.title,
+.selection-menu,
+.backpack-menu {
+    -moz-border-radius: 5px 5px 0 0 ;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.selection-menu,
+.backpack, 
+.search-menu {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px; 
+}
+
+.menu {
+    background-color: #BDC3C7;
+}
+
+.submit-button {
+    width: 100%;
+}
+
+/*** SELECTION MENU ***/
+
+.selection-menu {
+    padding-bottom: 30px;
+    min-width: 952px;
+}
+
+.title span,
+.selection-menu h5 {
+    color: white;
+}
+
+.selection-menu h5 {
+    margin-left: 43px;
+}
+
+.title {
+    background-color: #34495E; 
+    padding: 10px 20px;
+}
+
+.selection-menu > .row {
+    margin: auto;
+}
+
+
+.offer-icon {
+    position: absolute;
+    top: 175px;
+    left: 455px;
+    font-size: 50px;
+}
+
+
+/*** LISTINGS ****/
+
+.items-wanted {
+    background-color: none;
+}
+
+.items-offered {
+    background-color: none;
+}
+
+/*** Search ***/
+
+.search-main {
+    display: none;
+}
+
+.search-section,
+.response-section,
+.notes-section {
+    margin: 25px 0;
+}
+
+.response {
+    height: 300px;
+    overflow: auto;
+}
+
+.response-message {
+    position: relative;
+    top: 80px;
+    left: 15px;
+}
+
+.item-search {
+    margin: 10px;
+}
+
+.item-search input {
+    margin: 10px 0;
+}
+
+.search-btn {
+    margin-right: 5px;
+}
+
+#search {
+    width: 50%;
+}
+
+
+/*** Backpack ***/
+
+.backpack-section {
+    margin-top: 30px;
+}
+
+.backpack-section span {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.backpack {
+    height: 300px;
+    overflow: auto;
+}
+
+.backpack ul {
+
+}
+
+#reload {
+    display: inline;
+}
+
+/*** NOTE SECTION ***/
+
+.notes textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100px;
 }

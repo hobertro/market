@@ -24,7 +24,6 @@
 
         initialize: function(){
             console.log("ItemSlot initialized");
-            
         },
 
         defaults: {
@@ -115,7 +114,7 @@
     Market.Views.Item = Backbone.View.extend({
 
         tagName: "li",
-        className: "item-div",
+        className: "item-li item",
 
         initialize: function(){
                 
@@ -143,7 +142,7 @@
     Market.Views.SearchItem = Backbone.View.extend({
 
         tagName: "li",
-        className: "search-item-div",
+        className: "search-item-li item",
 
         initialize: function(){
 
@@ -168,9 +167,10 @@
 
     Market.Views.ItemCollection = Backbone.View.extend({
         tagName: 'ul',
+        className: "clearfix",
         initialize: function(){
             $(".backpack").html(this.render().el);
-            this.listenTo(appView, "item-div:click", this.addItemtoSlot);
+            this.listenTo(appView, "item-li:click", this.addItemtoSlot);
         },
         render: function(){
             this.addStockItemURL();
@@ -186,24 +186,34 @@
         addItemtoSlot: function(itemId){
             // change itemId to a number
             var appendedItemModel = this.collection.findWhere({item_id: parseInt(itemId, 10)});
-            console.log(appendedItemModel);
             var appendedItemView = new Market.Views.Item({model: appendedItemModel });
-            $(".highlighted").html(appendedItemView.render().el);
+            this.addHighlightToNextClass(appendedItemView);
         },
         addStockItemURL: function(){
         this.collection.models.forEach(function(model){
-            if (model.get("image_url")=== ""){
+            if (model.get("image_url") === ""){
             model.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
          }
         });
-       }
+        },
+        addHighlightToNextClass: function(appendedItemView){
+            $(".highlighted").html(appendedItemView.render().el);
+            var that = $(".highlighted").next();
+            if ($(".highlighted").hasClass("last-slot")){
+                $(".highlighted").removeClass("highlighted");
+                $(".item-slot").siblings().first().addClass("highlighted");
+            } else {
+                $(".highlighted").removeClass("highlighted");
+                that.addClass("highlighted");
+            }
+        }
     });
 
     Market.Views.ItemSearchCollection = Backbone.View.extend({
         tagName: 'ul',
         initialize: function(){
             $(".response").html(this.render().el);
-            this.listenTo(appView, "search-item-div:click", this.addItemToSlot);
+            this.listenTo(appView, "search-item-li:click", this.addItemToSlot);
             this.listenTo(appView, "removeView:click", this.removeView);
         },
         render: function(){
@@ -215,13 +225,24 @@
                 var ItemView = new Market.Views.SearchItem({model: item});
                 this.$el.append(ItemView.render().el);
             }, this);
-            console.log(this);
             return this;
         },
         addItemToSlot: function(itemId){
+            console.log("we're in addItemtoSlots");
             var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)});
             var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel });
+            this.addHighlightToNextClass(appendedItemView);
+        },
+        addHighlightToNextClass: function(appendedItemView){
             $(".highlighted").html(appendedItemView.render().el);
+            var that = $(".highlighted").next();
+            if ($(".highlighted").hasClass("last-slot")){
+                $(".highlighted").removeClass("highlighted");
+                $(".items-wanted .item-slot").siblings().first().addClass("highlighted");
+            } else {
+                $(".highlighted").removeClass("highlighted");
+                that.addClass("highlighted");
+            }
         },
         removeView: function(){
             this.remove();
@@ -301,8 +322,8 @@
         },
 
         events: {
-            "click .item-div": "addItemToSlot",
-            "click .search-item-div": "addSearchItemToSlot",
+            "click .item-li": "addItemToSlot",
+            "click .search-item-li": "addSearchItemToSlot",
             "click .search-btn": "removeView",
             "ajax:success": "createSearchCollection",
             "click #reload": "reloadItems"
@@ -310,17 +331,17 @@
 
         addItemToSlot: function(e){
             e.preventDefault();
+            console.log("in global appview");
             var itemId = e.currentTarget.id;
-            this.trigger("item-div:click", itemId); // Market.Views.ItemCollection
+            this.trigger("item-li:click", itemId); // Market.Views.ItemCollection
         },
         addSearchItemToSlot: function(e){
             e.preventDefault();
             var itemId = e.currentTarget.id;
-            this.trigger("search-item-div:click", itemId);
+            this.trigger("search-item-li:click", itemId);
         },
         createSearchCollection: function(e, data, status, xhr){
             var searchItems = data;
-            console.log(data);
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
         },

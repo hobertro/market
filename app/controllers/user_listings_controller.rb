@@ -12,6 +12,7 @@ class UserListingsController < ApplicationController
         @user = User.find(params[:user_id])
         @user_items = @user.user_items
         @user_listing = UserListing.new()
+        @comment = @user_listing.comments.new()
     end
 
     def destroy

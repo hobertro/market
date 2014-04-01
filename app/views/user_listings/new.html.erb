@@ -1,86 +1,159 @@
-<div class="container" id="market">
+<!--
     <h1>Welcome <%= @user.steam_name %></h1>
-    <div class="user-info span6">
-        <div>
-          <img class="avatar" src=<%= @user.avatar_medium %> />
-            <div class="user-data user-name" data-user-id=<%= @user.id %>>
-              <b><%= @user.steam_name %></b>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-      <div class="span12">
-        <div class="span5">
-            <h1>Items Offered</h1>
-            <div class="items-offered">
-                 
-            </div>
-        </div>
-        
-        <div class="span5">
-            <h1>Items Wanted</h1>
-            <div class="items-wanted">
-        
-        </div>
-
-
-        </div>
-      </div>
-    </div>
-
-    <%= form_for @user_listing, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
-
-            <%= f.submit "Create Button", class: "btn btn-primary" %>
-    <% end %>
-
-    <button type="submit" id="test" value="test" class="btn btn-primary">Submit</button>
-
-
-    <button type="submit" id="reload" value="test" class="btn btn-danger">Reload</button>
-
-    <div class="test">
-        
-    </div>
-
-            <div class="rails-search">
-
-              <%= form_tag("/search", method: "get", remote: true, id: "item-search") do %>
-              <%= label_tag(:search, "Search for:") %>
-              <%= text_field_tag(:search, params[:search]) %>
-              <%= submit_tag("Search", class: "btn search-btn") %>
-
-              <% end %>
-
-            </div>
-
-    <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
-        <%= hidden_field_tag(:offer) %>
-        <%= hidden_field_tag(:wanted) %>
-        <%= submit_tag("Test1", class: "test1") %>
-    <% end %>
-
-    <div class="response span6">
-        <h1>Response</h1>
-    </div>
-
-
         <div class="row">
-                <div class="span12">
-                    <div class="backpack">
-<!-- rails view rendering
-                    <ul>
-                      <% @user.items.each do |item| %>
-                        <li class="item-div" data-item-id="<%= item.id%>" id="<%= item.id%>">
-                            <a href="/items/<%= item.id %>"><img class="item-img" src="<%= item.image_url %>"></a>
-                        </li>
-                      <% end %>
-                    </ul>
--->                 </div>
+            <div class="col-xs-3">
+                <%= render "layouts/sidebar" %>
+            </div>
+
+            <div class="main-view col-xs-6">
+                <div class="row selections">
+                    <div class="items-section clearfix">
+                           <div class="col-xs-3 items-offered">
+                             <h2>Items Offered</h2>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                           </div>
+                           <div class="col-xs-3 items-wanted">
+                            <h2>Items Wanted</h2>   
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                                <li class="item-slot"></li>
+                           </div>
+                    </div>
                 </div>
-              <!-- </div> -->
+
+                    
+                <div class="row">
+                    <button type="submit" id="test" value="test" class="col-xs-3 btn btn-primary">Submit</button>
+                    <button type="submit" id="reload" value="test" class="col-xs-3 btn btn-danger">Reload</button>
+                </div>
+                <div class="rails-search">
+                  <%= form_tag("/search", method: "get", remote: true, id: "item-search") do %>
+                      <%= label_tag(:search, "Search for:") %>
+                      <%= text_field_tag(:search, params[:search]) %>
+                      <%= submit_tag("Search", class: "btn search-btn") %>
+                  <% end %>
+                </div>
+        
+
+                <div>
+                    <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
+                        <%= hidden_field_tag(:offer) %>
+                        <%= hidden_field_tag(:wanted) %>
+                        <%= submit_tag("Create Listing", class: "create-listing") %>
+                    <% end %>
+                </div>
+                
+                <div>
+                    <h1>Response</h1>
+                    <div class="response-body clearfix">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="response">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="backpack clearfix"></div>
+                </div>
+            </div>
         </div>
+    </div>
+-->
+<div class="test" id="market">
+    <div class="main-div row">
+        <div class="col-xs-3">
+            <%= render "layouts/sidebar" %>
+        </div>
+
+        <div class="col-xs-8">
+                <div class="selection-menu menu row">
+                    <div class="title">
+                        <span>New Trade</span>
+                    </div>
+                    <div class="col-xs-6 items-offered">
+                        <h5>Items Offered</h5>
+                        <ul class="clearfix">
+                            <li class="highlighted item-slot"></li>
+                            <li class="item-slot"></li>
+                            <li class="item-slot"></li>
+                            <li class="item-slot"></li>
+                            <li class="item-slot"></li>
+                            <li class="item-slot last-slot"></li>
+                        </ul>
+                    </div> 
+                    <span class="offer-icon glyphicon glyphicon-transfer"></span>   
+        
+                    <div class="col-xs-6 items-wanted">
+                        <h5>Items Wanted</h5>
+                        <ul class="clearfix">
+                           <li class="item-slot"></li>
+                           <li class="item-slot"></li>
+                           <li class="item-slot"></li>
+                           <li class="item-slot"></li>
+                           <li class="item-slot"></li>
+                           <li class="item-slot last-slot"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="search-main">
+                    <div class="search-section menu">
+                            <div class="title">
+                                <span>Search For Item</span>
+                            </div>
+                              <%= form_tag("/search", class: "item-search", method: "get", remote: true, id: "item-search") do %>
+                              <%= label_tag(:search, "Search for:") %>
+                              <%= text_field_tag(:search, params[:search]) %>
+                              <%= submit_tag("Search", class: "btn btn-primary search-btn") %>
+                              <% end %>
+                    </div>
     
+                    <div class="response-section menu">
+                        <div class="title">
+                            <span>Searched Items</span>
+                        </div>
+                        <div class="response">
+                            <h2 class="response-message">Type in name of items you would like to search for</h2>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="backpack-section menu">
+                    <div class="title clearfix">
+                        <span>Backpack (<%= @user.user_items.count %> items) </span>
+                        <button type="submit" id="reload" class="btn btn-info pull-right">Reload Backpack</button>
+                    </div>
+                    <div class="backpack clearfix"></div>
+                </div>
+
+                <div class="notes-section menu">
+                    <div class="title">
+                        <span>Notes</span>
+                    </div>
+                    <div class="notes">
+                        <%= text_area_tag(:notes, "", class: "notes-input", placeholder: "Type any notes here to accompany your listing :D") %>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
+                        <%= hidden_field_tag(:offer) %>
+                        <%= hidden_field_tag(:wanted) %>
+                        <%= submit_tag("Create Listing", class: "submit-button btn btn-primary") %>
+                    <% end %>
+                </div>
+        </div>   
+    </div>
+
 </div>
 
 <script type="text/javascript">
@@ -92,19 +165,19 @@
     // creating the Backpack
 
     var backpack  = new Market.Collections.Item();
-    backpack.reset(<%= raw @user.user_items.to_json %>);
-    console.log(<%= raw @user.user_items.to_json %>);
-    console.log(backpack);
+        backpack.reset(<%= raw @user.user_items.to_json %>);
+        console.log(<%= raw @user.user_items.to_json %>);
+        console.log(backpack);
     var backpackView = new Market.Views.ItemCollection({collection: backpack});
 
     // items offered
 
-    var itemsOfferedCollection = new Market.Collections.ItemSlots();
-    var itemsOfferedCollectionView = new Market.Views.ItemsOfferedCollection({collection: itemsOfferedCollection});
+    //var itemsOfferedCollection = new Market.Collections.ItemSlots();
+    //var itemsOfferedCollectionView = new Market.Views.ItemsOfferedCollection({collection: itemsOfferedCollection});
 
     // items wanted
 
-    var itemsWantedCollection = new Market.Collections.ItemSlots();
-    var itemsWantedCollectionView = new Market.Views.ItemsWantedCollection({collection: itemsWantedCollection});
+    //var itemsWantedCollection = new Market.Collections.ItemSlots();
+    //var itemsWantedCollectionView = new Market.Views.ItemsWantedCollection({collection: itemsWantedCollection});
 
 </script>

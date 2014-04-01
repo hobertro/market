@@ -34,30 +34,40 @@ class Item < ActiveRecord::Base
   end
 
   def self.populate_database
+
+    @dict = []
+    Item.all.each do |item|
+      @dict.push(item.defindex.to_i)
+    end
+
     self.all_dota_items.each do |item|
-      new_item = Item.new(item)
-      new_item.save
+      if @dict.include?(item["defindex"])
+        puts item
+        puts item["defindex"]
+        puts "have item"
+      else
+        puts "don't have item"
+        new_item = Item.new(item)
+        new_item.save
+      end
     end
-=begin ##### Note: Inefficient way of adding Items to the DB. 
-      new_item = Item.new()
-      new_item.capabilities = item["capabilities"]
-      new_item.defindex = item["defindex"]
-      new_item.image_inventory = item["image_inventory"]
-      new_item.image_url = item["image_url"]
-      new_item.image_url_large = item["image_url_large"]
-      new_item.item_class = item["item_class"]
-      new_item.item_description = item["item_description"]
-      new_item.item_quality = item["item_quality"]
-      new_item.item_type_name = item["item_type_name"]
-      new_item.max_ilevel = item["max_ilevel"]
-      new_item.min_ilevel = item["min_ilevel"]
-      new_item.name = item["name"]
-      new_item.tools = item["tools"]
-      new_item.proper_name = item["proper_name"]
-      new_item.item_name = item["item_name"]
-      new_item.save
+    return "hello moto"
+  end
+
+  def self.item_checker(steam_item)
+    @dict = []
+    Item.all.each do |item|
+      @dict.push(item.defindex.to_i)
     end
-=end
-    return "done!"
+    # return @dict
+  end
+
+  def self.steam_id_count
+    steam_items = []
+    self.all_dota_items.each do |item|
+      steam_items.push(item)
+    end
+    puts steam_items.count
+    return puts steam_items.count
   end
 end

@@ -1,0 +1,49 @@
+.sidebar {
+   background-color: #34495E;
+   margin-left: 20px;
+   border-radius: 8px;
+   height: 100%;
+}
+
+.sidebar-avatar {
+   background-color: #34495E;
+}
+
+.sidebar-avatar img {
+    margin: 20px 0;
+}
+
+.sidebar-menu {
+    margin: 10px 0 0 0;
+    padding: 10px 0;
+    background-color: #BDC3C7;
+}
+
+.sidebar-menu ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.sidebar-menu li {
+    list-style: none;
+}
+
+.sidebar-menu span {
+    float: left;
+    position: relative;
+    left: 85px;
+    display: block;
+}
+
+.sidebar-menu a {
+    color: #FFF;
+}
+
+.sidebar-menu a:hover {
+    color: #1ABC9C;
+}
+
+.user-name {
+    color: #BDC3C7;
+}
+

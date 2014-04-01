@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.7'
-gem 'bootstrap-sass', '2.3.2'
 gem 'omniauth-steam'
 gem 'figaro'
 gem 'safe_attributes' # so I can use "attributes" attribute in the DB
