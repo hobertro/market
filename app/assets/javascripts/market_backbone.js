@@ -114,7 +114,8 @@
     Market.Views.Item = Backbone.View.extend({
 
         tagName: "li",
-        className: "item-li item",
+        className: "item-li item thumbnail",
+
 
         initialize: function(){
                 
@@ -134,7 +135,11 @@
             return {
                 'id': this.model.get("item_id"),
                 'data-name': this.model.get("name"),
-                'data-defindex': this.model.get("defindex")
+                'data-defindex': this.model.get("defindex"),
+                'data-toggle': "tooltip",
+                'data-placement': "bottom",
+                'title': this.model.get("name"),
+                'data-id': this.model.get("item_id")
             };
         }
     });
@@ -142,7 +147,7 @@
     Market.Views.SearchItem = Backbone.View.extend({
 
         tagName: "li",
-        className: "search-item-li item",
+        className: "search-item-li item thumbnail",
 
         initialize: function(){
 
@@ -158,7 +163,11 @@
             return {
                 'id': this.model.get("id"),
                 'data-name': this.model.get("name"),
-                'data-defindex': this.model.get("defindex")
+                'data-defindex': this.model.get("defindex"),
+                'data-toggle': "tooltip",
+                'data-placement': "bottom",
+                'title': this.model.get("name"),
+                'data-id': this.model.get("item_id")
             };
         }
     });
@@ -341,15 +350,18 @@
             this.trigger("search-item-li:click", itemId);
         },
         createSearchCollection: function(e, data, status, xhr){
+            console.log("in createSearchCollection");
             var searchItems = data;
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
+            $('li').tooltip("hide");
         },
         // global view remover
         removeView: function(){
             this.trigger("removeView:click");
         },
         reloadItems: function(){
+            console.log("In reload item");
             var request = $.ajax({
             type: "POST",
             url: "/reload"

@@ -1,23 +1,47 @@
-<div class="container">
-    <%= render 'layouts/messages_side_bar' %>
-    
-    <h1>Sent Messages</h1>
-    <div class="span8">
-         <% @user.messages.each do |message| %>
-                <div class="user-avy span2">
-                    <img src="<%= message.recipient.avatar_medium %>">
+<div class="main-div">
+    <div class="row">
+        <div class="col-xs-3">
+            <%= render 'layouts/sidebar' %>
+            <%= render 'layouts/messages_side_bar' %>
+        </div>
+
+        <div class="col-xs-8">
+        <% @user.messages.each do |message| %>
+            <div class="message-section row clearfix">
+                <%= link_to url_for(message.recipient) do %>
+                <div class="user-avy col-xs-1">
+                    <span class=>
+                        <img src="<%= message.recipient.avatar_medium %>">
+                    </span>
+                </div>
+                <% end %>
+
+                <div class="comment-header group col-xs-11">
+                      <div class="title clearfix">
+                        <span class="messenger-name">Message to <%= message.recipient.steam_name %> was posted <%= time_ago_in_words(message.created_at) %> ago...</span>
+                      <div class="btn-group pull-right">
+                      <button type="button" class="btn btn-inverse">
+                        <%= link_to url_for([message.recipient, message]), {:method => :delete} do %>
+                            <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      </button>
+
+                      <button type="button" class="btn btn-inverse">
+                        <%= link_to user_message_path({:id => message.id}) do %>
+                            <i class="pull-right icon fa fa-comments"></i>
+                        <% end %>
+                      </button>
+                    </div>
                 </div>
 
-                <div class="user-message span6">
-                    <ul class="row">
-                        <li>To: <%= message.recipient.steam_id %></li>
-                        <li>Content: <%= message.content %></li>
-                        <li><%= link_to "Message", user_message_path({:id => message.id}) %></li>
-                        <li><%= link_to "Respond", new_user_message_path({recipient: message.recipient}) %></li>
-                        <li><%= link_to "Delete Message", user_message_path(@user, :id => message.id), method: :delete,
-                                                           data: { confirm: "are you sure?"} %></li>
-                    </ul>
+
+
+                    <div class="menu comment-description">
+                        <%= message.content %>
+                    </div>
                 </div>
-         <% end %>
+             </div>
+        <% end %>
+        </div>
     </div>
 </div>

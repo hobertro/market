@@ -1,0 +1,11 @@
+<div class="btn-group">
+  <button type="button" class="btn btn-default"><%= link_to url_for([@user, message]), {:method => :delete} do %>
+                            <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                        <% end %></button>
+  <button type="button" class="btn btn-default"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
+                            <i class="pull-right icon fa fa-reply"></i>
+                        <% end %></button>
+  <button type="button" class="btn btn-default"><%= link_to user_message_path({:id => message.id}) do %>
+                            <i class="pull-right icon fa fa-comments"></i>
+                        <% end %></button>
+</div>

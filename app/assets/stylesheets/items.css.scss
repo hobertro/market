@@ -2,58 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/*** Listings ***/
-
-/*
-.listng {
-    margin: 0;
-}
-
-.listing h3 {
-    margin-left: 25px;
-}
-*/
-
-/*** Items ***/
-
-/*
-
-.item-div {
-    float: left;
-    padding: 5px;
-    position: relative;
-    display: inline-block;
-}
-
-.search-item-div {
-    float: left;
-    background-color: red;
-    padding: 5px;
-    position: relative;
-    display: inline-block;
-}
-
-
-.item-img {
-    height: 70px;
-    width: 100px;
-}
-
-li {
-    list-style-type: none;
-}
-
-.clone {
-    position: relative;
-    margin: 5px;
-    width: 80%;
-    height: 80%;
-}
-
-*/
-
-/*** Icons ***/
-
 /* Items */
 
 .item-slot {
@@ -65,13 +13,6 @@ li {
     float: left;
     list-style-type: none;
     border-radius: 12px;
-}
-
-.item-slot img {
-    position: relative;
-    top: 7px;
-    left: 10px;
-    border-radius: 10px;
 }
 
 .item-slot:hover {

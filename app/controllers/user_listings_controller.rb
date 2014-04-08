@@ -1,6 +1,6 @@
 class UserListingsController < ApplicationController
-    before_filter :signed_in_user, only: [:create, :destroy]
-    before_filter :correct_user, only: [:create, :destroy]
+    before_filter :signed_in_user, only: [:create, :destroy, :new]
+    before_filter :correct_user, only: [:create, :destroy, :new]
 
 
     def index
@@ -16,7 +16,10 @@ class UserListingsController < ApplicationController
     end
 
     def destroy
-        
+        @user = User.find(params[:user_id])
+        @user_listing = UserListing.find(params[:id])
+        @user_listing.destroy
+        redirect_to url_for([@user, @user_listing])
     end
 
     def show
@@ -31,6 +34,7 @@ class UserListingsController < ApplicationController
         @user = User.find(params[:user_id])
         @offered_items = JSON.parse(params[:offer])
         @wanted_items = JSON.parse(params[:wanted])
+        @notes = params[:listnote]
         if @user
             @user_listings = @user.user_listings.create()
             @offered_items.each do |item|
@@ -40,7 +44,8 @@ class UserListingsController < ApplicationController
               @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "wanted"})
             end
         end
-        redirect_to root_path
+        @user_listings.comments.create({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
+        redirect_to user_user_listings_path(@user)
     end
 
     def search

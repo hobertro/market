@@ -1,22 +1,53 @@
-<div class="container">
-    <%= render 'layouts/messages_side_bar' %>
-
-    <div class="span8">
-        <% @user.received_messages.each do |message| %>
-        <span class="user-avy span2">
-            <img src="<%= message.messenger.avatar_medium %>">
-        </span>
-
-        <div class="user-message span6">
-            <ul>
-                <li>From: <%= message.messenger.steam_name %></li>
-                <li>Content: <%= message.content %></li>
-                <li><%= link_to "Coversation", user_message_path({:id => message.id}) %></li>
-                <li><%= link_to "Respond", new_user_message_path({recipient: message.messenger}) %></li>
-                <li><%= link_to "Delete Message", user_message_path(@user, :id => message.id), method: :delete,
-                                                   data: { confirm: "are you sure?"} %></li>
-            </ul>
+<div class="main-div">
+    <div class="row">
+        <div class="col-xs-3">
+            <%= render 'layouts/sidebar' %>
+            <%= render 'layouts/messages_side_bar' %>
         </div>
-        <% end %> 
+
+        <div class="col-xs-8">
+        <% @user.received_messages.each do |message| %>
+            <div class="message-section row clearfix">
+                <%= link_to url_for(message.messenger) do %>
+                <div class="user-avy col-xs-1">
+                    <span class=>
+                        <img src="<%= message.messenger.avatar_medium %>">
+                    </span>
+                </div>
+                <% end %>
+
+                <div class="comment-header group col-xs-11">
+                    <div class="title clearfix">
+                        
+                        <%= link_to url_for(message.messenger) do %>
+                        <span class="messenger-name"><%= message.messenger.steam_name %> posted <%= time_ago_in_words(message.created_at) %> ago...</span>
+                        <% end %>
+            
+                        <div class="btn-group pull-right">
+                        
+                          <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
+                                <i class="pull-right icon fa fa-reply"></i>
+                            <% end %>
+                          </button>
+                          
+                          <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
+                            <i class="pull-right icon fa fa-comments"></i>
+                          <% end %>
+                          </button>
+
+                           <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, message]), {:method => :delete} do %>
+                                <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                            <% end %>
+                           </button>
+                        </div>
+                    </div>
+
+                    <div class="menu comment-description">
+                        <%= message.content %>
+                    </div>
+                </div>
+             </div>
+        <% end %>
+        </div>
     </div>
 </div>

@@ -1,0 +1,33 @@
+<div class="user-stats row clearfix">
+    <div class="center user-stats-main col-xs-6">
+        <div class="test-div">
+            <div class="steam-name"><%= @user.steam_name %></div>
+            <img class="img-circle" src="<%= @user.avatar_full %>">
+            <div class="item-count"><%= @user.items.count %> items</div>
+        </div>
+    </div>
+
+    <div class="user-stats-menu col-xs-4">
+        <ul>
+            <li><%= link_to "Send Trade Request(N/A yet!)" %></</li>
+            <li><%= link_to "Message This User", new_user_message_path(current_user,  {recipient: @user.id}) %></li>
+            <li><%= link_to "User's Listings", user_user_listings_path(@user) %></li>
+            <li><%= link_to "Block User (N/A yet!)" %></li>
+        </ul>
+    </div>
+</div>
+
+<div class="backpack-section menu">
+    <div class="title">
+        <span>Backpack</span>
+    </div>
+    <div class="user-backpack backpack">
+        <ul class="clearfix">
+        <% @user.items.each do |item| %>
+            <li class="item-li thumbnail">
+                <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+</div>  

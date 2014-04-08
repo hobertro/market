@@ -1,4 +1,6 @@
-class MessagesController < ApplicationController
+    class MessagesController < ApplicationController
+    before_filter :signed_in_user, only: [:create, :new, :show, :index, :destroy]
+    before_filter :correct_user, only: [:create, :new, :show, :index, :destroy]
 
     def index
         @user = User.find(params[:user_id])
@@ -21,8 +23,8 @@ class MessagesController < ApplicationController
     end
 
     def show
+        @user = User.find(params[:user_id])
         @message = Message.find(params[:id])
-        
         @conversation = Message.where(["(messenger_id = ? AND recipient_id = ?) OR (messenger_id = ? AND recipient_id = ?)", 
                                 @message.messenger_id, @message.recipient_id, @message.recipient_id, @message.messenger_id])
                                 .order("created_at DESC")

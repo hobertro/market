@@ -2,150 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/* main */
-
-/* items */
-
-/*
-
-.item {
-    float: left;    
-    width: 150px;
-    height: 150px;
-    margin: 0 10px;
-}
-
-
-.item-slot {
-    background-color: #2A2A2A;
-    width: 90px;
-    height: 70px;
-    float: left;
-    border: 2px solid;
-    margin: 1px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 10px;
-}
-
-.item-slot li {
-    margin-top: 3px;
-}
-
-.item-slot img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-}
-
-.item-slot:hover {
-    background-color: #34495e;
-}
-
-.item-close {
-    height: 25%;
-    width:  25%;
-    position: relative;
-    top: -100px;
-    left: 70px;
-}
-
-.highlighted {
-    background-color: red;
-}
-
-*/
-
-/* Search Form */
-
-/*
-
-.search-div {
-    margin: 100px;
-}
-
-.response,
-.response-body,
-.backpack {
-    min-width: 920px;
-}
-
-.response-body {
-    height: 200px;
-    margin: 50px 0;
-    border: 5px solid black;
-    overflow: scroll;
-    min-width: 920px;
-}
-
-*/
-
-/* Player Listings */
-
-/*
-
-h2 {
-    color: #34495E;
-}
-
-.list-view {
-    background-color: red;
-    margin: 20px 0;
-}
-
-.listing-notes {
-    background-color: red;
-    display: none;
-    margin-top: 10px;
-}
-
-.row.listing-notes {
-    margin-left: 0;
-}
-
-.listing-comments {
-    background-color: red;
-    margin-top: 10px;
-}
-
-.commenting-area textarea {
-    width: 100%;
-}
-
-.selections {
-    background-color: red;
-    min-width: 920px;
-    margin-bottom: 50px;
-    border: 2px solid black;
-}
-
-.items-offered {
-    width: 40%;
-}
-
-.items-wanted {
-    width: 40%;
-}
-
-.main-view {
-    margin-left: 5 0px; 
-}
-
-.items-section {
-    padding-left: 150px;
-    padding-bottom: 50px;
-    box-sizing: border-box;
-}
-
-.backpack {
-    border: 1px solid black;
-}
-
-*/
-
 /*** MAIN VIEW ***/
 
 body {
@@ -159,7 +15,8 @@ body {
 
 .title,
 .selection-menu,
-.backpack-menu {
+.backpack-menu,
+.sidebar {
     -moz-border-radius: 5px 5px 0 0 ;
     -webkit-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
@@ -167,7 +24,8 @@ body {
 
 .selection-menu,
 .backpack, 
-.search-menu {
+.search-menu,
+.menu {
     -moz-border-radius: 0 0 5px 5px;
     -webkit-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px; 
@@ -207,7 +65,7 @@ body {
 }
 
 
-.offer-icon {
+.selection-menu .offer-icon {
     position: absolute;
     top: 175px;
     left: 455px;
@@ -297,4 +155,85 @@ body {
     box-sizing: border-box;
     width: 100%;
     height: 100px;
+}
+
+/*** LISTINGS INDEX SECTION ***/
+
+.single-listing {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 50px;
+}
+
+.single-listing:nth-child(n+2) {
+    margin: 20px 0;
+}
+
+.single-listing .offer-icon {
+    font-size: 35px;
+    margin-top: 20px;
+}
+
+.single-listing .icon {
+    font-size: 25px;
+    color: white;
+    margin: 0 8px;
+}
+
+.single-listing .icon:hover {
+    color: #1ABC9C;
+    transition: 0.25s;
+}
+
+.list-items-offered {
+    
+}
+
+.note-section {
+    margin: 20px 0;
+    display: none;
+}
+
+/*** COMMENTS ***/
+
+.individual-comment {
+    margin: 20px 0;
+}
+
+.new_comment textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100px;
+}
+
+.new_comment .btn {
+    margin: 20px 0;
+}
+
+.comment-header span {
+    color: white;
+}
+
+
+.user-avy img,
+.comment-avy img {
+    border: 5px solid #34495E;
+    border-radius: 5px;
+    margin: 0 -8px;
+}
+
+.commenting-area {
+    margin: 20px 0;
+}
+
+.single-listing .title {
+    padding: 0;
+}
+
+.icon i {
+    height: 5px;
+    width: 55px;
 }

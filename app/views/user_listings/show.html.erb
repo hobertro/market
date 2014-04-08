@@ -1,71 +1,16 @@
-<div class="container">
-      <div class="listing">
-        <div class="list-view row">
-          <h3>Listing</h3>
-          <div class="span5 items-offered">
-            <h3>Items Offered:</h3>
-            <% @listings.items_offered.each do |item| %>
-                   <div class="item-div" id="<%= item.id%>">
-                      <img class="item-img" src="<%= item.image_url %>">
-                   </div>
-            <% end %>
-          </div>
-          <div class="span5 items-wanted">
-            <h3>Items Wanted:</h3>
-            <% @listings.items_wanted.each do |item| %>
-                   <div class="item-div" id="<%= item.id%>">
-                      <img class="item-img" src="<%= item.image_url %>">
-                   </div>
-            <% end %>
-          </div>
-          <button class="listing-button" type="button">Click</button>
-          <button class="comment-button" type="button">Comments</button>
+<div class="main-div">
+    <div class="row">
+        <% if signed_in? %>
+        <div class="col-xs-3"> 
+          <%= render "layouts/sidebar" %>
         </div>
-
-        <div class="listing-notes row">
-          <div class="span6">
-            <p>
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-              Hello :D Hello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :DHello :D
-            </p>
-          </div>
+        <div class="col-xs-8">
+          <%= render "layouts/user_listings" %>
         </div>
-      </div>
-        
-    <div class="commenting-area">
-        <h2>Comments</h2>
-        <h3>Comment here:</h3>
-            <%= form_for([@listings, Comment.new]) do |f| %>
-                    <%= f.text_area :description, size: "10x4" %>
-                    <%= hidden_field_tag(:listing_id, @listings.id) %>
-                    <%= hidden_field_tag(:user_id, @user.id) %>
-                    <%= f.submit "Add Comment" %>
-            <% end %>
-        <div class="individual-comment">
-          <% @listings.comments.each do |comment| %>
-              <div class="comment-header group">
-                <ul class="left-comment">
-                    <li class="comment-username"><%= comment.user.steam_name%>:</li>
-                    <li class="time-ago"> Posted <%= time_ago_in_words(comment.created_at) %> ago</li>
-                </ul>
-                <% if comment.user == current_user %>
-                <ul class="right-comment">
-                  <li class="edit-comment">Edit</li>
-                  <%= comment.id %>
-                  <li class="delete-comment"><%= link_to 'Delete', url_for([@user, comment]), method: :delete,
-                                                                                              data: { confirm: "are you sure?"} %></li>
-                </ul>
-                <% end %>
-              </div>
-              <div class="comment-description">
-                <%= comment.description %>
-              </div>
-            <% end %>
-        </div>  
-     </div>
+        <% else %>
+        <div class="container">
+          <%= render "layouts/user_listings" %>
+        </div>
+        <% end %>
+    </div>
 </div>
-

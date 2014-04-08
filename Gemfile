@@ -4,6 +4,8 @@ gem 'rails', '3.2.7'
 gem 'omniauth-steam'
 gem 'figaro'
 gem 'safe_attributes' # so I can use "attributes" attribute in the DB
+gem 'will_paginate', '> 3.0'
+gem 'will_paginate-bootstrap'
 
 
 

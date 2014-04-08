@@ -1,4 +1,10 @@
 DotaMarket::Application.routes.draw do
+  get "search/new"
+
+  get "search/create"
+
+  get "search/show"
+
   resources :users do
     resources :user_listings 
   end
@@ -34,6 +40,7 @@ DotaMarket::Application.routes.draw do
   match '/signin', to: redirect('/auth/steam')
   match '/signout', to: 'sessions#destroy', via: :delete  
 
+  match '/searched-items', to: 'search#search'
   match '/search', to: "user_listings#search"
   match '/reload', to: "user_listings#reload"
 

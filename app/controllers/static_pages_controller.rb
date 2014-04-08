@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
+    # @listings = UserListing.all
+    @listings = UserListing.paginate(:page => params[:page]).per_page(10)
   end
 
   def about
@@ -9,5 +11,8 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+  end
+
+  def search
   end
 end

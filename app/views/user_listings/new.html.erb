@@ -1,74 +1,4 @@
-<!--
-    <h1>Welcome <%= @user.steam_name %></h1>
-        <div class="row">
-            <div class="col-xs-3">
-                <%= render "layouts/sidebar" %>
-            </div>
-
-            <div class="main-view col-xs-6">
-                <div class="row selections">
-                    <div class="items-section clearfix">
-                           <div class="col-xs-3 items-offered">
-                             <h2>Items Offered</h2>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                           </div>
-                           <div class="col-xs-3 items-wanted">
-                            <h2>Items Wanted</h2>   
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                                <li class="item-slot"></li>
-                           </div>
-                    </div>
-                </div>
-
-                    
-                <div class="row">
-                    <button type="submit" id="test" value="test" class="col-xs-3 btn btn-primary">Submit</button>
-                    <button type="submit" id="reload" value="test" class="col-xs-3 btn btn-danger">Reload</button>
-                </div>
-                <div class="rails-search">
-                  <%= form_tag("/search", method: "get", remote: true, id: "item-search") do %>
-                      <%= label_tag(:search, "Search for:") %>
-                      <%= text_field_tag(:search, params[:search]) %>
-                      <%= submit_tag("Search", class: "btn search-btn") %>
-                  <% end %>
-                </div>
-        
-
-                <div>
-                    <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
-                        <%= hidden_field_tag(:offer) %>
-                        <%= hidden_field_tag(:wanted) %>
-                        <%= submit_tag("Create Listing", class: "create-listing") %>
-                    <% end %>
-                </div>
-                
-                <div>
-                    <h1>Response</h1>
-                    <div class="response-body clearfix">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="response">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="backpack clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
--->
-<div class="test" id="market">
+<div id="market">
     <div class="main-div row">
         <div class="col-xs-3">
             <%= render "layouts/sidebar" %>
@@ -130,7 +60,7 @@
                 <div class="backpack-section menu">
                     <div class="title clearfix">
                         <span>Backpack (<%= @user.user_items.count %> items) </span>
-                        <button type="submit" id="reload" class="btn btn-info pull-right">Reload Backpack</button>
+                        <button type="submit" id="reload" class="btn btn-default pull-right">Reload Backpack</button>
                     </div>
                     <div class="backpack clearfix"></div>
                 </div>
@@ -148,12 +78,13 @@
                     <%= form_tag({controller: "user_listings", action: "create"}, method: "post", class: "super-form") do %>
                         <%= hidden_field_tag(:offer) %>
                         <%= hidden_field_tag(:wanted) %>
-                        <%= submit_tag("Create Listing", class: "submit-button btn btn-primary") %>
+                        <%= hidden_field_tag(:listnote) %>
+                        <%= submit_tag("Create Listing", class: "submit-button disabled btn btn-primary") %>
                     <% end %>
-                </div>
+                </div> 
+                <!-- <button type="submit" id="test" value="test" class="col-xs-3 btn btn-danger">Submit</button> -->
         </div>   
     </div>
-
 </div>
 
 <script type="text/javascript">
