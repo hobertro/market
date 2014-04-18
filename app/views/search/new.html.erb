@@ -1,89 +1,38 @@
-<h1>Search#new</h1>
-<p>Find me in app/views/search/new.html.erb</p>
 <div id="market">
     <div class="main-div">
-    <div class="row">
+        <div class="row">
 
-    <% if signed_in? %>
-        <div class="col-xs-3">
-            <%= render "layouts/sidebar" %>
-        </div>
-
-    <% else %> 
-
-    <% end %>
-
-            <div class="col-xs-8">
-                <div class="selection-menu menu row">
-                    <div class="title">
-                        <span>New Search</span>
-                    </div>
-                    <div class="col-xs-6 items-offered">
-                        <h5>Items Offered</h5>
-                        <ul class="clearfix">
-                            <li class="highlighted item-slot"></li>
-                            <li class="item-slot items-searched"></li>
-                            <li class="item-slot items-searched"></li>
-                            <li class="item-slot items-searched"></li>
-                            <li class="item-slot items-searched"></li>
-                            <li class="item-slot last-slot items-searched"></li>
-                        </ul>
-                    </div> 
-                    <span class="offer-icon glyphicon glyphicon-transfer"></span>   
-        
-                    <div class="col-xs-6 items-wanted">
-                        <h5>Items Wanted</h5>
-                        <ul class="clearfix">
-                           <li class="item-slot items-searched"></li>
-                           <li class="item-slot items-searched"></li>
-                           <li class="item-slot items-searched"></li>
-                           <li class="item-slot items-searched"></li>
-                           <li class="item-slot items-searched"></li>
-                           <li class="item-slot last-slot items-searched"></li>
-                        </ul>
-                    </div>
+            <% if signed_in? %>
+                <div class="col-xs-3">
+                    <%= render "layouts/sidebar" %>
                 </div>
 
-                <div class="search-listing-main">
-                    <div class="search-section menu">
-                            <div class="title">
-                                <span>Search For Item</span>
+            <% else %> 
+
+            <% end %>
+                    <div class="col-xs-8">
+                        <div class="search-listing-main">
+                            <div class="search-section menu">
+                                    <div class="title">
+                                        <span>Search For Item In Listing</span>
+                                    </div>
+                                      <%= form_tag("/searched-items", method: "get", class: "item-search", id: "item-search form-val") do %>
+                                          <%= label_tag(:search, "Search for:") %>
+                                          <%= text_field_tag(:search, params[:search], class: "input-val") %>
+                                          <%= submit_tag("Search", class: "btn btn-primary search-btn") %>
+                                      <% end %>
                             </div>
-                              <%= form_tag("/searched-items", method: "get", class: "item-search", remote: true, id: "item-search") do %>
-                              <%= label_tag(:search, "Search for:") %>
-                              <%= text_field_tag(:search, params[:search]) %>
-                              <%= submit_tag("Search", class: "btn btn-primary search-btn") %>
-                              <% end %>
-                    </div>
-    
-                    <div class="response-section menu">
-                        <div class="title">
-                            <span>Searched Items</span>
+            
+                            <div class="response-section menu">
+                                <div class="title">
+                                    <span>Searched Listings</span>
+                                </div>
+                                <div class="response">
+                                    <h2 class="response-message">Type in name of items you would like to search for</h2>
+                                </div>
+                            </div>
                         </div>
-                        <div class="response">
-                            <h2 class="response-message">Type in name of items you would like to search for</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <%= form_tag({controller: "search", action: "create"}, method: "post", class: "super-form") do %>
-                        <%= hidden_field_tag(:offer) %>
-                        <%= hidden_field_tag(:wanted) %>
-                        <%= hidden_field_tag(:listnote) %>
-                        <%= submit_tag("Search", class: "submit-button btn btn-primary") %>
-                    <% end %>
-                </div> 
-                <!-- <button type="submit" id="test" value="test" class="col-xs-3 btn btn-danger">Submit</button> -->
-        </div>   
-
-    </div>
+                </div>   
+        </div>
     </div>
 </div>
-<script type="text/javascript">
-    // AppView
-    console.log("Before app view");
-    var appView = new Market.Views.App()
-    console.log("Before app view");
-</script>
-

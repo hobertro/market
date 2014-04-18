@@ -1,0 +1,54 @@
+      <% @user_listings.each do |listings| %>
+        <div class="single-listing">
+          <div class="title clearfix">
+            <%= link_to url_for([@user, listings]) do %>
+              <span class="messenger-name"><%= listings.user.steam_name %> at <%= time_ago_in_words(listings.created_at) %> ago wanted to trade ... </span>
+            <% end %>
+            <div class="btn-group pull-right">  
+
+            <button type="button" class="btn btn-inverse note-btn">
+                                      <i class="pull-right icon fa fa-comment-o"></i>
+                                  </button>
+            <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, listings]), {:method => :delete} do %>
+                                      <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                                  <% end %></button>
+            </div>
+          </div>
+          <div class="menu">
+            <div class="row clearfix">
+              <div class="list-items-offered col-xs-5">
+               <% listings.items_offered.each do |item| %>
+                  <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                  </li>
+               <% end %>
+              </div>
+
+                <span class="col-xs-1 offer-icon glyphicon glyphicon-transfer"></span> 
+
+                <div class="list-items-wanted col-xs-5">
+                 <% listings.items_wanted.each do |item| %>
+                    <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                  </li>
+                 <% end %>
+                </div>
+              </div>
+          </div>
+
+          <div class="note-section">
+            <div class="title clearfix">
+              <span>Notes</span>
+              
+            </div>
+
+            <div class="note-body menu">
+              <% if listings.comments.first.nil? %>
+                  <span>No comment </span>
+              <% else %> 
+                  <%= listings.comments.first.description %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>

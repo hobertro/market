@@ -3,6 +3,7 @@ class UserListingsController < ApplicationController
     before_filter :correct_user, only: [:create, :destroy, :new]
 
 
+
     def index
        @user = User.find(params[:user_id])
        @user_listings = @user.user_listings
@@ -44,8 +45,14 @@ class UserListingsController < ApplicationController
               @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "wanted"})
             end
         end
-        @user_listings.comments.create({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
-        redirect_to user_user_listings_path(@user)
+        comment = @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
+        if comment.save
+          flash[:success] = "Comment created!"
+          redirect_to([@user, @listings])
+        else
+          flash[:notice] = "Hello moto!"
+          redirect_to user_user_listings_path(@user)
+        end
     end
 
     def search

@@ -70,4 +70,27 @@ class Item < ActiveRecord::Base
     puts steam_items.count
     return puts steam_items.count
   end
+
+  def self.create_hash
+    item_hash = {}
+    Item.all.each do |item|
+      item_hash["#{item.defindex}"] = item.name
+    end
+
+    return item_hash
+  end
+
+  def self.open_json_file(file_name)
+    created_hash = Item.all
+    file = JSON.parse(File.read(file_name))
+    Item.all.each do |item|
+      if file.include?(item.defindex)
+        puts "Hello this works"
+        item.rarity = file[item.defindex]["item_rarity"]
+        item.save
+        puts item.rarity
+      end
+    end
+    return "done"
+  end
 end

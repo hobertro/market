@@ -6,6 +6,11 @@
         </div>
         <div class="col-xs-8">
           <%= render "layouts/user_listings" %>
+          <% if flash.alert %>
+            <div class="alert alert-danger">
+              <span>Comments can't be blank</span>
+            </div>
+          <% end %>
         </div>
         <% else %>
         <div class="container">

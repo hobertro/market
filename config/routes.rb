@@ -1,9 +1,12 @@
 DotaMarket::Application.routes.draw do
+
   get "search/new"
 
   get "search/create"
 
   get "search/show"
+
+  resources :contact_messages, only: [:new, :create]
 
   resources :users do
     resources :user_listings 
@@ -23,7 +26,6 @@ DotaMarket::Application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
-
   resources :items
   resources :sessions, only: [:create, :destroy]
 
@@ -34,16 +36,17 @@ DotaMarket::Application.routes.draw do
 
   match "/faq", to: "static_pages#faq"
   match "/about", to: "static_pages#about"
-  match "/contact", to: "static_pages#contact"
+  # match "/contact", to: "static_pages#contact"
 
   post 'auth/steam/callback' => 'sessions#create'
-  match '/signin', to: redirect('/auth/steam')
   match '/signout', to: 'sessions#destroy', via: :delete  
 
-  match '/searched-items', to: 'search#search'
+  match '/searched-items', to: 'search#show'
   match '/search', to: "user_listings#search"
   match '/reload', to: "user_listings#reload"
 
+  match '/contact', to: "contact_messages#new"
+  match '/signin', to: redirect('/auth/steam')
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

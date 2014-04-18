@@ -62,7 +62,9 @@
                         <span>Backpack (<%= @user.user_items.count %> items) </span>
                         <button type="submit" id="reload" class="btn btn-default pull-right">Reload Backpack</button>
                     </div>
-                    <div class="backpack clearfix"></div>
+                    <div class="backpack clearfix">
+                        
+                    </div>
                 </div>
 
                 <div class="notes-section menu">
@@ -97,18 +99,5 @@
 
     var backpack  = new Market.Collections.Item();
         backpack.reset(<%= raw @user.user_items.to_json %>);
-        console.log(<%= raw @user.user_items.to_json %>);
-        console.log(backpack);
     var backpackView = new Market.Views.ItemCollection({collection: backpack});
-
-    // items offered
-
-    //var itemsOfferedCollection = new Market.Collections.ItemSlots();
-    //var itemsOfferedCollectionView = new Market.Views.ItemsOfferedCollection({collection: itemsOfferedCollection});
-
-    // items wanted
-
-    //var itemsWantedCollection = new Market.Collections.ItemSlots();
-    //var itemsWantedCollectionView = new Market.Views.ItemsWantedCollection({collection: itemsWantedCollection});
-
 </script>

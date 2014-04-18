@@ -56,12 +56,16 @@ class User < ActiveRecord::Base
       player_item_hash.each do |hash_item|
         if hash_item["defindex"].to_s == item.defindex
         self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
-          quality: hash_item["quality"])
+          quality: hash_item["quality"], rarity: item.rarity)
         end
       end
     end
     add_attr_to_items
     self.user_items
+  end
+
+  def find_rarity
+
   end
 
   def add_attr_to_items

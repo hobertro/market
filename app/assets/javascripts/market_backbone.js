@@ -128,19 +128,28 @@
         itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
 
         render: function(){
-            this.$el.html(this.itemTemplate(this.model.toJSON()));
+            this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
             return this;
         },
         attributes: function(){
+            console.log(this.model.get("rarity"));
             return {
                 'id': this.model.get("item_id"),
                 'data-name': this.model.get("name"),
                 'data-defindex': this.model.get("defindex"),
                 'data-toggle': "tooltip",
                 'data-placement': "bottom",
-                'title': this.model.get("name"),
-                'data-id': this.model.get("item_id")
+                'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
+                'data-id': this.model.get("item_id"),
+                'data-rarity': this.model.get("rarity"),
             };
+        },
+        capitalize: function(string){
+            if (string === null){
+                return "Common";
+            } else {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
         }
     });
 
@@ -156,7 +165,7 @@
         itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
 
         render: function(){
-            this.$el.html(this.itemTemplate(this.model.toJSON()));
+            this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
             return this;
         },
         attributes: function(){
@@ -166,9 +175,17 @@
                 'data-defindex': this.model.get("defindex"),
                 'data-toggle': "tooltip",
                 'data-placement': "bottom",
-                'title': this.model.get("name"),
-                'data-id': this.model.get("item_id")
+                'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
+                'data-id': this.model.get("item_id"),
+                'data-rarity': this.model.get("rarity")
             };
+        },
+        capitalize: function(string){
+            if (string === null){
+                return "Common";
+            } else {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
         }
     });
 

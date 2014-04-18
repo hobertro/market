@@ -14,7 +14,6 @@ module SessionsHelper
     end
 
     def current_user?(user)
-      puts "we are in current user method"
       user == current_user
     end
 

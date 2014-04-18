@@ -35,3 +35,23 @@
     height: 75px;
     width: 100px;
 }
+
+.uncommon {
+    border-color: #5e98d9;
+}
+
+.uncommon [data-tooltip] {
+    font: #5e98d9;
+}
+
+.rare {
+    border-color: #4b69ff;
+}
+
+.immortal {
+    border-color: orange;
+}
+
+.mythical {
+    border-color: #8847ff;
+}

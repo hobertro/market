@@ -2,18 +2,35 @@
 <div class="main-div">
 
 
-  <div class="center hero-unit main-page">
-      <h1>Welcome To The DOTA MARKET</h1>
-
-      <h2>This is the home page for the <a href="#">DOTA MARKET.</a>
-      </h2>
+  <div class="container main-section">
+    <div class="center hero-unit main-page">
+      <h1>Welcome To The DOTA BAZAAR</h1>
+      <h2>Trade your DOTA 2 items with other players for free!</h2>
       <%= link_to image_tag("steam_nb.png", alt: "Sign In To Steam"), '/auth/steam' %>
+    </div>
+
+    <div class="row secondary-section">
+          <div class="col-sm-4">
+            <b class="glyphicon glyphicon-search main-glyph"></b>
+            <h2>Search for items &amp; available for trade</h2>
+            <p>Search through the Bazaar for items that are available for trade by other other players.</p>
+          </div>
+          <div class="col-sm-4">
+            <b class="glyphicon glyphicon-list main-glyph"></b>
+            <h2>List your items for trade for free</h2>
+            <p>List up to 6 items from your DOTA backpack in return for up to 6 items you want in return in a single listing. </p>
+         </div>
+          <div class="col-sm-4">
+            <b class="glyphicon glyphicon-user main-glyph"></b>
+            <h2>Easily message other users to facilliate trading.</h2>
+            <p>Message players who have the items you want to easily customize your DOTA characters!</p>
+          </div>
+    </div>
   </div>
 
+      <hr>
+
   <% if signed_in? %>
-
-
-
 
   <div class="hello container">
       <% @listings.each do |listing| %>
@@ -67,9 +84,9 @@
                   <div class="row clearfix">
                     <div class="list-items-offered col-xs-5">
                      <% listing.items_offered.each do |item| %>
-                        <li class="item-li thumbnail" data-toggle="tooltip" data-placement="bottom" title="<%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-defindex="<%= item.defindex %>">
-                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
-                  </li>
+                     <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                                <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                         </li>
                      <% end %>
                     </div>
 
@@ -77,9 +94,9 @@
 
                       <div class="list-items-wanted col-xs-5">
                         <% listing.items_wanted.each do |item| %>
-                          <li class="item-li thumbnail" data-toggle="tooltip" data-placement="bottom" title="<%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-defindex="<%= item.defindex %>">
-                              <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
-                          </li>                              
+                          <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                                <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                         </li>                            
                         <% end %>
                       </div>
                     </div>
@@ -102,14 +119,11 @@
               </div>
           </div>
       <% end %>
-      <div class="pagination">
+       <div class="pagination">
           <%= will_paginate @listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
       </div>
+      
   </div>
-  <% else %>
-
-  <% will_paginate @listings %>
 
   <% end %>
-
 </div>

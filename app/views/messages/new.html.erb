@@ -10,11 +10,18 @@
                 <span>Message to: <%= @recipient.steam_name %></span>
             </div>
 
-            <%= form_for([@user, @message], html: {class: "message_form"}) do |f| %>
+            <%= form_for([@user, @message], html: {class: "message_form forms"}) do |f| %>
                 <%= f.text_area :content, placeholder: "Type message here! :D" %>
                 <%= hidden_field_tag(:recipient_id, @recipient.id) %>
                 <%= f.submit "Submit Message", class: "btn btn-primary" %>
             <% end %>
+
+        <% if flash.alert %>
+            <div class="alert alert-danger alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <strong>Sorry! Messages can't be blank.</strong>
+            </div>
+        <% end %>
         </div>
     </div>
 </div>

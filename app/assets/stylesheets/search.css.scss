@@ -1,3 +1,24 @@
 // Place all the styles related to the Search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.search-container > .single-listing:first-child {
+    margin-top: 0;
+}
+
+.search-listing-main {
+    padding-right: 60px;
+}
+
+.pagination {
+    margin-left: 100px;
+}
+
+.search-listing-main .search-section {
+    margin-top: 0;
+}
+
+.search-listing-main .search-btn {
+    margin-left: 15px;
+    margin-bottom: 15px;
+}

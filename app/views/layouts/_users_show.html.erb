@@ -10,23 +10,25 @@
     <div class="user-stats-menu col-xs-4">
         <ul>
             <li><%= link_to "Send Trade Request(N/A yet!)" %></</li>
+            <% if signed_in? %>
             <li><%= link_to "Message This User", new_user_message_path(current_user,  {recipient: @user.id}) %></li>
+            <% end %>
             <li><%= link_to "User's Listings", user_user_listings_path(@user) %></li>
             <li><%= link_to "Block User (N/A yet!)" %></li>
         </ul>
     </div>
 </div>
 
-<div class="backpack-section menu">
+<div class="backpack-section menu main-back-section">
     <div class="title">
-        <span>Backpack</span>
+        <span>Backpack (<%= @user.items.count %>)</span>
     </div>
     <div class="user-backpack backpack">
         <ul class="clearfix">
         <% @user.items.each do |item| %>
-            <li class="item-li thumbnail">
-                <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a>
-            </li>
+             <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                                <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+             </li>
         <% end %>
         </ul>
     </div>

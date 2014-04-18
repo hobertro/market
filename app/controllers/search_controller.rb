@@ -9,17 +9,16 @@ class SearchController < ApplicationController
   end
 
   def show
-  end
-
-  def search
     search_params = params[:search]
     puts search_params
     if search_params
-       item_results = Item.where('name LIKE ?', "%#{search_params}%")
+       @listings = UserListing.joins(:items).where("items.name LIKE ? ", "%#{search_params}%").uniq.paginate(:page => params[:page]).per_page(10)
     else
         render :root_path
     end
-    puts "after logic"
-    render :json => item_results
+  end
+
+  def search
+   
   end
 end

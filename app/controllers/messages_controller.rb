@@ -1,4 +1,4 @@
-    class MessagesController < ApplicationController
+class MessagesController < ApplicationController
     before_filter :signed_in_user, only: [:create, :new, :show, :index, :destroy]
     before_filter :correct_user, only: [:create, :new, :show, :index, :destroy]
 
@@ -18,8 +18,14 @@
         @recipient = User.find(params[:recipient_id])
         @content = params[:message][:content]
         @new_message = @user.messages.new({content: @content, recipient_id: @recipient.id, messenger_id: @user.id})
-        @new_message.save
-        redirect_to user_messages_path(@user)
+        if @new_message.save
+          flash[:notice] = "Message successfully sent"
+          redirect_to user_messages_path(@user)
+        else 
+          flash[:alert] = "Message failed. Make sure you type a message! :D"
+          redirect_to new_user_message_path(@user, {:recipient => @recipient})
+        end
+        
     end
 
     def show

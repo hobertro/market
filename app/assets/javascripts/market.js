@@ -1,6 +1,20 @@
 (function(){
 
     // get data item id
+    
+    var checkButtonStatus = function(){
+        var itemsOffered = $(".items-offered .item-slot");
+        var itemsWanted = $(".items-wanted .item-slot");
+            if (itemsOffered.children().size() > 0 && itemsWanted.children().size() > 0 ) {
+                $(".submit-button").removeClass("disabled");
+            } else {
+                $(".submit-button").addClass("disabled");
+            }
+    };
+
+    $(".response").hover(function(){
+        checkButtonStatus();
+    });
 
     /* Creating an listing function */
     $(".super-form").submit(function(e){
@@ -53,7 +67,6 @@
         $(this).toggleClass("highlighted");
     });
 
-
 // User Listings 
 
     $(".items-offered .item-slot").click(function(){
@@ -65,13 +78,10 @@
         }
     });
 
-    $(".items-offered .item-slot").hover(function(){
+    $(".selection-menu").hover(function(){
         checkButtonStatus();
     });
 
-    $(".items-wanted .item-slot").hover(function(){
-        checkButtonStatus();
-    });
 
     $(".items-wanted .item-slot").click(function(){
         if ($(this).hasClass("items-searched")){
@@ -133,14 +143,8 @@
 
     $("li").tooltip('hide');
 
-    var checkButtonStatus = function(){
-        var itemsOffered = $(".items-offered .item-slot");
-        var itemsWanted = $(".items-wanted .item-slot");
-            if (itemsOffered.children().size() > 0 && itemsWanted.children().size() > 0 ) {
-                $(".submit-button").removeClass("disabled");
-            } else {
-                $(".submit-button").addClass("disabled");
-            }
-    };
+        $(".search-btn").submit(function(){
+        alert("submitted!");
+    });
 
 })();
