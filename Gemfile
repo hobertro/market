@@ -19,8 +19,12 @@ gem 'will_paginate-bootstrap'
 group :development do
   gem 'awesome_print'
   gem 'annotate'
-  # gem 'sqlite3'
-  gem 'sqlite3', '1.3.5'
+  gem 'sqlite3'
+  # gem 'sqlite3', '1.3.5'
+end
+
+group :test do
+  gem 'sqlite3'
 end
 
 group :production do 
