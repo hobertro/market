@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '1.9.7'
 
 gem 'rails', '3.2.7'
 gem 'omniauth-steam'
@@ -20,7 +21,6 @@ group :development do
   gem 'awesome_print'
   gem 'annotate'
   gem 'sqlite3'
-  # gem 'sqlite3', '1.3.5'
 end
 
 group :test do
