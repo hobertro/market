@@ -39,7 +39,7 @@ DotaMarket::Application.routes.draw do
   # match "/contact", to: "static_pages#contact"
 
   post 'auth/steam/callback' => 'sessions#create'
-  match '/signout', to: 'sessions#destroy', via: :delete  
+  match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/searched-items', to: 'search#show'
   match '/search', to: "user_listings#search"

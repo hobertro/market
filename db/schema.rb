@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140418035015) do
+ActiveRecord::Schema.define(:version => 20140419084107) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_listing_id"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20140418035015) do
     t.string   "avatar"
     t.string   "avatar_medium"
     t.string   "avatar_full"
-    t.integer  "primary_clanid"
+    t.decimal  "primary_clanid"
     t.integer  "time_created"
     t.integer  "persona_stateflags"
     t.integer  "person_state"
