@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     # get player items
     player_item_hash = User.get_user_items(steam_id)["result"]["items"]
     # create an array of the items based on defindex numbers
-    defindex_ids = player_item_hash.map { |item| item["defindex"]  }
+    defindex_ids = player_item_hash.map { |item| item["defindex"].to_i  }
     # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
     #items_dict = {}
