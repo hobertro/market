@@ -9,6 +9,9 @@ gem 'will_paginate', '> 3.0'
 gem 'will_paginate-bootstrap'
 # gem 'sendgrid'
 
+gem 'awesome_print'
+gem 'annotate'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -18,8 +21,6 @@ gem 'will_paginate-bootstrap'
 # Gems used only for assets and not required
 # in production environments by default.
 group :development do
-  gem 'awesome_print'
-  gem 'annotate'
   gem 'sqlite3'
 end
 
