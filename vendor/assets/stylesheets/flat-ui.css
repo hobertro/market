@@ -3241,7 +3241,7 @@ fieldset[disabled] .twitter-typeahead .tt-hint {
 }
 .tooltip.bottom .tooltip-arrow {
   /* border-bottom-color: #34495e; */
-  border-bottom-color: border-left: ;
+  border-bottom-color: #34495e;
   border-width: 0 9px 9px;
   margin-left: -9px;
   top: -1px;
