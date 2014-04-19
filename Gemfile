@@ -11,7 +11,7 @@ gem 'will_paginate-bootstrap'
 
 gem 'awesome_print'
 gem 'annotate'
-
+gem 'rails_12factor'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
