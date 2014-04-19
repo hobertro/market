@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140419084107) do
+ActiveRecord::Schema.define(:version => 20140419191151) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_listing_id"
@@ -47,17 +47,17 @@ ActiveRecord::Schema.define(:version => 20140419084107) do
     t.string   "defindex"
     t.string   "item_class"
     t.string   "item_type_name"
-    t.string   "item_description"
+    t.text     "item_description",        :limit => 255
     t.integer  "item_quality"
-    t.string   "image_inventory"
+    t.text     "image_inventory",         :limit => 255
     t.string   "min_ilevel"
     t.string   "max_ilevel"
-    t.string   "image_url"
-    t.string   "image_url_large"
-    t.string   "capabilities"
+    t.text     "image_url",               :limit => 255
+    t.text     "image_url_large",         :limit => 255
+    t.text     "capabilities",            :limit => 255
     t.string   "tools"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "item_name"
     t.string   "proper_name"
     t.string   "item_slot"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20140419084107) do
     t.string   "craft_class"
     t.string   "craft_material_type"
     t.string   "attributes"
-    t.string   "tool"
+    t.text     "tool",                    :limit => 255
     t.string   "used_by_classes"
     t.string   "per_class_loadout_slots"
     t.string   "styles"
