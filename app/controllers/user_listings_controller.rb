@@ -60,7 +60,8 @@ class UserListingsController < ApplicationController
         puts search_params
         if search_params
            puts "in search params"
-           item_results = Item.where('name LIKE ?', "%#{search_params}%")
+           item_results = Item.where("LOWER(name) LIKE ?", "%#{search_params}%")
+           puts item_results
            puts "in after search params"
            puts item_results
         else
