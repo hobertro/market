@@ -1,4 +1,4 @@
-(function(){
+    (function(){
 
 // For namespacing
 
@@ -159,7 +159,7 @@
         className: "search-item-li item thumbnail",
 
         initialize: function(){
-
+            console.log("search item created");
         },
 
         itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
@@ -368,6 +368,8 @@
         },
         createSearchCollection: function(e, data, status, xhr){
             console.log("in createSearchCollection");
+            console.log(data);
+            console.log(status);
             var searchItems = data;
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
