@@ -59,7 +59,9 @@ class UserListingsController < ApplicationController
         search_params = params[:search]
         puts search_params
         if search_params
+           puts "in search params"
            item_results = Item.where('name LIKE ?', "%#{search_params}%")
+           puts "in after search params"
            puts item_results
         else
             render :user_path
