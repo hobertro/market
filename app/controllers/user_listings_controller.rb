@@ -60,6 +60,7 @@ class UserListingsController < ApplicationController
         puts search_params
         if search_params
            item_results = Item.where('name LIKE ?', "%#{search_params}%")
+           puts item_results
         else
             render :user_path
         end
