@@ -9,6 +9,60 @@
     margin-left: 25px;
 }
 
+/*** SELECTION MENU ***/
+
+.selection-menu {
+    padding-bottom: 30px;
+    min-width: 952px;
+    h5 {
+        color: white;
+        margin-left: 43px;
+    }
+    .offer-icon {
+        position: absolute;
+        top: 175px;
+        left: 455px;
+        font-size: 50px;
+    }
+    > .row {
+        margin: auto;
+    }
+}
+
+/*** LISTINGS ****/
+
+.title {
+    background-color: #34495E; 
+    padding: 10px 20px;
+    span {
+        color: white;
+    }
+}
+
+.menu {
+    background-color: #BDC3C7;
+}
+
+.items-wanted {
+    background-color: none;
+}
+
+.items-offered {
+    background-color: none;
+}
+
+.top-corners {
+    -moz-border-radius: 5px 5px 0 0 ;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.bottom-corners {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px; 
+}
+
 .title,
 .selection-menu,
 .backpack-menu,
@@ -27,56 +81,19 @@
     border-radius: 0 0 5px 5px; 
 }
 
-.menu {
-    background-color: #BDC3C7;
+/*** NOTE SECTION ***/
+
+.note-section {
+    margin: 20px 0;
+    display: none;
 }
 
-.submit-button {
+.notes textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
-}
-
-/*** SELECTION MENU ***/
-
-.selection-menu {
-    padding-bottom: 30px;
-    min-width: 952px;
-}
-
-.title span,
-.selection-menu h5 {
-    color: white;
-}
-
-.selection-menu h5 {
-    margin-left: 43px;
-}
-
-.title {
-    background-color: #34495E; 
-    padding: 10px 20px;
-}
-
-.selection-menu > .row {
-    margin: auto;
-}
-
-
-.selection-menu .offer-icon {
-    position: absolute;
-    top: 175px;
-    left: 455px;
-    font-size: 50px;
-}
-
-
-/*** LISTINGS ****/
-
-.items-wanted {
-    background-color: none;
-}
-
-.items-offered {
-    background-color: none;
+    height: 100px;
 }
 
 /*** Search ***/
@@ -123,11 +140,10 @@
 
 .backpack-section {
     margin-top: 30px;
-}
-
-.backpack-section span {
-    display: inline-block;
-    margin-top: 5px;
+    span {
+        display: inline-block;
+        margin-top: 5px;
+    }
 }
 
 .backpack {
@@ -135,22 +151,8 @@
     overflow: auto;
 }
 
-.backpack ul {
-
-}
-
 #reload {
     display: inline;
-}
-
-/*** NOTE SECTION ***/
-
-.notes textarea {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100px;
 }
 
 /*** LISTINGS INDEX SECTION ***/
@@ -160,76 +162,58 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-right: 50px;
-}
-
-.single-listing:nth-child(n+2) {
-    margin: 20px 0;
-}
-
-.single-listing .offer-icon {
-    font-size: 35px;
-    margin-top: 20px;
-}
-
-.single-listing .icon {
-    font-size: 25px;
-    color: white;
-    margin: 0 8px;
-}
-
-.single-listing .icon:hover {
-    color: #1ABC9C;
-    transition: 0.25s;
-}
-
-.list-items-offered {
-    
-}
-
-.note-section {
-    margin: 20px 0;
-    display: none;
+    &:nth-child(n+2) {
+        margin: 20px 0;
+    }
+    .offer-icon {
+        margin-top: 20px;
+        font-size: 35px;
+    }
+    .icon {
+        font-size: 25px;
+        color: white;
+        margin: 0 8px;
+        &:hover {
+            color: #1ABC9C;
+            transition: 0.25s;
+        }
+    }
+    .title {
+        padding: 0;
+    }
 }
 
 /*** COMMENTS ***/
 
-.individual-comment {
-    margin: 20px 0;
-}
-
-.new_comment textarea {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100px;
-}
-
-.new_comment .btn {
-    margin: 20px 0;
-}
-
-.comment-header span {
-    color: white;
-}
-
-
-.user-avy img,
-.comment-avy img {
-    border: 5px solid #34495E;
-    border-radius: 5px;
-    margin: 0 -8px;
-}
-
+.individual-comment,
 .commenting-area {
     margin: 20px 0;
 }
 
-.single-listing .title {
-    padding: 0;
+.new_comment {
+    textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100px;
+    }
+    .btn {
+         margin: 20px 0;
+    }
+}
+
+.avatar img {
+    border: 5px solid #34495E;
+    border-radius: 5px;
+    margin: 0 -8px;
 }
 
 .icon i {
     height: 5px;
     width: 55px;
 }
+
+/***** SINGLE LISTING *****/
+
+

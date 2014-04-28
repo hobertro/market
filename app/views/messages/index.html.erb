@@ -15,7 +15,7 @@
             <% @user.received_messages.each do |message| %>
                 <div class="message-section row clearfix">
                     <%= link_to url_for(message.messenger) do %>
-                    <div class="user-avy col-xs-1">
+                    <div class="avatar col-xs-1">
                         <span class=>
                             <img src="<%= message.messenger.avatar_medium %>">
                         </span>

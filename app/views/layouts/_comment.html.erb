@@ -1,11 +1,11 @@
 <% @listings.comments.each do |comment| %>
   <div class="individual-comment row">
       <% if comment.user.avatar_medium.blank? || comment.user.avatar_medium.nil? %>
-      <div class="comment-avy col-xs-1">
+      <div class="avatar col-xs-1">
         <span><img src="http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"></span>
       </div>
       <% else %>
-        <div class="comment-avy col-xs-1">
+        <div class="avatar col-xs-1">
           <%= link_to url_for(comment.user) do %>
             <span><img src="<%= comment.user.avatar_medium %>"></span>
           <% end %>

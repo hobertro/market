@@ -13,7 +13,7 @@
         <% @conversation.each do |message| %>
             <% if message.messenger == current_user %>
             <div class="message-section row clearfix">
-                <div class="user-avy col-xs-1">
+                <div class="avatar col-xs-1">
                     <span class=>
                         <img src="<%= message.messenger.avatar_medium %>">
                     </span>
@@ -46,7 +46,7 @@
              <% else %>
 
              <div class="message-section row clearfix">
-                <div class="user-avy col-xs-1">
+                <div class="avatar col-xs-1">
                     <span class=>
                         <img src="<%= message.messenger.avatar_medium %>">
                     </span>
