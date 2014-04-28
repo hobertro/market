@@ -2,11 +2,9 @@ class UserListingsController < ApplicationController
     before_filter :signed_in_user, only: [:create, :destroy, :new]
     before_filter :correct_user, only: [:create, :destroy, :new]
 
-
-
     def index
        @user = User.find(params[:user_id])
-       @user_listings = @user.user_listings
+       @listings = @user.user_listings
     end
 
     def new

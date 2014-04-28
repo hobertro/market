@@ -2,6 +2,8 @@
 
     // get data item id
     
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+
     var checkButtonStatus = function(){
         var itemsOffered = $(".items-offered .item-slot");
         var itemsWanted = $(".items-wanted .item-slot");
@@ -143,8 +145,15 @@
 
     $("li").tooltip('hide');
 
-        $(".search-btn").submit(function(){
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+    
+    $(".search-btn").submit(function(){
         alert("submitted!");
     });
+
+    $('body').tooltip({
+     selector: '[rel=tooltip]'
+    });
+
 
 })();
