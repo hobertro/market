@@ -44,9 +44,10 @@ class UserListingsController < ApplicationController
             end
         end
         comment = @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
-        if comment.save
+        if @user_listings.save
           flash[:success] = "Comment created!"
-          redirect_to([@user, @listings])
+          puts @user_listings
+          redirect_to([@user, @user_listings])
         else
           flash[:notice] = "Hello moto!"
           redirect_to user_user_listings_path(@user)
