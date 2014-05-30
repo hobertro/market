@@ -34,7 +34,6 @@ class Item < ActiveRecord::Base
   end
 
   def self.populate_database
-
     @dict = []
     Item.all.each do |item|
       @dict.push(item.defindex.to_i)

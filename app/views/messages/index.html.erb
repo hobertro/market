@@ -1,12 +1,17 @@
 <div class="main-div">
     <div class="row">
+      <% if flash[:success] %>
+      <div class="alert alert-success alert-dismissable goodbye">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Congratulations!</strong> Your message was successfully sent!
+      </div>
+      <% end %>
         <div class="col-xs-3">
             <%= render 'layouts/sidebar' %>
             <%= render 'layouts/messages_side_bar' %>
         </div>
 
         <div class="col-xs-8">
-        
         <% if @user.received_messages.blank? %>
            <div class="">
                <span>You don't have any messages yet. Message someone! :D</span>
@@ -47,7 +52,6 @@
                                </button>
                             </div>
                         </div>
-
                         <div class="menu comment-description">
                             <%= message.content %>
                         </div>

@@ -155,5 +155,5 @@
      selector: '[rel=tooltip]'
     });
 
-
+    $(".goodbye").fadeOut(7500);
 })();

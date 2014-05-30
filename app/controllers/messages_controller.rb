@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
         @content = params[:message][:content]
         @new_message = @user.messages.new({content: @content, recipient_id: @recipient.id, messenger_id: @user.id})
         if @new_message.save
-          flash[:notice] = "Message successfully sent"
+          flash[:success] = "Message successfully sent"
           redirect_to user_messages_path(@user)
         else 
           flash[:alert] = "Message failed. Make sure you type a message! :D"

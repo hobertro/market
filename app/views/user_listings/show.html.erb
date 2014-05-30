@@ -1,4 +1,10 @@
 <div class="main-div">
+  <% if flash[:success] %>
+  <div class="alert alert-success alert-dismissable goodbye">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Congratulations!</strong> Your post was successful!
+  </div>
+  <% end %>
     <div class="row">
         <% if signed_in? %>
         <div class="col-xs-3"> 
@@ -6,11 +12,6 @@
         </div>
         <div class="col-xs-8">
           <%= render "layouts/user_listings" %>
-          <% if flash.alert %>
-            <div class="alert alert-danger">
-              <span>Comments can't be blank</span>
-            </div>
-          <% end %>
         </div>
         <% else %>
         <div class="container">
@@ -18,4 +19,4 @@
         </div>
         <% end %>
     </div>
-</div>
+</div>s

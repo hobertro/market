@@ -32,10 +32,13 @@ class User < ActiveRecord::Base
            class_name: "Message",
            foreign_key: "recipient_id"
 
-
   def reload_player_items    
     self.user_items.delete_all
     create_player_items(self.steam_id)
+  end
+
+  def have_items?
+    create_player_items(steam_id) if self.user_items.empty?
   end
 
   def self.get_user_items(steam_id)
@@ -50,9 +53,6 @@ class User < ActiveRecord::Base
     defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
     # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
-    puts items
-    #items_dict = {}
-    #items.each { |item| items_dict[item["defindex"].to_s] = item }
     items.each do |item|
       player_item_hash.each do |hash_item|
         if hash_item["defindex"].to_s == item.defindex
@@ -63,10 +63,6 @@ class User < ActiveRecord::Base
     end
     add_attr_to_items
     self.user_items
-  end
-
-  def find_rarity
-
   end
 
   def add_attr_to_items
@@ -80,13 +76,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  ## need to refactor code below
+
   def self.from_omniauth(auth)
-    authorization = User.find_by_steam_id(auth["uid"])
-      if authorization
-           authorization
-      else
-        self.create_from_omniauth(auth)
-      end
+    if auth_user = self.find_by_steam_id(auth["uid"])
+    ## create player in db unless they exist already
+      return auth_user
+    else 
+      self.create_from_omniauth(auth)
+    end
   end
 
   def self.create_from_omniauth(auth)
