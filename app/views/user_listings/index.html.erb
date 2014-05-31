@@ -2,10 +2,15 @@
   <div class="col-xs-3">
       <% if signed_in? %>
         <%= render "layouts/sidebar" %>
-      <% end %>
+      <% end %> 
   </div>
 
+  <% if @listings.empty? %>
+    This space is empty because you have not created any listings yet!
+    Try creating your first listing!
+  <% else %>
   <div class="col-xs-9">
       <%= render "layouts/listing" %>
   </div>
+  <% end %>
 </div>
