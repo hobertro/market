@@ -6,8 +6,8 @@
   </div>
 
   <% if @listings.empty? %>
-    This space is empty because you have not created any listings yet!
-    Try creating your first listing!
+    <p>This space is empty because you have not created any listings yet!
+        Try creating your first listing!</p>
   <% else %>
   <div class="col-xs-9">
       <%= render "layouts/listing" %>
