@@ -380,6 +380,8 @@
             this.trigger("removeView:click");
         },
         reloadItems: function(){
+            $("#reload").prop("disabled", true);
+            $("#reload").html("Button disabled while reloading...");
             console.log("In reload item");
             var request = $.ajax({
             type: "POST",
@@ -391,6 +393,8 @@
                 backpackView.remove();
                 backpack.reset(response) ;
                 backpackView = new Market.Views.ItemCollection({collection: backpack});
+                $("#reload").prop("disabled", false);
+                $("#reload").html("Reload backpack");
             });
             request.fail(function(){
             console.log("Fail");
