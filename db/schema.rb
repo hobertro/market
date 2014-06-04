@@ -47,17 +47,17 @@ ActiveRecord::Schema.define(:version => 20140419191151) do
     t.string   "defindex"
     t.string   "item_class"
     t.string   "item_type_name"
-    t.text     "item_description",        :limit => 255
+    t.text     "item_description"
     t.integer  "item_quality"
-    t.text     "image_inventory",         :limit => 255
+    t.text     "image_inventory"
     t.string   "min_ilevel"
     t.string   "max_ilevel"
-    t.text     "image_url",               :limit => 255
-    t.text     "image_url_large",         :limit => 255
-    t.text     "capabilities",            :limit => 255
+    t.text     "image_url"
+    t.text     "image_url_large"
+    t.text     "capabilities"
     t.string   "tools"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "item_name"
     t.string   "proper_name"
     t.string   "item_slot"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20140419191151) do
     t.string   "craft_class"
     t.string   "craft_material_type"
     t.string   "attributes"
-    t.text     "tool",                    :limit => 255
+    t.text     "tool"
     t.string   "used_by_classes"
     t.string   "per_class_loadout_slots"
     t.string   "styles"

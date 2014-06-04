@@ -8,9 +8,6 @@ class StaticPagesController < ApplicationController
   end
 
   def faq
-    # @user = User.find(params[:user_id])
-    @user = User.find(13)
-    @listings = @user.user_listings
   end
 
   def contact
