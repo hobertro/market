@@ -1,12 +1,16 @@
+@import "import";
+
 .sidebar {
    background-color: #34495E;
-   border-radius: 8px;
    height: 200%;
+   @include borderRadius(8px);
 }
 
+/*
 .sidebar-avatar {
    background-color: #34495E;
 }
+*/
 
 .sidebar-avatar img {
     margin: 20px 0;
@@ -15,11 +19,13 @@
 .sidebar-menu {
     padding: 10px 0;
     background-color: #BDC3C7;
+    @include borderBottom(8px);
+
 }
 
 .sidebar-menu ul {
     margin-top: 1px;
-    margin-right: 50px;
+    margin-right: 42px;
     padding-left: 0;
     margin-bottom: 0;
 }

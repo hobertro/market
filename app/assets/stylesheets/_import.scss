@@ -1,0 +1,48 @@
+$gray: #999;
+$uncommon: #5e98d9;
+$rare: #4b69ff;
+$immortal: orange;
+$mythical: #8847ff;
+
+@mixin transition($val){
+    -webkit-transition: $val;
+    -moz-transition: $val;
+    -o-transition: $val;
+    transition: $val;
+}
+
+@mixin boxShadow($val){
+    -webkit-box-shadow: $val;
+    -moz-box-shadow: $val;
+    box-shadow: $val;
+}
+
+@mixin borderRadius($val){
+    -webkit-border-radius: $val;
+    -moz-border-radius: $val;
+    border-radius: $val;
+}
+
+@mixin borderTop($val){
+    -webkit-border-top-left-radius: $val;
+    -moz-border-top-left-radius: $val;
+    -webkit-border-top-right-radius: $val;
+    -moz-border-top-right-radius: $val;
+    border-top-left-radius: $val;
+    border-top-right-radius: $val;
+}
+
+@mixin borderBottom($val){
+    -webkit-border-bottom-left-radius: $val;
+    -moz-border-bottom-left-radius: $val;
+    -webkit-border-bottom-right-radius: $val;
+    -moz-border-bottom-right-radius: $val;
+    border-bottom-left-radius: $val;
+    border-bottom-right-radius: $val;
+}
+
+@mixin boxSizing {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

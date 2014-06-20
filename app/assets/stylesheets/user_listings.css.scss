@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "import";
+
 /*** MAIN VIEW ***/
 
 .main-div {
@@ -14,6 +16,7 @@
 .selection-menu {
     padding-bottom: 30px;
     min-width: 952px;
+    @include borderRadius(8px);
     h5 {
         color: white;
         margin-left: 43px;
@@ -32,8 +35,10 @@
 /*** LISTINGS ****/
 
 .title {
+
     background-color: #34495E; 
     padding: 10px 20px;
+    @include borderTop(8px);
     span {
         color: white;
     }
@@ -41,7 +46,8 @@
 
 .menu {
     background-color: #BDC3C7;
-}
+    @include borderBottom(8px);
+}   
 
 .items-wanted {
     background-color: none;
@@ -50,6 +56,8 @@
 .items-offered {
     background-color: none;
 }
+
+/*
 
 .top-corners {
     -moz-border-radius: 5px 5px 0 0 ;
@@ -80,6 +88,7 @@
     -webkit-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px; 
 }
+*/
 
 /*** NOTE SECTION ***/
 
@@ -140,6 +149,8 @@
 
 .backpack-section {
     margin-top: 30px;
+    @include borderRadius(8px);
+    @include borderBottom(8px);
     span {
         display: inline-block;
         margin-top: 5px;
