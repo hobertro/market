@@ -48,21 +48,24 @@ class User < ActiveRecord::Base
 
   def create_player_items(steam_id)
     # get player items
-    player_item_hash = User.get_user_items(steam_id)["result"]["items"]
-    # create an array of the items based on defindex numbers
-    defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
-    # find and create an array based on the defindexs in the Items table defindex 
-    items = Item.where(:defindex => defindex_ids).to_a
-    items.each do |item|
-      player_item_hash.each do |hash_item|
-        if hash_item["defindex"].to_s == item.defindex
-        self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
-          quality: hash_item["quality"], rarity: item.rarity)
+    begin 
+      rescue #rescues Internal error if player does not have any items
+        player_item_hash = User.get_user_items(steam_id)["result"]["items"]
+        # create an array of the items based on defindex numbers
+        defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
+        # find and create an array based on the defindexs in the Items table defindex 
+        items = Item.where(:defindex => defindex_ids).to_a
+        items.each do |item|
+          player_item_hash.each do |hash_item|
+            if hash_item["defindex"].to_s == item.defindex
+              self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
+              quality: hash_item["quality"], rarity: item.rarity)
+            end
+          end
         end
+        add_attr_to_items
+        self.user_items
       end
-    end
-    add_attr_to_items
-    self.user_items
   end
 
   def add_attr_to_items
