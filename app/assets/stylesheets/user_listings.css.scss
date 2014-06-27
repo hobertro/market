@@ -42,8 +42,9 @@
 /*** LISTINGS ****/
 
 .title {
-
-    background-color: #34495E; 
+    background-color: #34495E;
+    min-width: 952px;
+    max-width: 1000px;
     padding: 10px 20px;
     @include borderTop(8px);
     span {
