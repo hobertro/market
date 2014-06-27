@@ -35,12 +35,6 @@
                 <%= f.submit "Add Comment", class: "btn btn-primary" %>
         <% end %>
     <% end %>
-      <% if flash.notice %>
-        <div class="alert alert-danger alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong>Sorry! Messages can't be blank.</strong>
-        </div>
-      <% end %>
       <%= render "layouts/comment" %>
    </div>
  </div>

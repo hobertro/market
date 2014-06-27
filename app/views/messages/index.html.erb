@@ -35,11 +35,13 @@
                             <% end %>
                 
                             <div class="btn-group pull-right">
-                            
-                              <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
-                                    <i class="pull-right icon fa fa-reply"></i>
-                                <% end %>
-                              </button>
+                              
+                              <% unless current_user == message.messenger %>
+                                <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
+                                      <i class="pull-right icon fa fa-reply"></i>
+                                  <% end %>
+                                </button>
+                              <% end %>
                               
                               <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
                                 <i class="pull-right icon fa fa-comments"></i>

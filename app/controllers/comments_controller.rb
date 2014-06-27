@@ -7,10 +7,10 @@ class CommentsController < ApplicationController
         @listings = UserListing.find(params[:listing_id])
         @comment = @listings.comments.build({description: params[:comment][:description], user_id: @user.id, user_listing_id: @listings.id})
         if @comment.save
-          flash[:success] = "Comment created!"
+          flash[:success] = "Congratulations! Your comment was created!"
           redirect_to([@user, @listings])
         else
-          flash[:notice] = "Hello moto!"
+          flash[:notice] = "Sorry, something went wrong!"
           redirect_to([@user, @listings])
         end
     end
@@ -19,7 +19,11 @@ class CommentsController < ApplicationController
         @comment = Comment.find(params[:id])
         @user_listing = @comment.user_listing
         @user = @comment.user
-        @comment.destroy
+        if @comment.destroy
+            flash[:success] = "Your comment has been deleted"
+        else 
+            flash[:danger] = "Something went wrong!"
+        end
         redirect_to user_user_listing_path(@user, @user_listing)
     end
 end

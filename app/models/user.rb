@@ -32,7 +32,10 @@ class User < ActiveRecord::Base
            class_name: "Message",
            foreign_key: "recipient_id"
 
-  def reload_player_items    
+  def reload_player_items
+  puts "hihi"
+  puts "hihi"    
+  puts "hihi"
     self.user_items.delete_all
     create_player_items(self.steam_id)
   end
@@ -48,9 +51,11 @@ class User < ActiveRecord::Base
 
   def create_player_items(steam_id)
     # get player items
-    begin 
-      rescue #rescues Internal error if player does not have any items
+    begin
         player_item_hash = User.get_user_items(steam_id)["result"]["items"]
+    rescue
+      exit
+    end
         # create an array of the items based on defindex numbers
         defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
         # find and create an array based on the defindexs in the Items table defindex 
@@ -65,7 +70,6 @@ class User < ActiveRecord::Base
         end
         add_attr_to_items
         self.user_items
-      end
   end
 
   def add_attr_to_items

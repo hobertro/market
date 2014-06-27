@@ -11,11 +11,18 @@
     margin-left: 25px;
 }
 
+.submit-button {
+    width: 100%;
+    display: block;
+    min-width: 952px;
+    max-width: 1000px;
+}
+
+
 /*** SELECTION MENU ***/
 
 .selection-menu {
     padding-bottom: 30px;
-    min-width: 952px;
     @include borderRadius(8px);
     h5 {
         color: white;
@@ -27,7 +34,7 @@
         left: 455px;
         font-size: 50px;
     }
-    > .row {
+     .row {
         margin: auto;
     }
 }
@@ -47,6 +54,8 @@
 .menu {
     background-color: #BDC3C7;
     @include borderBottom(8px);
+    min-width: 952px;
+    max-width: 1000px;
 }   
 
 .items-wanted {
@@ -56,39 +65,6 @@
 .items-offered {
     background-color: none;
 }
-
-/*
-
-.top-corners {
-    -moz-border-radius: 5px 5px 0 0 ;
-    -webkit-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-}
-
-.bottom-corners {
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px; 
-}
-
-.title,
-.selection-menu,
-.backpack-menu,
-.sidebar {
-    -moz-border-radius: 5px 5px 0 0 ;
-    -webkit-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-}
-
-.selection-menu,
-.backpack, 
-.search-menu,
-.menu {
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px; 
-}
-*/
 
 /*** NOTE SECTION ***/
 
@@ -230,7 +206,7 @@
 .goodbye {
     position: fixed;
     margin-left: 460px;
-    top: 50;
-    right: 50;
+    top: 150px;
+    right: 350px;
     z-index: 100;
 }

@@ -1,5 +1,5 @@
-<div class="sidebar center">
-    <div class="sidebar-avatar">
+<div class="sidebar">
+    <div class="sidebar-avatar center">
             <img class="img-thumbnail" src="<%= current_user.avatar_medium %>">
             <p class="user-name"><%= current_user.steam_name %></p>
     </div>
@@ -7,7 +7,7 @@
     <div class="sidebar-menu clearfix">
         <ul>
             <li><span><i class="fa fa-search"></i></i></span><%= link_to "Search" , search_new_path %></li>
-            <li><%= link_to "New Listing", new_user_user_listing_path(current_user) %><span><i class="fa fa-pencil-square-o"></i></span></li>
+            <li><span><i class="fa fa-pencil-square-o"></i></span><%= link_to "New Listing", new_user_user_listing_path(current_user) %></li>
             <li><span><i class="fa fa-th-list"></i></span><%= link_to "Listings", user_user_listings_path(current_user) %></li>
             <li><span><i class="fa fa-briefcase"></i></span><%= link_to "Backpack", user_path(current_user) %></li>
             <li><span><i class="fa fa-envelope"></i></span><%= link_to "Messages", user_messages_path(current_user) %></li>

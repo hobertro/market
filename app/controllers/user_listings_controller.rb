@@ -17,7 +17,11 @@ class UserListingsController < ApplicationController
     def destroy
         @user = User.find(params[:user_id])
         @user_listing = UserListing.find(params[:id])
-        @user_listing.destroy
+        if @user_listing.destroy
+            flash[:success] = "Your listing has been successfully deleted"
+        else
+            flash[:alert] = "Something went wrong!"
+        end
         redirect_to url_for([@user, @user_listing])
     end
 
@@ -45,11 +49,10 @@ class UserListingsController < ApplicationController
         end
         comment = @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
         if @user_listings.save
-          flash[:success] = "Comment created!"
-          puts @user_listings
+          flash[:success] = "Your listing has been successfully created!!"
           redirect_to([@user, @user_listings])
         else
-          flash[:notice] = "Hello moto!"
+          flash[:notice] = "Oh no! Something went wrong, try again!"
           redirect_to user_user_listings_path(@user)
         end
     end

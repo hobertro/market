@@ -2,15 +2,14 @@
 
 .sidebar {
    background-color: #34495E;
-   height: 200%;
+   text-align: center;
    @include borderRadius(8px);
 }
 
-/*
 .sidebar-avatar {
    background-color: #34495E;
 }
-*/
+
 
 .sidebar-avatar img {
     margin: 20px 0;
@@ -20,48 +19,43 @@
     padding: 10px 0;
     background-color: #BDC3C7;
     @include borderBottom(8px);
-
-}
-
-.sidebar-menu ul {
-    margin-top: 1px;
-    margin-right: 42px;
-    padding-left: 0;
-    margin-bottom: 0;
-}
-
-.sidebar-menu li {
-    list-style: none;
-}
-
-.sidebar-menu span {
-    float: left;
-    position: relative;
-    left: 200px;
-    display: block;
-}
-
-.sidebar-menu a {
-    color: #FFF;
-}
-
-.sidebar-menu a:hover {
-    color: #1ABC9C;
-}
-.sidebar-bar li {
-  margin-left: 20px;
+      ul {
+        margin-right: 10px;
+        display: inline-block;
+      }
+      li {
+        list-style: none;
+        &:nth-child(1){
+          margin-right: 40px;
+        }
+        &:nth-child(3){
+          margin-right: 33px;
+        }
+        &:nth-child(4){
+          margin-right: 20px;
+        }
+        &:nth-child(5){
+          margin-right: 15px;
+        }
+      }
+      a {
+        color: #FFF;
+        display: inline-block;
+        margin-left: 10px;
+      }
+      a:hover {
+        color: #1ABC9C;
+      }
 }
 
 .messages-sidebar {
   margin-top: 20px;
-}
-
-.messages-sidebar i {
-  padding-left: 5px;
-}
-
-.messages-sidebar a {
-  padding-left: 45px;
+  i {
+    padding-left: 5px;
+  }
+  a {
+    padding-left: 45px;
+  }
 }
 
 .user-name {
