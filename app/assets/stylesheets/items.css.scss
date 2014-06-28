@@ -10,13 +10,13 @@
     display: inline-block;
     width: 125px;
     height: 95px;
-    background-color: #2A2A2A;
+    background-color: $itemslot;
     list-style-type: none;
     border-radius: 12px;
     margin: 1px;
     float: left;
     &:hover {
-        background-color: #34495E;
+        background-color: $color1;
     }
 }
 

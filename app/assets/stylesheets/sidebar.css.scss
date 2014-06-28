@@ -1,13 +1,13 @@
 @import "import";
 
 .sidebar {
-   background-color: #34495E;
+   background-color: $color1;
    text-align: center;
-   @include borderRadius(8px);
+   @include borderRadius(3px);
 }
 
 .sidebar-avatar {
-   background-color: #34495E;
+   background-color: $color1;;
 }
 
 
@@ -17,8 +17,8 @@
 
 .sidebar-menu {
     padding: 10px 0;
-    background-color: #BDC3C7;
-    @include borderBottom(8px);
+    background-color: $color3;
+    @include borderBottom(3px);
       ul {
         margin-right: 10px;
         display: inline-block;
@@ -44,7 +44,7 @@
         margin-left: 10px;
       }
       a:hover {
-        color: #1ABC9C;
+        color: $color2;
       }
 }
 
@@ -59,6 +59,6 @@
 }
 
 .user-name {
-    color: #BDC3C7;
+    color: $color3;
 }
 

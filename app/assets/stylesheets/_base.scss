@@ -7,9 +7,10 @@ html {
 }
 
 body {
+    color: $color7;
     padding-top: 60px;
     min-width: 1400px;
-    background-color: #ECF0F1;
+    background-color: $background;
 }
 
 /*
@@ -62,28 +63,30 @@ p {
     line-height: 1.7em;
 }
 
+a:hover,
+i:hover {
+    color: white;
+}
+
 footer {
     margin-top: 45px;
     padding-top: 5px;
     border-top: 1px solid #eaeaea;
     color: $gray;
+    a {
+        color: #555;
+    }
+    small {
+        float: left; 
+    }
+    ul {
+        float: right;
+        list-style: none; 
+    }
+    ul li {
+        float: left;
+        margin-left: 10px; 
+    }
 }
 
-footer a {
-    color: #555;
-}
-
-footer small {
-    float: left;
-}
-
-footer ul {
-    float: right;
-    list-style: none;
-}
-
-footer ul li {
-    float: left;
-    margin-left: 10px;
-}
-
+/* links */

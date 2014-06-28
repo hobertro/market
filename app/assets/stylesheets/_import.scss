@@ -1,8 +1,37 @@
+/* main */
+
+$background: #ECF0F1;
+$mainGlyph: #2C3E50;
+
+
+/* main colors */
+
+$color1: #222222; /* former color: #34495E */
+$color2: #1ABC9C;
+$color3: #BDC3C7;
+$color4: #2C3E50;
+$color5: #34495E;
+$color6: #ffffff;
+$color7: black;
+
+/* main backpack */
+
+$backpack: #2c3e50;
+
+/* items */
+
+$itemslot: #2A2A2A;
+
+/* DOTA2 Item borders */
+
 $gray: #999;
 $uncommon: #5e98d9;
 $rare: #4b69ff;
 $immortal: orange;
 $mythical: #8847ff;
+
+
+
 
 @mixin transition($val){
     -webkit-transition: $val;

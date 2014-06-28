@@ -1,6 +1,25 @@
+@import "import";
+
 /***** MODULES *****/ 
 
 /***** NAVBAR *****/
+
+.navbar {
+    background-color: $color1;
+}
+
+.navbar-inverse {
+    background-color: $color1;
+    li:hover {
+      color: white;
+      background-color: $color2;
+      -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+      transition: border .25s linear, color .25s linear, background-color .25s linear;
+      a:hover {
+        color: white;
+      }
+    }
+}
 
 .navbar-header {
     margin-left: 44px;
@@ -13,3 +32,31 @@
 }
 
 /***** BUTTONS *****/
+
+.btn-inverse {
+    color: $color1;
+    background-color: $color1;
+}
+
+.btn-inverse:hover,
+.btn-inverse:focus,
+.btn-inverse:active,
+.btn-inverse.active,
+.open .dropdown-toggle.btn-inverse {
+  color: $color2;
+  background-color: $color2;
+  border-color: $color2;
+  i:hover {
+    color: white;
+  }
+}
+
+/***** DROPDOWN MENU ******/
+#fat-menu {
+  .dropdown-menu {
+    background-color: $color1;
+    .divider {
+      background-color: white;
+    }
+  }
+}

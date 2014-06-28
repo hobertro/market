@@ -23,7 +23,7 @@
 
 .selection-menu {
     padding-bottom: 30px;
-    @include borderRadius(8px);
+    @include borderRadius(3px);
     h5 {
         color: white;
         margin-left: 43px;
@@ -42,19 +42,19 @@
 /*** LISTINGS ****/
 
 .title {
-    background-color: #34495E;
+    background-color: $color1;
     min-width: 952px;
     max-width: 1000px;
     padding: 10px 20px;
-    @include borderTop(8px);
+    @include borderTop(3px);
     span {
         color: white;
     }
 }
 
 .menu {
-    background-color: #BDC3C7;
-    @include borderBottom(8px);
+    background-color: $color3;
+    @include borderBottom(3px);
     min-width: 952px;
     max-width: 1000px;
 }   
@@ -126,8 +126,8 @@
 
 .backpack-section {
     margin-top: 30px;
-    @include borderRadius(8px);
-    @include borderBottom(8px);
+    @include borderRadius(3px);
+    @include borderBottom(3px);
     span {
         display: inline-block;
         margin-top: 5px;
@@ -162,7 +162,7 @@
         color: white;
         margin: 0 8px;
         &:hover {
-            color: #1ABC9C;
+            color: $color2;
             transition: 0.25s;
         }
     }
@@ -192,7 +192,7 @@
 }
 
 .avatar img {
-    border: 5px solid #34495E;
+    border: 5px solid $color1;
     border-radius: 5px;
     margin: 0 -8px;
 }
