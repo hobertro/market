@@ -1,15 +1,17 @@
 <div class="main-div">
     <div class="row">
     <% if signed_in? %>
+    <!--
         <div class="col-xs-3">
             <%= render 'layouts/sidebar' %>
         </div>
-        <div class="col-xs-8">
+    -->
+        <div class="col-xs-12">
             <%= render 'layouts/users_show' %>
         </div>
     
     <% else %>
-         <div class="container">
+         <div class="col-xs-12">
             <%= render 'layouts/users_show' %>
          </div>
      <% end %>
