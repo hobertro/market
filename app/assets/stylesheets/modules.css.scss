@@ -33,6 +33,10 @@
 
 /***** BUTTONS *****/
 
+.btn {
+  @include borderRadius(0); /* over writing bootstrap style */
+}
+
 .btn-inverse {
     color: $color1;
     background-color: $color1;

@@ -51,11 +51,19 @@ class User < ActiveRecord::Base
 
   def create_player_items(steam_id)
     # get player items
+    puts "hello"
     begin
+        puts "moto"
         player_item_hash = User.get_user_items(steam_id)["result"]["items"]
+        puts "before player item hash"
+        puts "jannet"
+        puts player_item_hash
     rescue
+      puts "HOLA"
+      puts "in rescue"
       exit
     end
+      puts "outside of rescue"
         # create an array of the items based on defindex numbers
         defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
         # find and create an array based on the defindexs in the Items table defindex 
