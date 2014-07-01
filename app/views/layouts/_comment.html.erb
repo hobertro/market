@@ -11,13 +11,15 @@
           <% end %>
         </div>
       <% end %> 
+
       <div class="comment-header group col-xs-11">
-        <div class="title">
+        <div class="title clearfix">
             <span><%= comment.user.steam_name%> Posted <%= time_ago_in_words(comment.created_at) %> ago</span>
             <% if current_user == comment.user || @listings.user %>
-              <%= link_to url_for([@user, comment]), {:method => :delete} do %>
-                <i class="pull-right icon glyphicon glyphicon-trash"></i>
+              <button type="button" class="btn btn-inverse pull-right"><%= link_to url_for([@user, comment]), {:method => :delete} do %>
+                  <i class="pull-right icon glyphicon glyphicon-trash"></i>
               <% end %>
+              </button>
             <% end %>
         </div>
         <div class="menu comment-description">

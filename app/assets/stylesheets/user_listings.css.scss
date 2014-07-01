@@ -14,8 +14,6 @@
 .submit-button {
     width: 100%;
     display: block;
-    min-width: 952px;
-    max-width: 1000px;
 }
 
 
@@ -41,22 +39,39 @@
 
 /*** LISTINGS ****/
 
+
+
+.submit-button,
+.title,
+.menu {
+    background-color: $color3;
+    min-width: 552px;
+    max-width: 950px;
+}
+
 .title {
-    background-color: $color1;
-    min-width: 952px;
-    max-width: 1000px;
+    border-bottom: 3px solid white;
     padding: 10px 20px;
+    font-weight: bold;
     @include borderTop(3px);
-    span {
-        color: white;
+    .messenger-name {
+        color: $color1;
+        &:hover {
+            color: white;
+            @include transition(.7s);
+        }
+    }
+    .btn {
+        background-color: inherit;
+    }
+    .btn:hover {
+        background-color: $color7;
     }
 }
 
 .menu {
-    background-color: $color3;
+    padding: 21px 12px 21px 12px;
     @include borderBottom(3px);
-    min-width: 952px;
-    max-width: 1000px;
 }   
 
 .items-wanted {
@@ -73,6 +88,15 @@
     margin: 20px 0;
     display: none;
 }
+
+.add-note {
+    margin: 20px 0;
+    .title {
+        margin-bottom: 15px;
+    }
+}
+
+
 
 .notes textarea {
     -webkit-box-sizing: border-box;
@@ -95,6 +119,8 @@
 }
 
 .response {
+    margin-top: 25px;
+    margin-left: 8px;
     height: 300px;
     overflow: auto;
 }
@@ -137,10 +163,17 @@
 .backpack {
     height: 300px;
     overflow: auto;
+    margin-top: 25px;
 }
 
 #reload {
-    display: inline;
+    display: inline-block;
+    margin-bottom: 10px;
+    background-color: $color7;
+    &:hover {
+        background-color: $color2;
+    }
+
 }
 
 /*** LISTINGS INDEX SECTION ***/

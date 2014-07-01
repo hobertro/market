@@ -1,8 +1,6 @@
 <div class="row menu">
   <div class="title">
-      <%= link_to url_for(@listings.user) do %>
         <span><%= @listings.user.steam_name %> at <%= time_ago_in_words(@listings.created_at) %> ago wanted to trade ...</span>
-      <% end %>
   </div>
 
   <div class="col-xs-6 items-offered">
