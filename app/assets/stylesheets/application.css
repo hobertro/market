@@ -14,3 +14,7 @@
  *= require font-awesome.min
  *= require_tree .
  */
+
+ * {
+    box-sizing: border-box;
+ }

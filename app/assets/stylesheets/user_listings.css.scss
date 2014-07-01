@@ -20,6 +20,7 @@
 /*** SELECTION MENU ***/
 
 .selection-menu {
+    margin: 0; /* overwriting bootstrap styles */
     padding-bottom: 30px;
     @include borderRadius(3px);
     h5 {
@@ -29,7 +30,7 @@
     .offer-icon {
         position: absolute;
         top: 175px;
-        left: 455px;
+        left: 505px;
         font-size: 50px;
     }
      .row {
@@ -39,14 +40,14 @@
 
 /*** LISTINGS ****/
 
-
-
 .submit-button,
 .title,
 .menu {
     background-color: $color3;
-    min-width: 552px;
+    min-width: 1000px;
+    /*
     max-width: 950px;
+    */
 }
 
 .title {
@@ -208,7 +209,8 @@
 
 .individual-comment,
 .commenting-area {
-    margin: 20px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .new_comment {

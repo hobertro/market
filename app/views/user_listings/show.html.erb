@@ -1,16 +1,16 @@
 <div class="main-div">
     <div class="row">
+      <div class="col-xs-12">
         <% if signed_in? %>
+        <!--
         <div class="col-xs-3"> 
           <%= render "layouts/sidebar" %>
         </div>
-        <div class="col-xs-8">
+        -->
           <%= render "layouts/user_listings" %>
-        </div>
         <% else %>
-        <div class="container">
           <%= render "layouts/user_listings" %>
-        </div>
         <% end %>
+        </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="row menu">
+<div class="menu row">
   <div class="title">
         <span><%= @listings.user.steam_name %> at <%= time_ago_in_words(@listings.created_at) %> ago wanted to trade ...</span>
   </div>
@@ -22,7 +22,7 @@
 </div>
     
     <% if signed_in? %>
-      <div class="commenting-area">
+      <div class="commenting-area row">
         <div class="title">
                     <span>New Comment</span>
         </div>
