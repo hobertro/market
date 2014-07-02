@@ -1,11 +1,13 @@
 <div class="main-div">
     <div class="row">
+        <!--
         <div class="col-xs-3">
             <%= render 'layouts/sidebar' %>
             <%= render 'layouts/messages_side_bar' %>
         </div>
-
-        <div class="col-xs-8">
+        -->
+        <div class="col-xs-12">
+        <%= render 'layouts/messages_side_bar' %>
         <% @user.messages.each do |message| %>
             <div class="message-section row clearfix">
                 <%= link_to url_for(message.recipient) do %>

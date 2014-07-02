@@ -5,21 +5,84 @@
 
 @import "import";
 
+/**** Home Page ****/
+
 .home-listing {
-    margin: 20px;
+    margin: 20px 0;
 }
 
 .pagination {
     margin-left: 350px;
 }
 
-.main-glyph {
-    font-size: 3em;
-    display: block;
-    text-align: center;
-    color: $mainGlyph;
+/*** Section One ***/
+
+.section-one {
+    height: 450px;
+    min-width: 900px;
+    background-color: $color1;
+    background-image: url(main-bg.jpg);
+    background-size: cover;
+    .main-welcome {
+        font-size: 105px;
+        font-weight: 300;
+        color: white;
+    }
+    .steam-btn {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 12px 30px;
+        padding-bottom: 10px;
+        border: 2px solid white;
+        height: 60px;
+        width: 350px;
+        color: white;
+        &:hover {
+            color: $steam;
+            border-color: $steam;
+        }
+        .fa-steam {
+            font-size: 40px;
+            float: left;
+            margin-bottom: 2px;
+        }
+    }
 }
+
+/*** inline border ***/
+
+.inline-border {
+    margin: 0 auto;
+    font-size: 30px;
+    margin: 20px 0 15px 0;
+    font-weight: 200;
+    &:before, &:after {
+        content: "";
+        display: block;
+        width: 35%;
+        height: 1px;
+        background: #ccc;
+        position: absolute;
+        top: 50%;
+        left: 0;
+    }
+    &:after {
+        right: 0;
+        left: auto;
+    }
+}
+
+/*** Secondary Section ***/
 
 .secondary-section {
     margin-top: 50px;
+    h2 {
+        font-weight: 300;
+    }
+    .main-glyph {
+        font-size: 3em;
+        display: block;
+        text-align: center;
+        color: $color7;
+    }
 }

@@ -46,7 +46,7 @@
     background-color: $color3;
     min-width: 1000px;
     /*
-    max-width: 950px;
+    max-width: 930px;
     */
 }
 
@@ -71,7 +71,6 @@
 }
 
 .menu {
-    padding: 21px 12px 21px 12px;
     @include borderBottom(3px);
 }   
 
@@ -92,9 +91,6 @@
 
 .add-note {
     margin: 20px 0;
-    .title {
-        margin-bottom: 15px;
-    }
 }
 
 
@@ -169,7 +165,7 @@
 
 #reload {
     display: inline-block;
-    margin-bottom: 10px;
+    margin: 10px 0;
     background-color: $color7;
     &:hover {
         background-color: $color2;
@@ -183,7 +179,6 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-right: 50px;
     &:nth-child(n+2) {
         margin: 20px 0;
     }
@@ -202,6 +197,9 @@
     }
     .title {
         padding: 0;
+    }
+    .menu {
+        padding: 21px 12px 21px 12px;;
     }
 }
 

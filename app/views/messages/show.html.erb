@@ -1,15 +1,16 @@
 <!-- Conversation Section -->
 <div class="main-div">
     <div class="row">
+        <!--
         <div class="col-xs-3">
             <% if signed_in? %>
                 <%= render 'layouts/sidebar' %>
                 <%= render 'layouts/messages_side_bar' %>
             <% end %>
         </div>
-
-        <div class="col-xs-8">
-
+        -->
+        <div class="col-xs-12">
+        <%= render 'layouts/messages_side_bar' %>
         <% @conversation.each do |message| %>
             <% if message.messenger == current_user %>
             <div class="message-section row clearfix">

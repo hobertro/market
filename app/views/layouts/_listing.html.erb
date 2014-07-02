@@ -15,7 +15,7 @@
         <button type="button" class="btn btn-inverse note-btn">
                 <i class="pull-right icon fa fa-pencil"></i>
         </button>
-        
+
         <% unless current_user == listing.user %>
           <button type="button" class="btn btn-inverse">
             <%= link_to new_user_message_path(current_user,  {recipient: listing.user}) do %>
