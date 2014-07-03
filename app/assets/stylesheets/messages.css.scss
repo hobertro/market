@@ -10,11 +10,14 @@
     margin-top: 10px;
 }
 
-.message-section:nth-child(n+2) {
+.message-section {
+    &:nth-child(n+2) {
     margin-top: 20px;
+}
 }
 
 .comment-header {
+    min-width: 650px;
     span {
         display: inline-block;
         margin-top: 6px;
@@ -34,6 +37,9 @@
             width: 0;
             -webkit-transform: rotate(360deg);
         }
+    }
+    .menu {
+        padding: 6px 12px;
     }
     .icon {
         font-size: 25px;
@@ -57,10 +63,6 @@
     .btn {
         margin: 20px 0;
     }
-}
-
-.message-section .title {
-    padding: 0;
 }
 
 .messenger-name {

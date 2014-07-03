@@ -1,5 +1,5 @@
-<div class="main-div">
-    <div class="row">
+
+<div class="row">
       <% if flash[:success] %>
       <div class="alert alert-success alert-dismissable goodbye">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -14,61 +14,62 @@
             <%= render 'layouts/messages_side_bar' %>
         </div>
       -->
-        <div class="col-xs-12">
-          
-          
-            <%= render 'layouts/messages_side_bar' %>
+          <h1>Messages</h1>
 
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="messages">Messages</a></li>
+            <li><%= link_to "Sent Messages", sent_messages_user_messages_path %></li>
+          </ul>
+              <!--
+              <%= render 'layouts/messages_side_bar' %>
+              -->
+          <% if @user.received_messages.blank? %>
+             <div class="">
+                 <span>You don't have any messages yet. Message someone! :D</span>
+             </div>
+          <% else %>
+              <% @user.received_messages.each do |message| %>
+                  <div class="message-section row ">
+                      <%= link_to url_for(message.messenger) do %>
+                        <div class="avatar col-xs-1">
+                            <span class=>
+                                <img src="<%= message.messenger.avatar_medium %>">
+                            </span>
+                        </div>
+                      <% end %>
 
-        <% if @user.received_messages.blank? %>
-           <div class="">
-               <span>You don't have any messages yet. Message someone! :D</span>
-           </div>
-        <% else %>
-            <% @user.received_messages.each do |message| %>
-                <div class="message-section row clearfix">
-                    <%= link_to url_for(message.messenger) do %>
-                    <div class="avatar col-xs-1">
-                        <span class=>
-                            <img src="<%= message.messenger.avatar_medium %>">
-                        </span>
-                    </div>
-                    <% end %>
-
-                    <div class="comment-header group col-xs-11">
-                        <div class="title clearfix">
-                            
-                            <%= link_to url_for(message.messenger) do %>
-                            <span class="messenger-name"><%= message.messenger.steam_name %> posted <%= time_ago_in_words(message.created_at) %> ago...</span>
-                            <% end %>
-                
-                            <div class="btn-group pull-right">
-                              
-                              <% unless current_user == message.messenger %>
-                                <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
-                                      <i class="pull-right icon fa fa-reply"></i>
-                                  <% end %>
-                                </button>
+                      <div class="comment-header group col-xs-8">
+                          <div class="title clearfix">
+                              <%= link_to url_for(message.messenger) do %>
+                              <span class="messenger-name"><%= message.messenger.steam_name %> posted <%= time_ago_in_words(message.created_at) %> ago...</span>
                               <% end %>
-                              
-                              <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
-                                <i class="pull-right icon fa fa-comments"></i>
-                              <% end %>
-                              </button>
-
-                               <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, message]), {:method => :delete} do %>
-                                    <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                  
+                              <div class="btn-group pull-right">
+                                <% unless current_user == message.messenger %>
+                                  <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
+                                        <i class="pull-right icon fa fa-reply"></i>
+                                    <% end %>
+                                  </button>
                                 <% end %>
-                               </button>
-                            </div>
-                        </div>
-                        <div class="menu comment-description">
-                            <%= message.content %>
-                        </div>
-                    </div>
-                 </div>
-            <% end %>
-        <% end %>
+                                
+                                <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
+                                  <i class="pull-right icon fa fa-comments"></i>
+                                <% end %>
+                                </button>
+
+                                 <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, message]), {:method => :delete} do %>
+                                      <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                                  <% end %>
+                                 </button>
+                              </div>
+                          </div>
+
+                          <div class="menu comment-description">
+                              <%= message.content %>
+                          </div>
+                      </div>
+                   </div>
+              <% end %>
+          <% end %>
         </div>
-    </div>
 </div>

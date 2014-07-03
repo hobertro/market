@@ -41,8 +41,6 @@ h6 {
 h1 {
     font-size: 3em;
     letter-spacing: -2px;
-    margin-bottom: 30px;
-    text-align: center;
 }
 
 h2 {
@@ -65,7 +63,7 @@ p {
 
 a:hover,
 i:hover {
-    color: white;
+    color: $color2;
 }
 
 footer {
@@ -75,6 +73,9 @@ footer {
     color: $gray;
     a {
         color: #555;
+        &:hover {
+            color: $color2;
+        }
     }
     small {
         float: left; 

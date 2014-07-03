@@ -9,7 +9,13 @@
 /***** NAVBAR *****/
 
 .navbar {
+    a {
+        font-weight: 100;
+    }
     background-color: $color1;
+    li a {
+      font-weight: 400;
+    }
 }
 
 .navbar-inverse {
@@ -69,3 +75,6 @@
     }
   }
 }
+
+/*** General Title / Menu Sections ***/
+
