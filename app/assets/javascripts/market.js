@@ -20,7 +20,6 @@
 
     /* Creating an listing function */
     $(".super-form").submit(function(e){
-        console.log("begin");
         var userID = $(".user-data").attr("data-user-id");
         var itemsOfferedArray = $('.items-offered .item-li');
         var itemsWantedArray = $('.items-wanted .search-item-li');
@@ -31,8 +30,6 @@
         itemsOfferedArray.each(function(x){
             // validation
             itemsOffered.push($(this).attr("id"));
-            console.log(itemsOfferedArray);
-            console.log("pushed from offered array");
         });
 
         itemsWantedArray.each(function(x){
@@ -47,21 +44,6 @@
         $("#offer").val(offer);
         $("#wanted").val(wanted);
         $("#listnote").val(notes);
-
-                /*
-        var request = $.ajax({
-            type: "POST",
-            url: "../user_listings",
-            data: {"offer": JSON.stringify(itemsOffered),
-                   "wanted": JSON.stringify(itemsWanted)}
-        });
-
-        request.done(function(response, textStatus, jqXHR){
-            console.log("It worked!");
-            $('.response').append(response);
-        });
-       e.preventDefault();
-       */
     });
 
     $(".item-slot").click(function(){
@@ -126,14 +108,11 @@
         });
 
         request.done(function(response, textStatus, jqXHR){
-            console.log("It worked!");
         });
        e.preventDefault();
     });
 
     $(".note-btn").click(function(e){
-        console.log("in note btn");
-        console.log($(this).parent().parent().parent());
         $(this).parent().parent().parent().find(".note-section").toggle();
         e.preventDefault();
     });
@@ -156,4 +135,20 @@
     });
 
     $(".goodbye").fadeOut(7500);
+
+    $(".user-listings-btn").click(function(){
+        console.log("user-listings-btn");
+        $(".user-backpack-items").fadeOut();
+        $(".user-backpack-listings").fadeIn();
+        $(".user-items-btn").removeClass("active");
+        $(".user-listings-btn").addClass("active");
+    });
+
+    $(".user-items-btn").click(function(){
+        console.log("user-items-btn");
+        $(".user-backpack-listings").fadeOut();
+        $(".user-backpack-items").fadeIn();
+        $(".user-listings-btn").removeClass("active");
+        $(".user-items-btn").addClass("active");
+    });
 })();

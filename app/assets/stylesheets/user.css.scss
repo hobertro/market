@@ -1,46 +1,44 @@
 @import "import";
 
 .user-stats {
-    height: 305px;
-    background-color: $color1;
+    height: 230px;
+    background-image: url("main-bg.jpg");
     color: #FFF;
+    .user-stats-sub {
+        margin-top: 19px;
+        margin-left: 30px;
+        i {
+            font-size: 40px;
+        }
+    }
+    .user-img {
+        margin: 20px 0 0 50px;
+
+    }
+    .steam-name {
+        font-size: 35px;
+        margin-left: 15px;
+    }
+    .user-stats-options {
+        div {
+            height: 100px;
+            width: 138px;
+            padding: 10px;
+            margin: 0 10px;
+            &:hover{
+                color: $color2;
+                @include transition(0.25s)
+            }
+        }
+        p {
+            font-size: 18px;
+            font-weight: 300;
+        }
+    }
 }
 
-.user-stats-main {
-    position: relative;
-    top: 40px;
-    left: 50px;
+.main-backpack-section {
+    > .title {
+        background-color: white;
+    }
 }
-
-.user-stats-main img {
-    border: 2px solid $color2;
-    width: 185px;
-    height: 185px;
-}
-
-.steam-name {
-    margin-top: -20px;
-    margin-bottom: 10px;
-}
-
-.item-count {
-    margin-top: 15px;
-}
-
-.user-stats-menu {
-    margin-top: 45px;
-}
-
-.user-stats-menu li {
-    list-style: none;
-    margin: 20px 0;
-    margin-left: 40px;
-}
-
-/*
-
-.container .backpack-section {
-    background-color: orange;
-}
-
-*/

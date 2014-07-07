@@ -1,29 +1,43 @@
-<div class="user-stats row clearfix">
-    <div class="center user-stats-main col-xs-6">
-        <div class="test-div">
-            <div class="steam-name"><%= @user.steam_name %></div>
-            <img class="img-circle" src="<%= @user.avatar_full %>">
-            <div class="item-count"><%= @user.items.count %> items</div>
+<div class="user-stats clearfix">
+    <div class="user-stats-outside">
+        <div class="user-stats-main">
+            <div class="user-img col-xs-2">
+                <!--<div class="steam-name"><%= @user.steam_name %></div>-->
+                <img class="img-circle" src="<%= @user.avatar_full %>">
+                <!--<div class="item-count"><%= @user.items.count %> items</div>-->
+            </div>
+    
+             <div class="user-stats-sub col-xs-6">
+                 <p class="steam-name"><%= @user.steam_name %></p>
+            
+                 <div class="row user-stats-options center">
+                     <div class="col-xs-3">
+                        <i class="fa fa-comment-o"></i>
+                        <p>Message User</p>
+                     </div>
+                     <div class="col-xs-3">
+                        <i class="fa fa-paper-plane-o"></i>
+                         <p>Trade Request</p>
+                     </div>
+                     <div class="col-xs-3">
+                       <i class="fa fa-times"></i>
+                        <p>Block User</p>
+                     </div>
+                 </div>
+            </div>
         </div>
-    </div>
-
-    <div class="user-stats-menu col-xs-4">
-        <ul>
-            <li><%= link_to "Send Trade Request(N/A yet!)" %></</li>
-            <% if signed_in? %>
-            <li><%= link_to "Message This User", new_user_message_path(current_user,  {recipient: @user.id}) %></li>
-            <% end %>
-            <li><%= link_to "User's Listings", user_user_listings_path(@user) %></li>
-            <li><%= link_to "Block User (N/A yet!)" %></li>
-        </ul>
     </div>
 </div>
 
-<div class="backpack-section menu main-back-section">
+<div class="backpack-section menu main-backpack-section">
     <div class="title">
-        <span>Backpack (<%= @user.items.count %>)</span>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="profile-links active user-items-btn"><a href="#">Backpack <span class="badge"><%= @user.items.count %></span></a></li>
+          <li class="profile-links user-listings-btn"><a href="#">User Listings <span class="badge"><%= @user.user_listings.count %></span></a></li>
+        </ul>
     </div>
-    <div class="user-backpack backpack">
+
+    <div class="user-backpack backpack user-backpack-items">
         <ul class="clearfix">
         <% @user.items.each do |item| %>
              <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
@@ -32,4 +46,62 @@
         <% end %>
         </ul>
     </div>
-</div>  
+
+    <div class="user-backpack backpack user-backpack-listings">
+        <% @user.user_listings.each do |listings| %>
+        <div class="single-listing">
+          <div class="title clearfix">
+            <%= link_to url_for([@user, listings]) do %>
+              <span class="messenger-name"><%= listings.user.steam_name %> at <%= time_ago_in_words(listings.created_at) %> ago wanted to trade ... </span>
+            <% end %>
+            <div class="btn-group pull-right">  
+
+            <button type="button" class="btn btn-inverse note-btn">
+                                      <i class="pull-right icon fa fa-comment-o"></i>
+                                  </button>
+            <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, listings]), {:method => :delete} do %>
+                  <i class="pull-right icon glyphicon glyphicon-trash"></i>
+              <% end %>
+            </button>
+          </div>
+        </div>
+          <div class="menu">
+            <div class="row clearfix">
+              <div class="list-items-offered col-xs-5">
+               <% listings.items_offered.each do |item| %>
+                  <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                  </li>
+               <% end %>
+              </div>
+
+                <span class="col-xs-1 offer-icon glyphicon glyphicon-transfer"></span> 
+
+                <div class="list-items-wanted col-xs-5">
+                 <% listings.items_wanted.each do |item| %>
+                    <li class="item-li thumbnail <%= item.rarity %>" data-toggle="tooltip" data-placement="bottom" title="<%= item.rarity.capitalize unless item.rarity.nil? %> <%= item.name %>" data-id="<%= item.id %>" data-name="<%= item.name %>" data-rarity="<%= item.rarity %>" data-defindex="<%= item.defindex %>">
+                    <a href="/items/<%= item.id %>"><img src="<%= item.image_url %>"></a> 
+                  </li>
+                 <% end %>
+                </div>
+              </div>
+          </div>
+
+          <div class="note-section">
+            <div class="title clearfix">
+              <span>Notes</span>
+              
+            </div>
+
+            <div class="note-body menu">
+              <% if listings.comments.first.nil? %>
+                  <span>No comment </span>
+              <% else %> 
+                  <%= listings.comments.first.description %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+    </div>
+</div>
