@@ -38,7 +38,33 @@
 }
 
 .main-backpack-section {
-    > .title {
-        background-color: white;
+    
+    .title, .menu, .backpack {
+        border: 2px solid white;
+    }
+    .title {
+       
+    }
+    .backpack {
+        margin-top: 0px;
+        height: auto;
+        overflow: none;
+    }
+    .note-section {
+        margin-top: 20px;
+        .title {
+            padding: 10px;
+        
+        }
     }
 }
+
+.user-backpack-listings {
+    display: none;
+    .single-listing {
+        margin: 30px auto !important;
+        width: 1000px;
+    }
+}
+
+

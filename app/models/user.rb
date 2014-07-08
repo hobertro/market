@@ -10,10 +10,9 @@
 #
 
 require 'get_data'
-require 'awesome_print'
 
 class User < ActiveRecord::Base
-  extend GetData
+  extend GetData 
   attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, :profile_state,
   :last_logoff, :avatar, :avatar_medium, :avatar_full, :primary_clanid, :time_created, :person_state, :received_messages
 
@@ -33,9 +32,6 @@ class User < ActiveRecord::Base
            foreign_key: "recipient_id"
 
   def reload_player_items
-  puts "hihi"
-  puts "hihi"    
-  puts "hihi"
     self.user_items.delete_all
     create_player_items(self.steam_id)
   end
@@ -51,19 +47,11 @@ class User < ActiveRecord::Base
 
   def create_player_items(steam_id)
     # get player items
-    puts "hello"
     begin
-        puts "moto"
         player_item_hash = User.get_user_items(steam_id)["result"]["items"]
-        puts "before player item hash"
-        puts "jannet"
-        puts player_item_hash
     rescue
-      puts "HOLA"
-      puts "in rescue"
       exit
     end
-      puts "outside of rescue"
         # create an array of the items based on defindex numbers
         defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
         # find and create an array based on the defindexs in the Items table defindex 

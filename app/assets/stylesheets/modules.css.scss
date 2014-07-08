@@ -16,6 +16,11 @@
     li a {
       font-weight: 400;
     }
+    .navbar-brand {
+      &:hover {
+        color: $color2;
+      }
+    }
 }
 
 .navbar-inverse {

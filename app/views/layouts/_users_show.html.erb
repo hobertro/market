@@ -103,5 +103,11 @@
           </div>
         </div>
         <% end %>
+
+         <div class="pagination">
+            <%= will_paginate @user_listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
+        </div>
     </div>
+
+
 </div>
