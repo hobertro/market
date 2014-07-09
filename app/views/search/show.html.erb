@@ -23,7 +23,7 @@
                     <% end %>
                 </div>
              </div>
-              <% @listings.each do |listing| %>
+              <% @user_listings.each do |listing| %>
                 <div class="search-container">
                    <div class="home-listing single-listing">
                       <div class="title clearfix">
@@ -114,7 +114,7 @@
                 </div>
             <% end %>
             <div class="pagination container">
-                <%= will_paginate @listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
+                <%= will_paginate @user_listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
             </div>
           </div>
         </div>

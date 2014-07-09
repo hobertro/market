@@ -4,14 +4,14 @@ class CommentsController < ApplicationController
 
     def create
         @user = User.find(params[:user_id])
-        @listings = UserListing.find(params[:listing_id])
-        @comment = @listings.comments.build({description: params[:comment][:description], user_id: @user.id, user_listing_id: @listings.id})
+        @user_listing = UserListing.find(params[:listing_id])
+        @comment = @user_listing.comments.build({description: params[:comment][:description], user_id: @user.id, user_listing_id: @user_listing.id})
         if @comment.save
           flash[:success] = "Congratulations! Your comment was created!"
-          redirect_to([@user, @listings])
+          redirect_to([@user, @user_listing])
         else
           flash[:notice] = "Sorry, something went wrong!"
-          redirect_to([@user, @listings])
+          redirect_to([@user, @user_listing])
         end
     end
 

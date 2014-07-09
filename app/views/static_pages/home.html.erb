@@ -2,9 +2,9 @@
 <div class="main-div">
   <% if signed_in? %>
     <div class="container">
-        <%= render "layouts/listing" %>
+         <%= render partial: "layouts/listing", collection: @user_listings %>
          <div class="pagination">
-            <%= will_paginate @listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
+            <%= will_paginate @user_listings, renderer: BootstrapPagination::Rails, class: "pagination-lg" %>
         </div>
     </div>
 

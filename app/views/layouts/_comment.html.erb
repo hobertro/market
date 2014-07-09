@@ -1,4 +1,4 @@
-<% @listings.comments.each do |comment| %>
+<% @user_listing.comments.each do |comment| %>
   <div class="individual-comment row">
       <% if comment.user.avatar_medium.blank? || comment.user.avatar_medium.nil? %>
       <div class="avatar col-xs-1">
@@ -15,7 +15,7 @@
       <div class="comment-header group col-xs-11">
         <div class="title clearfix">
             <span><%= comment.user.steam_name%> Posted <%= time_ago_in_words(comment.created_at) %> ago</span>
-            <% if current_user == comment.user || @listings.user %>
+            <% if current_user == comment.user || @user_listings.user %>
               <button type="button" class="btn btn-inverse pull-right"><%= link_to url_for([@user, comment]), {:method => :delete} do %>
                   <i class="pull-right icon glyphicon glyphicon-trash"></i>
               <% end %>

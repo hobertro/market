@@ -4,7 +4,7 @@ class UserListingsController < ApplicationController
 
     def index
        @user = User.find(params[:user_id])
-       @listings = @user.user_listings
+       @user_listings = @user.user_listings
     end
 
     def new
@@ -27,8 +27,7 @@ class UserListingsController < ApplicationController
 
     def show
         @user = User.find(params[:user_id]) #probably need to eventually delete
-        @listings = UserListing.find(params[:id])
-        # @comments = @listings.comments.build()
+        @user_listing = UserListing.find(params[:id])
     end
 
     ################ Have to create method to create listings on the model
