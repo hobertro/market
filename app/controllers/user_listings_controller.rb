@@ -59,13 +59,8 @@ class UserListingsController < ApplicationController
 
     def search
         search_params = params[:search]
-        puts search_params
         if search_params
-           puts "in search params"
            item_results = Item.where("LOWER(name) LIKE ?", "%#{search_params.downcase}%")
-           puts item_results
-           puts "in after search params"
-           puts item_results
         else
             render :user_path
         end

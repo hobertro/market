@@ -51,7 +51,7 @@
 
         url:  "new",
 
-       addStockItemURL: function(){
+        addStockItemURL: function(){
         this.models.forEach(function(model){
             if (model.image_url === ""){
             model.image_url = "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png";
@@ -61,7 +61,7 @@
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
-
+        
         // create item slots on load
 
         initialize: function(){
