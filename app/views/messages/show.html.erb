@@ -20,20 +20,20 @@
                     </span>
                 </div>
 
-                <div class="comment-header group col-xs-7 clearfix">
+                <div class="comment-header group col-xs-9 clearfix">
                     <div class="title clearfix">
 
                         <span><%= message.messenger.steam_name %> Posted <%= time_ago_in_words(message.created_at) %> ago...</span>
 
                         <div class="btn-group pull-right">
-                              <button type="button" class="btn btn-inverse"><%= link_to url_for([message.messenger, message]), {:method => :delete} do %>
+                              <div type="button" class="btn btn-inverse"><%= link_to url_for([message.messenger, message]), {:method => :delete} do %>
                                 <i class="pull-right icon glyphicon glyphicon-trash"></i>
                                 <% end %>
-                              </button>
-                              <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
+                              </div>
+                              <div type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
                                 <i class="pull-right icon fa fa-comments"></i>
                                 <% end %>
-                              </button>
+                              </div>
                         </div>
                     </div>
 
@@ -59,18 +59,18 @@
                         <span><%= message.messenger.steam_name %> Posted <%= time_ago_in_words(message.created_at) %> ago...</span>
 
                         <div class="btn-group pull-right">
-                              <button type="button" class="btn btn-inverse"><%= link_to url_for([message.messenger, message]), {:method => :delete} do %>
+                              <div type="button" class="btn btn-inverse"><%= link_to url_for([message.messenger, message]), {:method => :delete} do %>
                                 <i class="pull-right icon glyphicon glyphicon-trash"></i>
                                 <% end %>
-                              </button>
-                                <button type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
+                              </div>
+                                <div type="button" class="btn btn-inverse"><%= link_to new_user_message_path({recipient: message.messenger}) do %>
                             <i class="pull-right icon fa fa-reply"></i>
                         <% end %>
-                              </button>
-                              <button type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
+                              </div>
+                              <div type="button" class="btn btn-inverse"><%= link_to user_message_path({:id => message.id}) do %>
                                 <i class="pull-right icon fa fa-comments"></i>
                                 <% end %>
-                              </button>
+                              </div>
                         </div>
                     </div>
 

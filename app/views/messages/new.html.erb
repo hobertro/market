@@ -1,10 +1,5 @@
 <div class="main-div">
     <div class="row">
-        <div class="col-xs-3">
-            <%= render 'layouts/sidebar' %>
-            <%= render 'layouts/messages_side_bar' %>
-        </div>
-
         <div class="message-area col-xs-8">
             <div class="title">
                 <span>Message to: <%= @recipient.steam_name %></span>
@@ -18,7 +13,7 @@
 
         <% if flash.alert %>
             <div class="alert alert-danger alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <div type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</div>
               <strong>Sorry! Messages can't be blank.</strong>
             </div>
         <% end %>

@@ -41,34 +41,34 @@
                         <div class="btn-group pull-right">  
                             <% if current_user == listing.user %>
                                 <div class="btn-group">
-                                <button type="button" class="btn btn-inverse main-note-btn">
+                                <div type="button" class="btn btn-inverse main-note-btn">
                                     <i class="pull-right icon fa fa-pencil"></i>
-                                </button>
+                                </div>
 
-                                 <button type="button" class="btn btn-inverse">
+                                 <div type="button" class="btn btn-inverse">
                                     <%= link_to new_user_message_path(current_user,  {recipient: listing.user}) do %>
                                      <i class="pull-right icon fa fa-comment-o"></i>
                                   <% end %>
-                                  </button>
+                                  </div>
                               
-                                <button type="button" class="btn btn-inverse"><%= link_to url_for([listing.user, listing]), {:method => :delete} do %>
+                                <div type="button" class="btn btn-inverse"><%= link_to url_for([listing.user, listing]), {:method => :delete} do %>
                                     <i class="pull-right icon glyphicon glyphicon-trash"></i>
-                                </button>
+                                </div>
                                 <% end %>
 
                                </div>
                             <% else %>
-                                <button type="button" class="btn btn-inverse note-btn">
+                                <div type="button" class="btn btn-inverse note-btn">
                                     <i class="pull-right icon fa fa-pencil"></i>
-                                </button>
+                                </div>
                                 
 
                                <% unless listing.user.nil? %>
-                                  <button type="button" class="btn btn-inverse">
+                                  <div type="button" class="btn btn-inverse">
                                    <%= link_to new_user_message_path(current_user,  {recipient: listing.user}) do %>
                                      <i class="pull-right icon fa fa-comment-o"></i>
                                   <% end %>
-                                </button>
+                                </div>
                                <% end %>
                               
                             <% end %>

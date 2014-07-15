@@ -11,10 +11,14 @@
                  <p class="steam-name"><%= @user.steam_name %></p>
             
                  <div class="row user-stats-options center">
+                  <% unless current_user == @user %>
                      <div class="col-xs-3">
-                        <i class="fa fa-comment-o"></i>
-                        <p>Message User</p>
+                        <%= link_to new_user_message_path(current_user,  {recipient: @user}) do %>
+                          <i class="fa fa-comment-o"></i>
+                          <p>Message User</p>
+                        <% end %>
                      </div>
+                  <% end %>
                      <div class="col-xs-3">
                         <i class="fa fa-paper-plane-o"></i>
                          <p>Trade Request</p>
@@ -56,13 +60,13 @@
             <% end %>
             <div class="btn-group pull-right">  
 
-            <button type="button" class="btn btn-inverse note-btn">
+            <div type="button" class="btn btn-inverse note-btn">
                                       <i class="pull-right icon fa fa-comment-o"></i>
-                                  </button>
-            <button type="button" class="btn btn-inverse"><%= link_to url_for([@user, listings]), {:method => :delete} do %>
+                                  </div>
+            <div type="button" class="btn btn-inverse"><%= link_to url_for([@user, listings]), {:method => :delete} do %>
                   <i class="pull-right icon glyphicon glyphicon-trash"></i>
               <% end %>
-            </button>
+            </div>
           </div>
         </div>
           <div class="menu">

@@ -9,7 +9,11 @@
                              <li><%= link_to "Profile", current_user %></li>
                              <li><%= link_to "New Listing", new_user_user_listing_path(current_user) %></li>
                              <li><%= link_to "Listings", user_user_listings_path(current_user) %></li>
-                             <li><%= link_to "Messages", user_messages_path(current_user) %></li>
+                             <% if unread_messages(current_user) > 0 %>
+                             <li><%= link_to "Messages (#{unread_messages(current_user)} unread)", user_messages_path(current_user) %></li>
+                             <% else %>
+                            <li><%= link_to "Messages", user_messages_path(current_user) %></li>
+                             <% end %>
                              <li><%= link_to "Search", search_new_path %></li>
                              <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
                              <!--

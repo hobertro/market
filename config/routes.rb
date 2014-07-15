@@ -47,6 +47,7 @@ DotaMarket::Application.routes.draw do
 
   match '/contact', to: "contact_messages#new"
   match '/signin', to: redirect('/auth/steam')
+  match '/message_marked_as_read', to: "messages#marked_as_read"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

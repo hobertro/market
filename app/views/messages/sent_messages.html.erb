@@ -1,10 +1,4 @@
 <div class="row">
-    <!--
-    <div class="col-xs-3">
-    <%= render 'layouts/sidebar' %>
-    <%= render 'layouts/messages_side_bar' %>
-    </div>
-    -->
     <h1>Messages</h1>
         <ul class="nav nav-tabs" role="tablist">
             <li><%= link_to "Messages", user_messages_path(current_user) %></li>
@@ -20,21 +14,20 @@
             </div>
         <% end %>
 
-        <div class="comment-header group col-xs-7">
+        <div class="comment-header group col-xs-9">
               <div class="title clearfix">
                 <span class="messenger-name">Message to <%= message.recipient.steam_name %> was posted <%= time_ago_in_words(message.created_at) %> ago...</span>
               <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-inverse">
+                  <div type="button" class="btn btn-inverse">
                     <%= link_to user_message_path({:id => message.id}) do %>
                         <i class="pull-right icon fa fa-comments"></i>
                     <% end %>
-                  </button>
-
-                   <button type="button" class="btn btn-inverse">
+                  </div>
+                   <div type="button" class="btn btn-inverse">
                     <%= link_to url_for([message.recipient, message]), {:method => :delete} do %>
                         <i class="pull-right icon glyphicon glyphicon-trash"></i>
                     <% end %>
-                  </button>
+                  </div>
               </div>
         </div>
 

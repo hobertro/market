@@ -21,15 +21,17 @@ class User < ActiveRecord::Base
   has_many :user_items, dependent: :destroy # foreign_key: "item_id",
   has_many :items, through: :user_items
 
-  has_many :user_listings
+  has_many :user_listings, dependent: :destroy
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   has_many :messages, 
-           foreign_key: "messenger_id"
+           foreign_key: "messenger_id",
+           dependent: :destroy
   has_many :received_messages, 
            class_name: "Message",
            foreign_key: "recipient_id"
+
 
   def reload_player_items
     self.user_items.delete_all
@@ -42,16 +44,22 @@ class User < ActiveRecord::Base
 
   def self.get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
-    parsed_data(url)  # reading HTTP request using open-uri
+    begin
+      parsed_data(url)  # reading HTTP request using open-uri
+    rescue
+      return "hihi"
+    end
   end
 
   def create_player_items(steam_id)
     # get player items
     begin
         player_item_hash = User.get_user_items(steam_id)["result"]["items"]
+        self.user_items.delete_all
     rescue
-      exit
+      return "hihi"
     end
+
         # create an array of the items based on defindex numbers
         defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
         # find and create an array based on the defindexs in the Items table defindex 
@@ -92,12 +100,21 @@ class User < ActiveRecord::Base
 
   def self.create_from_omniauth(auth)
     info = auth["extra"]["raw_info"]
-    User.create!({"steam_id" => info["steamid"], "steam_name" => info["personaname"],
-      "community_visibility" => info["communityvisibilitystate"], "profile_state" =>
-      info["profilestate"], "last_logoff" => info["lastlogoff"], "profile_url" => 
-      info["profileurl"], "avatar" => info["avatar"],"avatar_medium" => info["avatarmedium"], 
-      "avatar_full" => info["avatarfull"], "primary_clanid" => info["primaryclanid"], 
-      "time_created" => info["timecreated"], "person_state" => info["personastate"]})
+
+    User.create! do |u| 
+      u.steam_id             = info["steamid"]
+      u.steam_name           = info["personaname"]
+      u.community_visibility = info["communityvisibilitystate"]
+      u.profile_state        = info["profilestate"]
+      u.last_logoff          = info["lastlogoff"]
+      u.profile_url          = info["profileurl"]
+      u.avatar               = info["avatar"]
+      u.avatar_medium        = info["avatarmedium"]
+      u.avatar_full          = info["avatarfull"]
+      u.primary_clanid       = info["primaryclanid"]
+      u.time_created         = info["timecreated"]
+      u.person_state         = info["person_state"]
+    end
   end
 
   private

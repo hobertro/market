@@ -11,23 +11,23 @@
       <% end %>
       <!-- BUTTONS -->
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-inverse note-btn">
+        <div type="button" class="btn btn-inverse note-btn">
                 <i class="pull-right icon fa fa-pencil"></i>
-        </button>
+        </div>
 
         <% unless current_user == listing.user %>
-          <button type="button" class="btn btn-inverse">
+          <div type="button" class="btn btn-inverse">
             <%= link_to new_user_message_path(current_user,  {recipient: listing.user}) do %>
              <i class="pull-right icon fa fa-comment-o"></i>
           <% end %>
-          </button>
+          </div>
         <% end %>
         
         <% if current_user == listing.user %>
-            <button type="button" class="btn btn-inverse"><%= link_to url_for([listing.user, listing]), method: :delete, data: {confirm: "Are you sure you want to delete this listing?"} do %>
+            <div type="button" class="btn btn-inverse"><%= link_to url_for([listing.user, listing]), method: :delete, data: {confirm: "Are you sure you want to delete this listing?"} do %>
                 <i class="pull-right icon glyphicon glyphicon-trash"></i>
             <% end %>
-            </button>
+            </div>
         <% end %>
       </div>
     </div>

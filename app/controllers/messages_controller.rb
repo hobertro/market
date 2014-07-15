@@ -1,9 +1,10 @@
 class MessagesController < ApplicationController
     before_filter :signed_in_user, only: [:create, :new, :show, :index, :destroy]
-    before_filter :correct_user, only: [:create, :new, :show, :index, :destroy]
+    before_filter :correct_user, only: [:create, :destroy]
 
     def index
         @user = User.find(params[:user_id])
+        @message = @user.messages
         # @messages = Message.all
     end
 
@@ -45,6 +46,15 @@ class MessagesController < ApplicationController
 
     def sent_messages
         @user = User.find(params[:user_id])
+    end
+
+    def marked_as_read
+        puts "HIHIHIHIHI"
+        puts params
+        @message = Message.find(params[:message_id])
+        puts @message
+        @message.set_status_to_read
+        redirect_to user_messages_path(@message.messenger)
     end
 
 end

@@ -112,6 +112,21 @@
        e.preventDefault();
     });
 
+    $(".mark-btn").click(function(e){
+        var messageID = $(this).parent().parent().parent().parent().data("message-id");
+        console.log("clicked!");
+        var request = $.ajax({
+            type: "POST",
+            url: "/message_marked_as_read",
+            data: {message_id: messageID}
+        });
+
+        request.done(function(response, textStatus, jqXHR){
+                
+        });
+        e.preventDefault();
+    });
+
     $(".note-btn").click(function(e){
         $(this).parent().parent().parent().find(".note-section").toggle();
         e.preventDefault();

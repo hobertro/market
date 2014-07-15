@@ -397,6 +397,8 @@
                 $("#reload").html("Reload backpack");
             });
             request.fail(function(){
+                $("#reload").prop("disabled", false);
+                $("#reload").html("Reload backpack");
             console.log("Fail");
              });
         }

@@ -55,6 +55,9 @@
     padding: 10px 20px;
     font-weight: bold;
     @include borderTop(3px);
+    > span {
+        width: 50%;
+    }
     .messenger-name {
         color: $color1;
         &:hover {
