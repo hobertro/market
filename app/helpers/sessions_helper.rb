@@ -46,5 +46,13 @@ module SessionsHelper
     def find_item(item_id)
       Item.find_by_defindex(item_id.to_s)
     end
+
+    def blocked?
+      puts params
+      if Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") ||
+         Relationship.exists?(user_id: params[:recipient], other_user_id: current_user.id, status: "blocked")
+         redirect_to root_path
+      end
+    end
 end
   

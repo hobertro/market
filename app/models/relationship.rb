@@ -3,7 +3,8 @@ class Relationship < ActiveRecord::Base
   belongs_to :user
   belongs_to :other_user, class_name: "User"
 
-  after_create :be_friendly_to_friend 
+  after_create :be_friendly_to_friend
+
 
   def be_friendly_to_friend
     other_user.other_users << user unless other_user.other_users.include?(user)
