@@ -24,8 +24,10 @@
                          <p>Trade Request</p>
                      </div>
                      <div class="col-xs-3">
-                       <i class="fa fa-times"></i>
-                        <p>Block User</p>
+                       <%= link_to user_relationships_path(current_user, {blocked_user: @user}), :method => :post do %>
+                          <i class="fa fa-times"></i>
+                          <p>Block User</p>
+                        <% end %>
                      </div>
                  </div>
             </div>

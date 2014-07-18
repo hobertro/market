@@ -13,8 +13,9 @@ require 'get_data'
 
 class User < ActiveRecord::Base
   extend GetData 
-  attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, :profile_state,
-  :last_logoff, :avatar, :avatar_medium, :avatar_full, :primary_clanid, :time_created, :person_state, :received_messages
+  attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, 
+  :profile_state, :last_logoff, :avatar, :avatar_medium, :avatar_full, 
+  :primary_clanid, :time_created, :person_state, :received_messages, :other_user_id
 
   before_save :create_remember_token
 
@@ -31,7 +32,10 @@ class User < ActiveRecord::Base
   has_many :received_messages, 
            class_name: "Message",
            foreign_key: "recipient_id"
-
+  has_many :relationships, dependent: :destroy
+  has_many :other_users,  :through => :relationships,
+                          :source  => :other_user
+                          
 
   def reload_player_items
     self.user_items.delete_all
@@ -41,6 +45,8 @@ class User < ActiveRecord::Base
   def have_items?
     create_player_items(steam_id) if self.user_items.empty?
   end
+
+   #possible violation of SRP with method below
 
   def self.get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
@@ -54,12 +60,11 @@ class User < ActiveRecord::Base
   def create_player_items(steam_id)
     # get player items
     begin
-        player_item_hash = User.get_user_items(steam_id)["result"]["items"]
         self.user_items.delete_all
+        player_item_hash = User.get_user_items(steam_id)["result"]["items"]
     rescue
       return "hihi"
     end
-
         # create an array of the items based on defindex numbers
         defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
         # find and create an array based on the defindexs in the Items table defindex 
@@ -67,15 +72,27 @@ class User < ActiveRecord::Base
         items.each do |item|
           player_item_hash.each do |hash_item|
             if hash_item["defindex"].to_s == item.defindex
-              self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
-              quality: hash_item["quality"], rarity: item.rarity)
+              #self.user_items.create(item_id: item.id, equipped: hash_item["equipped"],
+              #quality: hash_item["quality"], rarity: item.rarity)
+              self.user_items.create! do |ui| #ui = user item
+                ui.item_id          = item.id
+                ui.equipped         = hash_item["equipped"]
+                ui.quality          = hash_item["quality"]
+                ui.rarity           = item.rarity
+                ui.name             = item.name
+                ui.defindex         = item.defindex
+                ui.image_url        = item.image_url
+                ui.item_description = item.item_description
+                ui.item_set         = item.item_set
+              end
             end
           end
         end
-        add_attr_to_items
-        self.user_items
+        #add_attr_to_items
+        #self.user_items
   end
 
+=begin
   def add_attr_to_items
     self.user_items.each do |user_item|
       user_item[:name] = user_item.item.name
@@ -86,6 +103,7 @@ class User < ActiveRecord::Base
       user_item.save
     end
   end
+=end
 
   ## need to refactor code below
 
@@ -100,7 +118,6 @@ class User < ActiveRecord::Base
 
   def self.create_from_omniauth(auth)
     info = auth["extra"]["raw_info"]
-
     User.create! do |u| 
       u.steam_id             = info["steamid"]
       u.steam_name           = info["personaname"]

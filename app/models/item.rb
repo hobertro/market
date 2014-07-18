@@ -11,11 +11,10 @@ class Item < ActiveRecord::Base
   :used_by_classes, :per_class_loadout_slots, :styles
   
 
-  has_many :user_items, foreign_key: "user_id"
-  has_many :users, through: :user_items, source: :item
-
+  has_many :user_items
+  has_many :users, through: :user_items
+  
   has_many :user_listings
-  has_many :users, through: :user_listings
 
   has_many :item_listings
   has_many :user_listings, through: :item_listings

@@ -1,5 +1,4 @@
 DotaMarket::Application.routes.draw do
-
   get "search/new"
 
   get "search/create"
@@ -26,6 +25,10 @@ DotaMarket::Application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  resources :users do
+    resources :relationships, only: [:new, :create, :edit, :destroy]
+  end
+
   resources :items
   resources :sessions, only: [:create, :destroy]
 
@@ -48,6 +51,7 @@ DotaMarket::Application.routes.draw do
   match '/contact', to: "contact_messages#new"
   match '/signin', to: redirect('/auth/steam')
   match '/message_marked_as_read', to: "messages#marked_as_read"
+  match '/block_user', to: "relationships#create"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
