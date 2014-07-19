@@ -1,6 +1,7 @@
 class UserListingsController < ApplicationController
     before_filter :signed_in_user, only: [:create, :destroy, :new]
     before_filter :correct_user, only: [:create, :destroy, :new]
+    before_filter :blocked_relationships
 
     def index
        @user = User.find(params[:user_id])
@@ -28,6 +29,7 @@ class UserListingsController < ApplicationController
     def show
         @user = User.find(params[:user_id]) #probably need to eventually delete
         @user_listing = UserListing.find(params[:id])
+        @comments = @user_listing.comments
     end
 
     ################ Have to create method to create listings on the model

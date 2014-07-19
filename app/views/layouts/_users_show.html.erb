@@ -18,16 +18,17 @@
                           <p>Message User</p>
                         <% end %>
                      </div>
-                  <% end %>
-                     <div class="col-xs-3">
-                        <i class="fa fa-paper-plane-o"></i>
-                         <p>Trade Request</p>
-                     </div>
-                     <div class="col-xs-3">
+
+                      <div class="col-xs-3">
                        <%= link_to user_relationships_path(current_user, {blocked_user: @user}), :method => :post do %>
                           <i class="fa fa-times"></i>
                           <p>Block User</p>
                         <% end %>
+                     </div>
+                  <% end %>
+                     <div class="col-xs-3">
+                        <i class="fa fa-paper-plane-o"></i>
+                         <p>Trade Request</p>
                      </div>
                  </div>
             </div>

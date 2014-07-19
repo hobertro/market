@@ -47,12 +47,31 @@ module SessionsHelper
       Item.find_by_defindex(item_id.to_s)
     end
 
-    def blocked?
-      puts params
-      if Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") ||
+    def messenger_blocked?
+      if Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") || 
          Relationship.exists?(user_id: params[:recipient], other_user_id: current_user.id, status: "blocked")
-         redirect_to root_path
+         redirect_to :root
       end
+    end
+
+    def blocked_relationships
+      if blocked?
+         puts "in blocked_relationships"
+         redirect_to :root
+      end
+    end
+
+    def blocked?
+        puts "in blocked"
+        puts params[:id]
+        puts "before params user id"
+        puts params[:user_id]
+         Relationship.exists?(user_id: current_user.id, other_user_id: params[:user_id], status: "blocked") ||
+         Relationship.exists?(user_id: params[:user_id], other_user_id: current_user.id, status: "blocked")
+    end
+
+    def blocked_friends
+        current_user.other_users
     end
 end
   

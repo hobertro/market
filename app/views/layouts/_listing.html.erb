@@ -1,3 +1,4 @@
+<% unless blocked_friends.include?(listing.user) %>
   <div class="single-listing">
     <div class="title clearfix">
       <%= link_to url_for([listing.user, listing]) do %>
@@ -69,3 +70,4 @@
       </div>
     </div>
   </div>
+  <% end %>

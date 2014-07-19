@@ -1,30 +1,31 @@
-<% @user_listing.comments.each do |comment| %>
-  <div class="individual-comment row">
-      <% if comment.user.avatar_medium.blank? || comment.user.avatar_medium.nil? %>
-      <div class="avatar col-xs-1">
-        <span><img src="http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"></span>
-      </div>
-      <% else %>
-        <div class="avatar col-xs-1">
-          <%= link_to url_for(comment.user) do %>
-            <span><img src="<%= comment.user.avatar_medium %>"></span>
-          <% end %>
-        </div>
-      <% end %> 
 
-      <div class="comment-header group col-xs-11">
-        <div class="title clearfix">
-            <span><%= comment.user.steam_name%> Posted <%= time_ago_in_words(comment.created_at) %> ago</span>
-            <% if current_user == comment.user || @user_listings.user %>
-              <button type="button" class="btn btn-inverse pull-right"><%= link_to url_for([@user, comment]), {:method => :delete} do %>
-                  <i class="pull-right icon glyphicon glyphicon-trash"></i>
+  <% unless blocked_friends.include?(comment.user) %>
+      <div class="individual-comment row">
+          <% if comment.user.avatar_medium.blank? || comment.user.avatar_medium.nil? %>
+          <div class="avatar col-xs-1">
+            <span><img src="http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"></span>
+          </div>
+          <% else %>
+            <div class="avatar col-xs-1">
+              <%= link_to url_for(comment.user) do %>
+                <span><img src="<%= comment.user.avatar_medium %>"></span>
               <% end %>
-              </button>
-            <% end %>
-        </div>
-        <div class="menu comment-description">
-          <%= comment.description %>
-        </div>
+            </div>
+          <% end %> 
+
+          <div class="comment-header group col-xs-11">
+            <div class="title clearfix">
+                <span><%= comment.user.steam_name%> Posted <%= time_ago_in_words(comment.created_at) %> ago</span>
+                <% if current_user == comment.user || @user_listings.user %>
+                  <button type="button" class="btn btn-inverse pull-right"><%= link_to url_for([@user, comment]), {:method => :delete} do %>
+                      <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                  <% end %>
+                  </button>
+                <% end %>
+            </div>
+            <div class="menu comment-description">
+              <%= comment.description %>
+            </div>
+          </div>
       </div>
-  </div>  
-<% end %>
+    <% end %>

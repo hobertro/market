@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_filter :blocked_relationships
+
   def index
   end
 

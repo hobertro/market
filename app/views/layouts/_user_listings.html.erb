@@ -33,6 +33,6 @@
                 <%= f.submit "Add Comment", class: "btn btn-primary" %>
         <% end %>
     <% end %>
-      <%= render "layouts/comment" %>
+      <%= render partial: "layouts/comment", collection: @comments %>
    </div>
  </div>
