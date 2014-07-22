@@ -62,12 +62,13 @@ module SessionsHelper
     end
 
     def blocked?
-        puts "in blocked"
-        puts params[:id]
-        puts "before params user id"
-        puts params[:user_id]
-         Relationship.exists?(user_id: current_user.id, other_user_id: params[:user_id], status: "blocked") ||
-         Relationship.exists?(user_id: params[:user_id], other_user_id: current_user.id, status: "blocked")
+      if params[:user_id].blank?
+        Relationship.exists?(user_id: current_user.id, other_user_id: params[:id], status: "blocked") ||
+        Relationship.exists?(user_id: params[:id], other_user_id: current_user.id, status: "blocked")
+      else
+        Relationship.exists?(user_id: current_user.id, other_user_id: params[:user_id], status: "blocked") ||
+        Relationship.exists?(user_id: params[:user_id], other_user_id: current_user.id, status: "blocked")
+      end
     end
 
     def blocked_friends
