@@ -56,7 +56,6 @@ module SessionsHelper
 
     def blocked_relationships
       if blocked?
-         puts "in blocked_relationships"
          redirect_to :root
       end
     end
@@ -65,7 +64,10 @@ module SessionsHelper
       if params[:user_id].blank?
         Relationship.exists?(user_id: current_user.id, other_user_id: params[:id], status: "blocked") ||
         Relationship.exists?(user_id: params[:id], other_user_id: current_user.id, status: "blocked")
-      else
+      elsif
+        Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") || 
+        Relationship.exists?(user_id: params[:recipient], other_user_id: current_user.id, status: "blocked")
+      else 
         Relationship.exists?(user_id: current_user.id, other_user_id: params[:user_id], status: "blocked") ||
         Relationship.exists?(user_id: params[:user_id], other_user_id: current_user.id, status: "blocked")
       end

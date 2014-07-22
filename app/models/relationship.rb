@@ -10,5 +10,4 @@ class Relationship < ActiveRecord::Base
     other_user.other_users << user unless other_user.other_users.include?(user)
     self.save
   end
-
 end

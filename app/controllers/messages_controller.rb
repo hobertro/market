@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
     before_filter :signed_in_user, only: [:create, :new, :show, :index, :destroy]
     before_filter :correct_user, only: [:index, :create, :destroy]
-    before_filter :messenger_blocked?
+    before_filter :blocked_relationships
 
     def index
         #@user = User.find(params[:user_id])
