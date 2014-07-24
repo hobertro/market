@@ -152,7 +152,6 @@
     $(".goodbye").fadeOut(7500);
 
     $(".user-listings-btn").click(function(){
-        console.log("user-listings-btn");
         $(".user-backpack-items").fadeOut();
         $(".user-backpack-listings").fadeIn();
         $(".user-items-btn").removeClass("active");
@@ -160,10 +159,10 @@
     });
 
     $(".user-items-btn").click(function(){
-        console.log("user-items-btn");
         $(".user-backpack-listings").fadeOut();
         $(".user-backpack-items").fadeIn();
         $(".user-listings-btn").removeClass("active");
         $(".user-items-btn").addClass("active");
     });
+
 })();

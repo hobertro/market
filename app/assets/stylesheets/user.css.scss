@@ -67,4 +67,13 @@
     }
 }
 
+/*** EDIT / SETTINGS SECTION ***/
 
+.trade-url-section {
+    border: 1px solid $color3;
+    padding: 25px;
+    .settings-btn {
+        margin-top: 20px;
+        width: 100%;
+    }
+}

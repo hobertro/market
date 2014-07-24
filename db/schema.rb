@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140716053048) do
+ActiveRecord::Schema.define(:version => 20140724041132) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_listing_id"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20140716053048) do
     t.integer  "equipped_class"
     t.integer  "equipped_slot"
     t.integer  "quality"
+    t.integer  "other_user_id"
+    t.text     "trade_url"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"

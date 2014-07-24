@@ -33,25 +33,26 @@ class Item < ActiveRecord::Base
   end
 
   def self.populate_database
-    @dict = []
+    dict = []
     Item.all.each do |item|
-      @dict.push(item.defindex.to_i)
+      dict.push(item.defindex.to_i)
     end
 
     self.all_dota_items.each do |item|
-      if @dict.include?(item["defindex"])
-        puts item
-        puts item["defindex"]
-        puts "have item"
-      else
-        puts "don't have item"
+      a = 0
+      unless dict.include?(item["defindex"])
         new_item = Item.new(item)
+        puts new_item
+        puts a += 1
         new_item.save
       end
     end
     return "hello moto"
   end
 
+## use for refactoring in the future
+
+=begin 
   def self.item_checker(steam_item)
     @dict = []
     Item.all.each do |item|
@@ -59,24 +60,27 @@ class Item < ActiveRecord::Base
     end
     # return @dict
   end
+=end
 
-  def self.steam_id_count
+  def self.steam_id_count ## checks how many items are currently on the STEAM API
     steam_items = []
     self.all_dota_items.each do |item|
       steam_items.push(item)
     end
     puts steam_items.count
-    return puts steam_items.count
   end
 
-  def self.create_hash
+=begin ## will be used for future refactoring because hash > array in speed
+  def self.create_hash 
     item_hash = {}
     Item.all.each do |item|
       item_hash["#{item.defindex}"] = item.name
     end
-
     return item_hash
   end
+=end 
+
+## used in for getting item rarity
 
   def self.open_json_file_first(file_name)
     file = JSON.parse(File.read(file_name))
@@ -84,7 +88,6 @@ class Item < ActiveRecord::Base
       if file["items"].include?(item.defindex)
         item.rarity = file["items"][item.defindex]["item_rarity"]
         item.save
-        puts item.rarity
       end
     end
     return "done"
@@ -93,8 +96,7 @@ class Item < ActiveRecord::Base
   def self.open_json_file(file_name)
     file = JSON.parse(File.read(file_name))
     Item.all.each do |item|
-      if file.include?(item.defindex)
-        puts "Hello this works"
+      if file.include?(item.defindex) # include? wrapper for hash#has_key?
         item.rarity = file[item.defindex]["item_rarity"]
         item.save
         puts item.rarity

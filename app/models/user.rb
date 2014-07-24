@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
   has_many :other_users,  :through => :relationships,
                           :source  => :other_user
+
+  ## validate trade_url
                           
 
   def reload_player_items

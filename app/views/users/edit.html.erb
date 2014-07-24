@@ -1,0 +1,47 @@
+<div class="main-div">
+    <h1>Settings</h1>
+    <div class="row">
+        <div class="col-xs-3 side-section">
+            <ul class="list-group center">
+                <li class="list-group-item"><a href="#"><i class="fa fa-exchange"></i>  Update Trade URL</a></li>
+                <li class="list-group-item"><a href="#"><i class="fa fa-ban"></i>  Blocked Users</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-9 main-section">
+            <div class="trade-url-section">
+                <h4>Update your trade URL:</h4>
+                <div class="row">
+                    <div class="input-group col-xs-12">
+                    <%= form_for @user, url: {action: "update"}, html: {class: "nifty_form"} do |f| %>
+                      <%= f.text_field :trade_url, {class: "form-control", placeholder: "Trade Url"} %>
+                      <%= f.submit "Save", class: "btn btn-primary settings-btn" %>
+                    <% end %>
+                      <% unless @user.trade_url.blank? %>
+                        <p>Your current trade url is: <%= @user.trade_url %></p>
+                      <% end %>
+                      <br/>
+                      <p>Adding your Steam Trading URL will create a link on your profile and listings so that
+                       users to send you trade requests through the Steam Client which will facllitate 
+                       faster trading. 
+                       </p>
+
+                       <p>
+                           To get your Trade Url, go to <a href="http://steamcommunity.com/my/tradeoffers/privacy">Trade Offer Privacy</a> settings and copy the URL into the form above. If you ever wish to change
+                           your Trade Offer URL, you can go back to the same page and click "Create New URL."
+                       </p>
+                      <p>
+                          <blockquote>You can share this your unique trade URL with other Steam users to allow them to send you a trade offer even if they aren't on your friends list. You can share this URL anywhere, including on third-party trading sites and Steam Community groups. -From Steam's trade offers page
+                          </blockquote>
+                      </p>
+                      <p>
+                          For more information, go to the official page <a href="https://support.steampowered.com/kb_article.php?ref=2178-QGJV-0708">here</a>.
+                      </p>
+                    </div>
+                </div>
+            </div>
+            <div class="block-user-section">
+                
+            </div>
+        </div>
+    </div>
+</div>
