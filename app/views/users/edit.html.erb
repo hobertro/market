@@ -37,7 +37,9 @@
                 </div>
             </div>
             <div class="block-user-section">
-                <h4>You have blocked the users below. To unblock them, click "unblock."</h4>
+              <div class="alert alert-danger">
+                  You have blocked the users below. To unblock them, click "unblock."
+              </div>
                 <% if @user.other_users.blank? %>
                   <p> You have not blocked anyone.</p>
                 <% else %>

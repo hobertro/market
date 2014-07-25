@@ -73,7 +73,6 @@
         createItemSlots: function(){
 
         // create 12 models
-
             for(i=0; i<6; i++){
                 modelitemSlot = new Market.Models.ItemSlot();
                 this.add(modelitemSlot);
@@ -386,7 +385,7 @@
             var request = $.ajax({
             type: "POST",
             url: "/reload"
-        });
+            });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
                 backpackView.unbind();
