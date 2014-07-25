@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-xs-3 side-section">
             <ul class="list-group center">
-                <li class="list-group-item"><a href="#"><i class="fa fa-exchange"></i>  Update Trade URL</a></li>
-                <li class="list-group-item"><a href="#"><i class="fa fa-ban"></i>  Blocked Users</a></li>
+                <li class="list-group-item"><a href="#" class="trade-url-btn"><i class="fa fa-exchange"></i>  Update Trade URL</a></li>
+                <li class="list-group-item"><a href="#" class="blocked-user-btn"><i class="fa fa-ban"></i> Blocked Users</a></li>
             </ul>
         </div>
         <div class="col-xs-9 main-section">
@@ -16,9 +16,6 @@
                       <%= f.text_field :trade_url, {class: "form-control", placeholder: "Trade Url"} %>
                       <%= f.submit "Save", class: "btn btn-primary settings-btn" %>
                     <% end %>
-                      <% unless @user.trade_url.blank? %>
-                        <p>Your current trade url is: <%= @user.trade_url %></p>
-                      <% end %>
                       <br/>
                       <p>Adding your Steam Trading URL will create a link on your profile and listings so that
                        users to send you trade requests through the Steam Client which will facllitate 
@@ -40,7 +37,15 @@
                 </div>
             </div>
             <div class="block-user-section">
-                
+                <h4>You have blocked the users below. To unblock them, click "unblock."</h4>
+                <% if @user.other_users.blank? %>
+                  <p> You have not blocked anyone.</p>
+                <% else %>
+                  <% @user.other_users.each do |blocked| %>
+                     <%= blocked.steam_name %> 
+                     <%= link_to "Unblock", unblock_user_path(:blocked_user_id => blocked, :user_id => @user), { :class=>"btn btn-primary" } %>
+                  <% end %>
+                <% end %>
             </div>
         </div>
     </div>

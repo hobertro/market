@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   extend GetData 
   attr_accessible :steam_id, :steam_name, :profile_url, :community_visibility, 
   :profile_state, :last_logoff, :avatar, :avatar_medium, :avatar_full, 
-  :primary_clanid, :time_created, :person_state, :received_messages, :other_user_id
+  :primary_clanid, :time_created, :person_state, :received_messages, :other_user_id,
+  :trade_url
 
   before_save :create_remember_token
 

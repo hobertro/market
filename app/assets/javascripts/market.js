@@ -165,4 +165,17 @@
         $(".user-items-btn").addClass("active");
     });
 
+
+    // Users Edit Section
+
+    $(".blocked-user-btn").click(function(e){
+        e.preventDefault();
+        $(".trade-url-section").fadeOut();
+        $(".block-user-section").fadeIn();
+    });
+    $(".trade-url-btn").click(function(e){
+        e.preventDefault();
+        $(".block-user-section").fadeOut();
+        $(".trade-url-section").fadeIn();
+    })
 })();

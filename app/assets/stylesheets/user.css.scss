@@ -69,11 +69,19 @@
 
 /*** EDIT / SETTINGS SECTION ***/
 
-.trade-url-section {
+.trade-url-section,
+.block-user-section {
     border: 1px solid $color3;
     padding: 25px;
+}
+
+.trade-url-section {
     .settings-btn {
-        margin-top: 20px;
+        margin-top: 10px;
         width: 100%;
     }
+}
+
+.block-user-section {
+    display: none;
 }

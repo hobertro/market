@@ -16,6 +16,17 @@ class RelationshipsController < ApplicationController
       redirect_to :root
   end
 
+  def update
+    user = User.find(params[:user_id])
+    relationship = user.relationships.find_by_other_user_id(params[:blocked_user_id])
+    if relationship.destroy
+      flash[:success] = "You have successfully unblocked the user"
+    else
+      flash[:error] = "Something went wrong! "
+    end
+    redirect_to edit_user_path(user)
+  end
+
   def edit
   end
 

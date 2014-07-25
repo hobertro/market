@@ -14,16 +14,16 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @blocked_users = @user.relationships.where("status = ?", "blocked") || ""
   end
 
   def update
     @user = User.find(params[:id])
     @user.trade_url = params[:user][:trade_url]
-    @user.save
     if @user.save
-      flash[:success] = "Your trade_url has been updated"
-    else
-      flash[:error] = "Oops there was an error, try again"
+      flash[:success] = "You have successfully updated your Trading URL"
+    else 
+      flash[:error]   = "Something went wrong!"
     end
     sign_in @user
     redirect_to edit_user_path

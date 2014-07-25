@@ -26,10 +26,14 @@
                         <% end %>
                      </div>
                   <% end %>
+                  <% unless current_user.trade_url.blank? %>
                      <div class="col-xs-3">
+                      <%= link_to current_user.trade_url do %>
                         <i class="fa fa-paper-plane-o"></i>
                          <p>Trade Request</p>
+                      <% end %>
                      </div>
+                  <% end %>
                  </div>
             </div>
         </div>
