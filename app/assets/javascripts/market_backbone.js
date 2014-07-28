@@ -42,7 +42,7 @@
 
     /***************** Collections ******************/
 
-    Market.Collections.Item = Backbone.Collection.extend({
+    Market.Collections.Item = Backbone.Collection.extend({ // Collection only
 
         initialize: function(){
            this.addStockItemURL();
@@ -149,14 +149,15 @@
             } else {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
+        },
+        addTrashCan: function(){
+
         }
     });
 
     Market.Views.SearchItem = Backbone.View.extend({
-
         tagName: "li",
         className: "search-item-li item thumbnail",
-
         initialize: function(){
             console.log("search item created");
         },
@@ -190,7 +191,7 @@
 
 
 
-    Market.Views.ItemCollection = Backbone.View.extend({
+    Market.Views.ItemCollection = Backbone.View.extend({ // Backpack items view
         tagName: 'ul',
         className: "clearfix",
         initialize: function(){
@@ -202,8 +203,9 @@
             // filter through all items in a collection
             // for each, create a new view
             // render and then append to the ul (unordered list)
+            // populate backpack
             this.collection.each(function(person){
-                var ItemView = new Market.Views.Item({model: person});
+                var ItemView = new Market.Views.Item({model: person}); // Individual item view
                 this.$el.append(ItemView.render().el);
             }, this);
             return this;
@@ -211,7 +213,7 @@
         addItemtoSlot: function(itemId){
             // change itemId to a number
             var appendedItemModel = this.collection.findWhere({item_id: parseInt(itemId, 10)});
-            var appendedItemView = new Market.Views.Item({model: appendedItemModel });
+            var appendedItemView = new Market.Views.Item({model: appendedItemModel }); //Market.Views.Item line 113
             this.addHighlightToNextClass(appendedItemView);
         },
         addStockItemURL: function(){
@@ -238,7 +240,7 @@
         tagName: 'ul',
         initialize: function(){
             $(".response").html(this.render().el);
-            this.listenTo(appView, "search-item-li:click", this.addItemToSlot);
+            this.listenTo(appView, "search-item-li:click", this.addItemToSlot); // From addItemSearchSlot line 373
             this.listenTo(appView, "removeView:click", this.removeView);
         },
         render: function(){
@@ -248,30 +250,30 @@
             this.collection.each(function(item){
                 this.addStockItemURL(item);
                 var ItemView = new Market.Views.SearchItem({model: item});
-                this.$el.append(ItemView.render().el);
+                this.$el.append(ItemView.render().el); // append searched items
             }, this);
             return this;
         },
         addItemToSlot: function(itemId){
             console.log("we're in addItemtoSlots");
-            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)});
-            var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel });
-            this.addHighlightToNextClass(appendedItemView);
+            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)}); // find model that was clicked
+            var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
+            this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
         },
         addHighlightToNextClass: function(appendedItemView){
-            $(".highlighted").html(appendedItemView.render().el);
-            var that = $(".highlighted").next();
-            if ($(".highlighted").hasClass("last-slot")){
-                $(".highlighted").removeClass("highlighted");
-                $(".items-wanted .item-slot").siblings().first().addClass("highlighted");
+            $(".highlighted").html(appendedItemView.render().el); // render SearchItem
+            var that = $(".highlighted").next(); // move highlighted to next sibling
+            if ($(".highlighted").hasClass("last-slot")){ // if last slot of all siblings
+                $(".highlighted").removeClass("highlighted"); // remove highlighted class
+                $(".items-wanted .item-slot").siblings().first().addClass("highlighted"); // add to the first sibling
             } else {
-                $(".highlighted").removeClass("highlighted");
-                that.addClass("highlighted");
+                $(".highlighted").removeClass("highlighted"); // or else remove highlighted class
+                that.addClass("highlighted"); // add highlighted class to the next sibling
             }
         },
         removeView: function(){
-            this.remove();
-            this.unbind();
+            this.remove(); // remove view
+            this.unbind(); // unbind from model
         },
         // this method addresses the problem of the items without image urls
         addStockItemURL: function(item){
@@ -281,6 +283,10 @@
       }
     });
 
+    // Refactor here <-- 
+
+    // Market.Views.ItemWantedCollection just creates the ItemsWantedCollection view
+    // Basically, those six blank boxes
     Market.Views.ItemsWantedCollection = Backbone.View.extend({
         tagName: 'ul',
         initialize: function(){
@@ -296,6 +302,8 @@
         }
     });
 
+     // Market.Views.ItemWantedCollection just creates the ItemsOfferedCollection view
+    // Basically, those six blank boxes
     Market.Views.ItemsOfferedCollection = Backbone.View.extend({
         tagName: 'ul',
         initialize: function(){
@@ -312,6 +320,7 @@
             return this;
         }
     });
+    // To here <-- 
 
     Market.Views.ItemSlot = Backbone.View.extend({
 
@@ -356,19 +365,16 @@
 
         addItemToSlot: function(e){
             e.preventDefault();
-            console.log("in global appview");
+
             var itemId = e.currentTarget.id;
             this.trigger("item-li:click", itemId); // Market.Views.ItemCollection
         },
-        addSearchItemToSlot: function(e){
+        addSearchItemToSlot: function(e){ // line 239
             e.preventDefault();
             var itemId = e.currentTarget.id;
             this.trigger("search-item-li:click", itemId);
         },
         createSearchCollection: function(e, data, status, xhr){
-            console.log("in createSearchCollection");
-            console.log(data);
-            console.log(status);
             var searchItems = data;
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
@@ -381,7 +387,6 @@
         reloadItems: function(){
             $("#reload").prop("disabled", true);
             $("#reload").html("Button disabled while reloading...");
-            console.log("In reload item");
             var request = $.ajax({
             type: "POST",
             url: "/reload"
@@ -398,7 +403,6 @@
             request.fail(function(){
                 $("#reload").prop("disabled", false);
                 $("#reload").html("Reload backpack");
-            console.log("Fail");
              });
         }
     });
