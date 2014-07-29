@@ -10,4 +10,9 @@ class Relationship < ActiveRecord::Base
     other_user.other_users << user unless other_user.other_users.include?(user)
     self.save
   end
-end
+
+  def self.is_blocked_relationship?(user, other_user)
+    exists?(user_id: user, other_user_id: other_user, status: "blocked") ||
+    exists?(user_id: other_user, other_user_id: user, status: "blocked")
+  end
+end 

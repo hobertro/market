@@ -12,7 +12,6 @@
        </div>
     <% else %>
         <% @user.received_messages.each do |message| %>
-           <% unless blocked_friends.include?(message.messenger) %>
               <div class="message-section row" data-message-id=<%= message.id %>>
                   <%= link_to url_for(message.messenger) do %>
                     <div class="avatar col-xs-1">
@@ -59,7 +58,6 @@
                       </div>
                   </div>
                </div>
-            <% end %>
         <% end %>
     <% end %>
   </div>

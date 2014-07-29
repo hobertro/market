@@ -1,5 +1,4 @@
 
-  <% unless blocked_friends.include?(comment.user) %>
       <div class="individual-comment row">
           <% if comment.user.avatar_medium.blank? || comment.user.avatar_medium.nil? %>
           <div class="avatar col-xs-1">
@@ -28,4 +27,3 @@
             </div>
           </div>
       </div>
-    <% end %>

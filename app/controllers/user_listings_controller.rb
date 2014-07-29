@@ -1,7 +1,6 @@
 class UserListingsController < ApplicationController
     before_filter :signed_in_user, only: [:create, :destroy, :new]
     before_filter :correct_user, only: [:create, :destroy, :new]
-    before_filter :blocked_relationships
 
     def index
        @user = User.find(params[:user_id])

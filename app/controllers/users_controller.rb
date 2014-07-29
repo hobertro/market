@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :blocked_relationships
 
   def index
 
@@ -14,7 +13,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    @blocked_users = @user.relationships.where("status = ?", "blocked") || ""
   end
 
   def update

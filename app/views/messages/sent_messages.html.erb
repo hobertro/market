@@ -1,41 +1,42 @@
-<div class="row">
-    <h1>Messages</h1>
-        <ul class="nav nav-tabs" role="tablist">
-            <li><%= link_to "Messages", user_messages_path(current_user) %></li>
-            <li class="active"><%= link_to "Sent Messages", sent_messages_user_messages_path %></li>
-        </ul>
-    <% @user.messages.each do |message| %>
-    <div class="message-section row">
-        <%= link_to url_for(message.recipient) do %>
-            <div class="avatar col-xs-1">
-                <span class=>
-                    <img src="<%= message.recipient.avatar_medium %>">
-                </span>
-            </div>
-        <% end %>
 
-        <div class="comment-header group col-xs-9">
-              <div class="title clearfix">
-                <span class="messenger-name">Message to <%= message.recipient.steam_name %> was posted <%= time_ago_in_words(message.created_at) %> ago...</span>
-              <div class="btn-group pull-right">
-                  <div type="button" class="btn btn-inverse">
-                    <%= link_to user_message_path({:id => message.id}) do %>
-                        <i class="pull-right icon fa fa-comments"></i>
-                    <% end %>
-                  </div>
-                   <div type="button" class="btn btn-inverse">
-                    <%= link_to url_for([message.recipient, message]), {:method => :delete} do %>
-                        <i class="pull-right icon glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  </div>
+  <div class="row">
+      <h1>Messages</h1>
+          <ul class="nav nav-tabs" role="tablist">
+              <li><%= link_to "Messages", user_messages_path(current_user) %></li>
+              <li class="active"><%= link_to "Sent Messages", sent_messages_user_messages_path %></li>
+          </ul>
+      <% @user.messages.each do |message| %>
+      <div class="message-section row">
+          <%= link_to url_for(message.recipient) do %>
+              <div class="avatar col-xs-1">
+                  <span class=>
+                      <img src="<%= message.recipient.avatar_medium %>">
+                  </span>
               </div>
-        </div>
+          <% end %>
 
-            <div class="menu comment-description">
-                <%= message.content %>
-            </div>
-        </div>
-     </div>
-    <% end %>
-</div>
+          <div class="comment-header group col-xs-9">
+                <div class="title clearfix">
+                  <span class="messenger-name">Message to <%= message.recipient.steam_name %> was posted <%= time_ago_in_words(message.created_at) %> ago...</span>
+                <div class="btn-group pull-right">
+                    <div type="button" class="btn btn-inverse">
+                      <%= link_to user_message_path({:id => message.id}) do %>
+                          <i class="pull-right icon fa fa-comments"></i>
+                      <% end %>
+                    </div>
+                     <div type="button" class="btn btn-inverse">
+                      <%= link_to url_for([message.recipient, message]), {:method => :delete} do %>
+                          <i class="pull-right icon glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    </div>
+                </div>
+          </div>
+
+              <div class="menu comment-description">
+                  <%= message.content %>
+              </div>
+          </div>
+       </div>
+      <% end %>
+  </div>
 

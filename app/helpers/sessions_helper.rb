@@ -42,39 +42,9 @@ module SessionsHelper
       redirect_to root_path unless current_user?(@user)
       # render :js => "window.location.pathname = '#{signin_path}'" unless current_user?(@user)
     end
-
-    def find_item(item_id)
-      Item.find_by_defindex(item_id.to_s)
-    end
-
-    def messenger_blocked?
-      if Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") || 
-         Relationship.exists?(user_id: params[:recipient], other_user_id: current_user.id, status: "blocked")
-         redirect_to :root
-      end
-    end
-
-    def blocked_relationships
-      if blocked?
-         redirect_to :root
-      end
-    end
-
-    def blocked?
-      if params[:user_id].blank?
-        Relationship.exists?(user_id: current_user.id, other_user_id: params[:id], status: "blocked") ||
-        Relationship.exists?(user_id: params[:id], other_user_id: current_user.id, status: "blocked")
-      elsif
-        Relationship.exists?(user_id: current_user.id, other_user_id: params[:recipient], status: "blocked") || 
-        Relationship.exists?(user_id: params[:recipient], other_user_id: current_user.id, status: "blocked")
-      else 
-        Relationship.exists?(user_id: current_user.id, other_user_id: params[:user_id], status: "blocked") ||
-        Relationship.exists?(user_id: params[:user_id], other_user_id: current_user.id, status: "blocked")
-      end
-    end
-
-    def blocked_friends
-        current_user.other_users
-    end
 end
+  
+
+
+
   
