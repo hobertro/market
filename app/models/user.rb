@@ -39,11 +39,11 @@ class User < ActiveRecord::Base
 
   ## validate trade_url
 
-  def blocked_relationships
+  def blocked_users
     other_users.where("status = ?", "blocked")
   end
 
-  def is_relationship_blocked?(user, other_user)
+  def self.is_relationship_blocked?(user, other_user)
     Relationship.is_blocked_relationship?(user, other_user)
   end
                           
