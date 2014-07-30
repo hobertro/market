@@ -43,7 +43,7 @@
                 <% if @user.other_users.blank? %>
                   <p> You have not blocked anyone.</p>
                 <% else %>
-                  <% @user.other_users.each do |blocked| %>
+                  <% @user.blocked_users.each do |blocked| %>
                      <%= blocked.steam_name %> 
                      <%= link_to "Unblock", unblock_user_path(:blocked_user_id => blocked, :user_id => @user), { :class=>"btn btn-primary" } %>
                   <% end %>

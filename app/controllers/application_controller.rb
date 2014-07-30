@@ -4,12 +4,9 @@ class ApplicationController < ActionController::Base
   before_filter :blocked_relationships?
 
   def blocked_relationships?
-    puts params[:id]
-    puts "hihi"
-    puts params[:user_id]
-    id = params[:id] || params[:user_id]
+    id = params[:user_id] || params[:id]
     user = User.find(id)
-    if User.is_relationship_blocked?(user, current_user)
+    if user.other_users.include?(current_user)
       redirect_to root_path
     end
   end

@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  skip_before_filter :blocked_relationships?
   def new
   end
 
