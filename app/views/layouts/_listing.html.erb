@@ -1,4 +1,4 @@
-<% unless current_user.blocked_users.include?(listing.user) %>
+<% unless listing.user.other_users.include?(current_user) %>
   <div class="single-listing">
     <div class="title clearfix">
       <%= link_to url_for([listing.user, listing]) do %>

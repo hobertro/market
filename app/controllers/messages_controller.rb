@@ -1,24 +1,20 @@
 class MessagesController < ApplicationController
     before_filter :signed_in_user, only: [:create, :new, :show, :index, :destroy]
     before_filter :correct_user, only: [:index, :create, :destroy]
-    
-    
+
+
     def index
-        #@user = User.find(params[:user_id])
         @user = current_user
         @message = @user.messages
-        # @messages = Message.all
     end
 
     def new
-        #@user = User.find(params[:user_id])
         @user = current_user
         @recipient = User.find(params[:recipient])
         @message = @user.messages.new
     end
 
     def create
-        #@user = User.find(params[:user_id])
         @user = current_user
         @recipient = User.find(params[:recipient_id])
         @content = params[:message][:content]
@@ -34,7 +30,7 @@ class MessagesController < ApplicationController
     end
 
     def show
-        #@user = User.find(params[:user_id])
+
         @user = current_user
         @message = Message.find(params[:id])
         @conversation = Message.where(["(messenger_id = ? AND recipient_id = ?) OR (messenger_id = ? AND recipient_id = ?)", 
