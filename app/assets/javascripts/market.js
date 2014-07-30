@@ -111,7 +111,7 @@
         });
        e.preventDefault();
     });
-
+/*
     $(".mark-btn").click(function(e){
         var messageID = $(this).parent().parent().parent().parent().data("message-id");
         console.log("clicked!");
@@ -126,7 +126,7 @@
         });
         e.preventDefault();
     });
-
+*/
     $(".note-btn").click(function(e){
         $(this).parent().parent().parent().find(".note-section").toggle();
         e.preventDefault();
@@ -177,5 +177,5 @@
         e.preventDefault();
         $(".block-user-section").fadeOut();
         $(".trade-url-section").fadeIn();
-    })
+    });
 })();

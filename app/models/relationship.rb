@@ -15,4 +15,13 @@ class Relationship < ActiveRecord::Base
     exists?(user_id: user, other_user_id: other_user, status: "blocked") ||
     exists?(user_id: other_user, other_user_id: user, status: "default")
   end
+
+  def self.blocked_relationships(user_id, other_user_id)
+    where("(user_id = ? AND other_user_id = ?) OR (user_id = ? AND other_user_id = ?)", 
+                              user_id, other_user_id, other_user_id, user_id)
+  end
+
+  def self.unblock_relationship(user_id, other_user_id)
+    self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
+  end
 end 

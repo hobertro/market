@@ -18,6 +18,9 @@ DotaMarket::Application.routes.draw do
    resources :users do
      resources :messages do
         get "sent_messages", :on => :collection
+        member do 
+          get 'marked_as_read'
+        end
       end
   end
 
@@ -50,7 +53,7 @@ DotaMarket::Application.routes.draw do
 
   match '/contact', to: "contact_messages#new"
   match '/signin', to: redirect('/auth/steam')
-  match '/message_marked_as_read', to: "messages#marked_as_read"
+  # match '/message_marked_as_read', to: "messages#marked_as_read"
   match '/block_user', to: "relationships#create"
   match '/unblock_user', to:  "relationships#update"
   match '/update', to: "users#update"

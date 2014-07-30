@@ -45,7 +45,7 @@
                                </div>
                                 
                                 <% if message.status == "unread" %>
-                                  <div type="button" class="mark-btn btn btn-inverse"><%= link_to url_for([@user, message]) do %>
+                                  <div type="button" class="mark-btn btn btn-inverse"><%= link_to marked_as_read_user_message_path(@user, message) do %>
                                       <i class="pull-right icon fa fa-check-square"></i>
                                   <% end %>
                                   </div>
