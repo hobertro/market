@@ -124,23 +124,24 @@
             "click": "addItemToSlot"
         },
 
-        itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
+        itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
 
         render: function(){
             this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
             return this;
         },
         attributes: function(){
-            console.log(this.model.get("rarity"));
+            console.log(this.model);
+            console.log(this);
             return {
-                'id': this.model.get("item_id"),
+                'id': this.model.get("id"),
                 'data-name': this.model.get("name"),
                 'data-defindex': this.model.get("defindex"),
                 'data-toggle': "tooltip",
                 'data-placement': "bottom",
                 'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
-                'data-id': this.model.get("item_id"),
-                'data-rarity': this.model.get("rarity"),
+                'data-id': this.model.get("id"),
+                //'data-rarity': this.model.get("rarity") || "common",
             };
         },
         capitalize: function(string){
@@ -205,6 +206,7 @@
             // render and then append to the ul (unordered list)
             // populate backpack
             this.collection.each(function(person){
+                console.log("in item collection");
                 var ItemView = new Market.Views.Item({model: person}); // Individual item view
                 this.$el.append(ItemView.render().el);
             }, this);
@@ -212,7 +214,7 @@
         },
         addItemtoSlot: function(itemId){
             // change itemId to a number
-            var appendedItemModel = this.collection.findWhere({item_id: parseInt(itemId, 10)});
+            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)});
             var appendedItemView = new Market.Views.Item({model: appendedItemModel }); //Market.Views.Item line 113
             this.addHighlightToNextClass(appendedItemView);
         },
@@ -393,6 +395,7 @@
             });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
+                console.log(response);
                 backpackView.unbind();
                 backpackView.remove();
                 backpack.reset(response) ;
