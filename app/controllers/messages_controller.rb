@@ -40,7 +40,9 @@ class MessagesController < ApplicationController
     def destroy
         @user = User.find(params[:user_id])
         @message = Message.find(params[:id])
-        @message.destroy
+        if @message.destroy
+          flash[:success] = "You have successfully deleted the message"
+        end
         redirect_to user_messages_path(@user)
     end
 
@@ -50,8 +52,10 @@ class MessagesController < ApplicationController
 
     def marked_as_read
         @message = Message.find(params[:id])
-        @message.set_status_to_read
-        redirect_to user_messages_path(@message.messenger)
+        if @message.set_status_to_read
+          flash[:success] = "You have successfully marked the message as read"
+        end
+        redirect_to user_messages_path(@message.recipient)
     end
 
 end

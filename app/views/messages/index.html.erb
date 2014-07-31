@@ -39,7 +39,7 @@
                               <% end %>
                               </div>
 
-                               <div type="button" class="btn btn-inverse"><%= link_to url_for([@user, message]), {:method => :delete} do %>
+                               <div type="button" class="btn btn-inverse" data-toggle="modal" data-target="#myModal"><%= link_to url_for([@user, message]), class: "deleteButton" do %>
                                     <i class="pull-right icon glyphicon glyphicon-trash"></i>
                                 <% end %>
                                </div>

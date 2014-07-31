@@ -178,4 +178,14 @@
         $(".block-user-section").fadeOut();
         $(".trade-url-section").fadeIn();
     });
+
+    // Modal 
+
+    $(".deleteButton").click(function(){
+        var link = $(this).attr("href");
+        updateModal(link);
+    });
+    function updateModal(link){
+        $("#myModal").find(".btn-primary").attr("href", link);
+    }
 })();
