@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  skip_before_filter :blocked_relationships?
   def index
 
   end

@@ -194,6 +194,7 @@
     function updateModal(link, method){
         $("#myModal").find(".btn-primary").attr("href", link);
         if (method === "block"){
+            $("#myModal").find(".modal-body").html("Are you sure you want to block this user?");
             $("#myModal").find(".btn-primary").attr("data-method", "post");
         }
     }
