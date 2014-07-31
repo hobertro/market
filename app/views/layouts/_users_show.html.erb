@@ -20,7 +20,7 @@
                      </div>
 
                       <div class="col-xs-3">
-                       <%= link_to user_relationships_path(current_user, {blocked_user: @user}), :method => :post do %>
+                       <%= link_to user_relationships_path(current_user, {blocked_user: @user}), :data => {:type => "block", :toggle => "modal", :target => "#myModal"}, class: "blockButton" do %>
                           <i class="fa fa-ban"></i>
                           <p>Block User</p>
                         <% end %>

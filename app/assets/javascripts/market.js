@@ -185,7 +185,16 @@
         var link = $(this).attr("href");
         updateModal(link);
     });
-    function updateModal(link){
+    $(".blockButton").click(function(){
+        var link = $(this).attr("href");
+        var method = $(this).data("type");
+        console.log(method);
+        updateModal(link, method);
+    });
+    function updateModal(link, method){
         $("#myModal").find(".btn-primary").attr("href", link);
+        if (method === "block"){
+            $("#myModal").find(".btn-primary").attr("data-method", "post");
+        }
     }
 })();
