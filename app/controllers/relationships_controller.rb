@@ -17,7 +17,6 @@ class RelationshipsController < ApplicationController
 
   def update
     user = User.find(params[:user_id])
-    blocked_user = User.find(params[:blocked_user_id])
     Relationship.unblock_relationship(params[:user_id], params[:blocked_user_id])
     redirect_to edit_user_path(user)
   end
