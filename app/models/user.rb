@@ -107,21 +107,6 @@ class User < ActiveRecord::Base
         #self.user_items
   end
 
-=begin
-  def add_attr_to_items
-    self.user_items.each do |user_item|
-      user_item[:name] = user_item.item.name
-      user_item[:defindex] = user_item.item.defindex
-      user_item[:image_url] = user_item.item.image_url
-      user_item[:item_description] = user_item.item.item_description
-      user_item[:item_set] = user_item.item.item_set
-      user_item.save
-    end
-  end
-=end
-
-  ## need to refactor code below
-
   def self.from_omniauth(auth)
     if auth_user = self.find_by_steam_id(auth["uid"])
     ## create player in db unless they exist already

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_filter :blocked_relationships?
+
   def create
       # move specific user creation to a method on the User model
     auth = request.env['omniauth.auth']
