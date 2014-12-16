@@ -7,6 +7,8 @@ module GetData
   def parsed_data(url)
     puts "IN PARSED DATA"
     @data = URI.parse(url).read
+    puts @data
+    puts "after @data"
     JSON.parse(@data)
   end
 end

@@ -11,11 +11,9 @@
     /****************** Models *********************/
 
     Market.Models.Item = Backbone.Model.extend({
-
         initialize: function(){
             this.on("change", function(){
                 console.log("model changed");
-                console.log(this);
             });
         }
     });
@@ -115,7 +113,6 @@
         tagName: "li",
         className: "item-li item thumbnail",
 
-
         initialize: function(){
                 
         },
@@ -131,8 +128,6 @@
             return this;
         },
         attributes: function(){
-            console.log(this.model);
-            console.log(this);
             return {
                 'id': this.model.get("id"),
                 'data-name': this.model.get("name"),
@@ -156,37 +151,10 @@
         }
     });
 
-    Market.Views.SearchItem = Backbone.View.extend({
-        tagName: "li",
+    Market.Views.SearchItem = Market.Views.Item.extend({
         className: "search-item-li item thumbnail",
         initialize: function(){
             console.log("search item created");
-        },
-
-        itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
-
-        render: function(){
-            this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
-            return this;
-        },
-        attributes: function(){
-            return {
-                'id': this.model.get("id"),
-                'data-name': this.model.get("name"),
-                'data-defindex': this.model.get("defindex"),
-                'data-toggle': "tooltip",
-                'data-placement': "bottom",
-                'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
-                'data-id': this.model.get("item_id"),
-                'data-rarity': this.model.get("rarity")
-            };
-        },
-        capitalize: function(string){
-            if (string === null){
-                return "Common";
-            } else {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
         }
     });
 
@@ -238,7 +206,7 @@
         }
     });
 
-    Market.Views.ItemSearchCollection = Backbone.View.extend({
+    Market.Views.ItemSearchCollection = Market.Views.ItemCollection.extend({
         tagName: 'ul',
         initialize: function(){
             $(".response").html(this.render().el);
@@ -246,9 +214,6 @@
             this.listenTo(appView, "removeView:click", this.removeView);
         },
         render: function(){
-            // filter through all items in a collection
-            // for each, create a new view
-            // render and then append to the ul (unordered list)
             this.collection.each(function(item){
                 this.addStockItemURL(item);
                 var ItemView = new Market.Views.SearchItem({model: item});
@@ -262,27 +227,10 @@
             var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
             this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
         },
-        addHighlightToNextClass: function(appendedItemView){
-            $(".highlighted").html(appendedItemView.render().el); // render SearchItem
-            var that = $(".highlighted").next(); // move highlighted to next sibling
-            if ($(".highlighted").hasClass("last-slot")){ // if last slot of all siblings
-                $(".highlighted").removeClass("highlighted"); // remove highlighted class
-                $(".items-wanted .item-slot").siblings().first().addClass("highlighted"); // add to the first sibling
-            } else {
-                $(".highlighted").removeClass("highlighted"); // or else remove highlighted class
-                that.addClass("highlighted"); // add highlighted class to the next sibling
-            }
-        },
         removeView: function(){
             this.remove(); // remove view
             this.unbind(); // unbind from model
-        },
-        // this method addresses the problem of the items without image urls
-        addStockItemURL: function(item){
-            if (item.get("image_url") === ""){
-            item.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
-       }
-      }
+        }
     });
 
     // Refactor here <-- 
@@ -306,23 +254,12 @@
 
      // Market.Views.ItemWantedCollection just creates the ItemsOfferedCollection view
     // Basically, those six blank boxes
-    Market.Views.ItemsOfferedCollection = Backbone.View.extend({
+    Market.Views.ItemsOfferedCollection = Market.Views.ItemsWantedCollection.extend({
         tagName: 'ul',
         initialize: function(){
            $(".items-wanted").html(this.render().el);
-        },
-        render: function(){
-            this.collection.each(function(itemslot){
-                itemSlotView = new Market.Views.ItemSlot({model: itemslot});
-                this.$el.append(itemSlotView.render().el);
-            }, this);
-            // filter through all items in a collection
-            // for each, create a new view
-            // render and then append to the ul (unordered list)
-            return this;
         }
     });
-    // To here <-- 
 
     Market.Views.ItemSlot = Backbone.View.extend({
 
@@ -395,7 +332,6 @@
             });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
-                console.log(response);
                 backpackView.unbind();
                 backpackView.remove();
                 backpack.reset(response) ;

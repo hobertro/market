@@ -1,4 +1,5 @@
 class ContactMessagesController < ApplicationController
+  skip_before_filter :blocked_relationships?
   def create
     @name = params[:name]
     @email = params[:email]

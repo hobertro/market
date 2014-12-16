@@ -51,36 +51,32 @@ class User < ActiveRecord::Base
     Relationship.is_blocked_relationship?(user, other_user)
   end
 
-  def have_items?
-    create_player_items(steam_id) if self.user_items.empty?
+  def has_items?
+    !user_items.empty?
   end
 
    #possible violation of SRP with method below
 
-  def self.get_user_items(steam_id)
+  def get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
     begin
-      parsed_data(url)  # reading HTTP request using open-uri
-    rescue
-      puts "in rescue clause"
+      User.parsed_data(url)  # reading HTTP request using open-uri
+    rescue => e
       return 
     end
   end
 
   def reload_player_items
-    self.user_items.delete_all
-    create_player_items(steam_id)
+    user_items.delete_all
+    create_player_items
   end
 
-  def create_player_items(steam_id)
+  def create_player_items
     # get player items
     begin
-      player_item_hash = User.get_user_items(steam_id)["result"]["items"]
-    rescue
-      puts "in rescue"
-      return
+      puts "in create_player_items"
+      player_item_hash = get_user_items(steam_id)["result"]["items"]
     end
-    puts player_item_hash
     # create an array of the items based on defindex numbers
     defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
     # find and create an array based on the defindexs in the Items table defindex 
@@ -106,7 +102,10 @@ class User < ActiveRecord::Base
     #self.user_items
   end
 
+  private
+
   def self.from_omniauth(auth)
+    # find a user by their UID (assigned by Steam) by using ActiveRecord dynamic finder
     if auth_user = self.find_by_steam_id(auth["uid"])
     ## create player in db unless they exist already
       return auth_user
@@ -132,8 +131,6 @@ class User < ActiveRecord::Base
       u.person_state         = info["person_state"]
     end
   end
-
-  private
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
