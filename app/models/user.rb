@@ -55,7 +55,10 @@ class User < ActiveRecord::Base
     !user_items.empty?
   end
 
-   #possible violation of SRP with method below
+  def reload_player_items
+    user_items.delete_all
+    create_player_items
+  end
 
   def get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
@@ -66,19 +69,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  def reload_player_items
-    user_items.delete_all
-    create_player_items
+  def player_item_hash
+    get_user_items(steam_id)["result"]["items"]
+  end
+
+  def defindex_ids
+    player_item_hash.map { |item| item["defindex"].to_s }
   end
 
   def create_player_items
-    # get player items
-    begin
-      puts "in create_player_items"
-      player_item_hash = get_user_items(steam_id)["result"]["items"]
-    end
-    # create an array of the items based on defindex numbers
-    defindex_ids = player_item_hash.map { |item| item["defindex"].to_s }
     # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
     items.each do |item|
@@ -98,8 +97,6 @@ class User < ActiveRecord::Base
         end
       end
     end
-    #add_attr_to_items
-    #self.user_items
   end
 
   private

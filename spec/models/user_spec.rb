@@ -17,7 +17,27 @@ describe User do
   end
 
   context "methods" do
-    
+
+    describe "#has_items?" do 
+      user = User.create()
+
+      context "User has no items" do
+        it "#has_items? returns true if player has no items" do
+          user.user_items.create()  
+          expect(user.has_items?).to eq(true)
+        end
+      end
+
+      context "User has items" do
+        it "#has_items? returns false if player has no items" do
+          expect(user.has_items?).to eq(false)
+        end
+      end
+    end
+
+    describe "#get_user_items" do
+      it "returns a user's items from Steam web api"
+    end
   end
 
 

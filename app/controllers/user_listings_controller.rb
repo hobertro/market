@@ -69,9 +69,8 @@ class UserListingsController < ApplicationController
     end
 
     def reload
-        @user = current_user
-        reloaded_items = @user.reload_player_items
-        render :json => reloaded_items
+        current_user.reload_player_items
+        render :json => current_user.user_items
     end
 
     private

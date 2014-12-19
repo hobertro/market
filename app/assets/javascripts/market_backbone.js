@@ -332,14 +332,18 @@
             });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
+                console.log(response);
+                console.log("after console.log(response)");
+                var backpack  = new Market.Collections.Item();
                 backpackView.unbind();
                 backpackView.remove();
-                backpack.reset(response) ;
+                backpack.set(response); // set() vs reset() ?
                 backpackView = new Market.Views.ItemCollection({collection: backpack});
                 $("#reload").prop("disabled", false);
                 $("#reload").html("Reload backpack");
             });
             request.fail(function(){
+                alert("Something has gone wrong");
                 $("#reload").prop("disabled", false);
                 $("#reload").html("Reload backpack");
              });
