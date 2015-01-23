@@ -1,4 +1,4 @@
-# == Schema Information
+ # == Schema Information
 #
 # Table name: users
 #
@@ -37,6 +37,12 @@ class User < ActiveRecord::Base
   has_many :other_users,  :through => :relationships,
                           :source  => :other_user
 
+  validates :steam_id, presence: true
+  validates :steam_name, presence: true
+  validates :avatar, presence: true
+  validates :avatar_medium, presence: true
+  validates :avatar_full, presence: true
+
   ## validate trade_url
 
   def blocked_relationships(user_id, other_user_id)
@@ -51,39 +57,35 @@ class User < ActiveRecord::Base
     Relationship.is_blocked_relationship?(user, other_user)
   end
 
+  ## start testing here
+
   def has_items?
     !user_items.empty?
   end
+
+  ## need to work on reload_player_items
 
   def reload_player_items
     user_items.delete_all
     create_player_items
   end
 
+  ## need to fix rescue, can't rescue all errors
+
   def get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
-    begin
-      User.parsed_data(url)  # reading HTTP request using open-uri
-    rescue => e
-      return 
-    end
-  end
-
-  def player_item_hash
-    get_user_items(steam_id)["result"]["items"]
-  end
-
-  def defindex_ids
-    player_item_hash.map { |item| item["defindex"].to_s }
+    a = User.parsed_data(url)  # reading HTTP request using open-uri, returns a hash that is a parsed JSON object
+    puts a
+    puts "hihihihi"
+    return a
   end
 
   def create_player_items
-    # find and create an array based on the defindexs in the Items table defindex 
     items = Item.where(:defindex => defindex_ids).to_a
     items.each do |item|
       player_item_hash.each do |hash_item|
         if hash_item["defindex"].to_s == item.defindex
-          self.user_items.create! do |ui| #ui = user item
+          user_items.create! do |ui| 
             ui.item_id          = item.id
             ui.equipped         = hash_item["equipped"]
             ui.quality          = hash_item["quality"]
@@ -101,10 +103,19 @@ class User < ActiveRecord::Base
 
   private
 
+  def player_item_hash
+    @player_item_hash ||= get_user_items(steam_id)["result"]["items"]
+  end
+
+  def defindex_ids
+    player_item_hash.map { |item| item["defindex"].to_s }
+  end
+
   def self.from_omniauth(auth)
     # find a user by their UID (assigned by Steam) by using ActiveRecord dynamic finder
-    if auth_user = self.find_by_steam_id(auth["uid"])
+    auth_user = self.find_by_steam_id(auth["uid"])
     ## create player in db unless they exist already
+    if auth_user
       return auth_user
     else 
       self.create_from_omniauth(auth)

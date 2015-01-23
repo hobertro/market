@@ -69,7 +69,6 @@
         model: Market.Models.ItemSlot,
 
         createItemSlots: function(){
-
         // create 12 models
             for(i=0; i<6; i++){
                 modelitemSlot = new Market.Models.ItemSlot();
@@ -158,8 +157,6 @@
         }
     });
 
-
-
     Market.Views.ItemCollection = Backbone.View.extend({ // Backpack items view
         tagName: 'ul',
         className: "clearfix",
@@ -240,7 +237,7 @@
     Market.Views.ItemsWantedCollection = Backbone.View.extend({
         tagName: 'ul',
         initialize: function(){
-           $(".items-offered").html(this.render().el);
+           $(".items-wanted").html(this.render().el);
         },
         render: function(){
             this.collection.each(function(itemslot){
@@ -257,7 +254,9 @@
     Market.Views.ItemsOfferedCollection = Market.Views.ItemsWantedCollection.extend({
         tagName: 'ul',
         initialize: function(){
-           $(".items-wanted").html(this.render().el);
+           
+           $(".items-offered").html(this.render().el);
+           console.log("in items offerred collection view");
         }
     });
 
@@ -272,7 +271,6 @@
         },
 
         render: function(){
-
             return this;
         },
         events: {
@@ -304,7 +302,6 @@
 
         addItemToSlot: function(e){
             e.preventDefault();
-
             var itemId = e.currentTarget.id;
             this.trigger("item-li:click", itemId); // Market.Views.ItemCollection
         },
@@ -332,8 +329,6 @@
             });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
-                console.log(response);
-                console.log("after console.log(response)");
                 var backpack  = new Market.Collections.Item();
                 backpackView.unbind();
                 backpackView.remove();
