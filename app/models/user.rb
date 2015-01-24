@@ -74,31 +74,36 @@ class User < ActiveRecord::Base
 
   def get_user_items(steam_id)
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
-    a = User.parsed_data(url)  # reading HTTP request using open-uri, returns a hash that is a parsed JSON object
-    puts a
-    puts "hihihihi"
-    return a
+    User.parsed_data(url)  # reading HTTP request using open-uri, returns a hash that is a parsed JSON object
   end
 
   def create_player_items
+    merge_items.each do |item|
+      user_items.create!(item)
+    end
+  end
+
+  def merge_items
+    merged_items_array = []
     items = Item.where(:defindex => defindex_ids).to_a
-    items.each do |item|
-      player_item_hash.each do |hash_item|
-        if hash_item["defindex"].to_s == item.defindex
-          user_items.create! do |ui| 
-            ui.item_id          = item.id
-            ui.equipped         = hash_item["equipped"]
-            ui.quality          = hash_item["quality"]
-            ui.rarity           = item.rarity
-            ui.name             = item.name
-            ui.defindex         = item.defindex
-            ui.image_url        = item.image_url
-            ui.item_description = item.item_description
-            ui.item_set         = item.item_set
-          end
+    player_item_hash.each do |i|
+      items.each do |item|
+        if i["defindex"].to_s == item.defindex
+          array_with_attributes = {}
+          array_with_attributes["item_id"]          = item.id
+          array_with_attributes["equipped"]         = i["equipped"]
+          array_with_attributes["quality"]          = i["quality"]
+          array_with_attributes["rarity"]           = item.rarity
+          array_with_attributes["name"]             = item.name
+          array_with_attributes["defindex"]         = i["defindex"]
+          array_with_attributes["image_url"]        = item.image_url
+          array_with_attributes["item_description"] = item.item_description
+          array_with_attributes["item_set"]         = item.item_set
+          merged_items_array.push(array_with_attributes)
         end
       end
     end
+    return merged_items_array
   end
 
   private

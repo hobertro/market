@@ -10,6 +10,7 @@ describe User do
     avatar_full: "avy_full"
   }
 
+
   context "validations" do
 
     it "should be valid with a steam_id, steam_name, avatar, avatar_medium, and avatar_full" do
@@ -65,9 +66,9 @@ describe User do
 
   context "methods" do
 
-    describe "#has_items?" do 
-      user = User.create(valid_attributes)
+    let(:user) { User.create(valid_attributes) }
 
+    describe "#has_items?" do 
       context "User does not have any items" do
         it "#has_items? returns true if player has no items" do
           user.user_items.create()
@@ -82,14 +83,34 @@ describe User do
       end
     end
 
-    describe "#get_user_items" do
-      it "returns a user's items from Steam web api"
+
+      describe "#get_user_items" do
+        it "returns a user's items from Steam web api" do
+          stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
+           with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+           to_return(:status => 200, body: [valid_attributes.to_json], :headers => {})
+           expect(user.get_user_items(user.steam_id)).to eq([valid_attributes.to_json])
+        end
+      end
+
+    context "related to using Steam API for PLAYER ITEMS" do 
+
+      before(:each) do
+        stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
+           with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+           to_return(:status => 200, body: [valid_attributes.to_json], :headers => {})
+      end
+
+      describe "#merge_items" do
+        it "returns an array with merged attributes"
+      end
+
+      describe "#create_player_items" do
+        it "creates user_items based on how many items there are in #merge_items" do
+      end
+
     end
 
-    it "does some web request" do
-      stub = stub_request(:get, "www.example.com")
-      expect(stub).to have_been_requested
-    end
   end
 
 

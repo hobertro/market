@@ -15,6 +15,7 @@
             this.on("change", function(){
                 console.log("model changed");
             });
+            console.log(this);
         }
     });
 
@@ -113,7 +114,7 @@
         className: "item-li item thumbnail",
 
         initialize: function(){
-                
+            console.log(this);
         },
 
         events: {
@@ -134,7 +135,7 @@
                 'data-toggle': "tooltip",
                 'data-placement': "bottom",
                 'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
-                'data-id': this.model.get("id"),
+                'data-id': this.model.get("id")
                 //'data-rarity': this.model.get("rarity") || "common",
             };
         },

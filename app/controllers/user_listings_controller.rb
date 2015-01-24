@@ -10,7 +10,7 @@ class UserListingsController < ApplicationController
 
     def new
         @user = User.find(params[:user_id])
-        @user_items = @user.user_items
+        @user_items = @user.items
         @user_listing = UserListing.new()
         @comment = @user_listing.comments.new()
     end
@@ -39,6 +39,8 @@ class UserListingsController < ApplicationController
         @offered_items = JSON.parse(params[:offer])
         @wanted_items = JSON.parse(params[:wanted])
         @notes = params[:listnote]
+        puts @offered_items
+        puts @wanted_items
         if @user
             @user_listings = @user.user_listings.create()
             @offered_items.each do |item|
