@@ -1,11 +1,5 @@
 <div id="market">
     <div class="main-div row">
-        <!--
-        <div class="col-xs-3">
-            <%= render "layouts/sidebar" %>
-        </div>
-        -->
-
         <div class="col-xs-12">
                 <div class="selection-menu menu row">
                     <div class="title">
@@ -86,7 +80,6 @@
                         <%= submit_tag("Create Listing", class: "submit-button disabled btn btn-primary") %>
                     <% end %>
                 </div> 
-                <!-- <button type="submit" id="test" value="test" class="col-xs-3 btn btn-danger">Submit</button> -->
         </div>   
     </div>
 </div>
@@ -100,6 +93,7 @@
     // creating the Backpack
 
     var backpack  = new Market.Collections.Item();
-        backpack.reset(<%= raw @user.items.to_json %>);
-    var backpackView = new Market.Views.ItemCollection({collection: backpack});
+        backpack.reset(<%= raw @user.user_items.to_json %>);
+        console.log(backpack);
+    var backpackView = new Market.Views.BackpackItemCollection({collection: backpack});
 </script>

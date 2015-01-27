@@ -28,12 +28,13 @@ module SessionsHelper
 
     def signed_in_user
       unless signed_in?
-        puts "signed_in_user_method"
         redirect_to signin_path, notice: "Please sign in."
       end
     end
 
     def correct_user
+      # what is the purpose of this method?
+      
       if params[:user_id]
         @user = User.find(params[:user_id])
       else

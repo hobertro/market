@@ -1,4 +1,5 @@
 class UserListingsController < ApplicationController
+
     before_filter :signed_in_user, only: [:create, :destroy, :new]
     before_filter :correct_user, only: [:create, :destroy, :new]
     skip_before_filter :blocked_relationships?, only: [:search, :reload]
@@ -39,18 +40,14 @@ class UserListingsController < ApplicationController
         @offered_items = JSON.parse(params[:offer])
         @wanted_items = JSON.parse(params[:wanted])
         @notes = params[:listnote]
-        puts @offered_items
-        puts @wanted_items
-        if @user
-            @user_listings = @user.user_listings.create()
-            @offered_items.each do |item|
-              @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "offered"})
-            end
-            @wanted_items.each do |item|
-              @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "wanted"})
-            end
+        @user_listings = @user.user_listings.create()
+        @offered_items.each do |item|
+          @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "offered"})
         end
-        comment = @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
+        @wanted_items.each do |item|
+          @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "wanted"})
+        end
+        @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
         if @user_listings.save
           flash[:success] = "Your listing has been successfully created!!"
           redirect_to([@user, @user_listings])

@@ -1,4 +1,5 @@
-    (function(){
+(function(){
+
 
 // For namespacing
 
@@ -158,6 +159,21 @@
         }
     });
 
+    Market.Views.BackpackItem = Market.Views.Item.extend({
+        itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
+        attributes: function(){
+            return {
+                'id': this.model.get("item_id"),
+                'data-name': this.model.get("name"),
+                'data-defindex': this.model.get("defindex"),
+                'data-toggle': "tooltip",
+                'data-placement': "bottom",
+                'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
+                'data-id': this.model.get("item_id")
+            };
+        },
+    });
+
     Market.Views.ItemCollection = Backbone.View.extend({ // Backpack items view
         tagName: 'ul',
         className: "clearfix",
@@ -180,9 +196,9 @@
         },
         addItemtoSlot: function(itemId){
             // change itemId to a number
-            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)});
-            var appendedItemView = new Market.Views.Item({model: appendedItemModel }); //Market.Views.Item line 113
-            this.addHighlightToNextClass(appendedItemView);
+            var appendedItemModel = this.collection.findWhere({item_id: parseInt(itemId, 10)});
+            var appendedItemView = new Market.Views.BackpackItem({model: appendedItemModel }); //Market.Views.Item line 113
+                this.addHighlightToNextClass(appendedItemView);
         },
         addStockItemURL: function(){
         this.collection.models.forEach(function(model){
@@ -204,6 +220,22 @@
         }
     });
 
+     Market.Views.BackpackItemCollection = Market.Views.ItemCollection.extend({
+        render: function(){
+            this.addStockItemURL();
+            // filter through all items in a collection
+            // for each, create a new view
+            // render and then append to the ul (unordered list)
+            // populate backpack
+            this.collection.each(function(person){
+                console.log("in item backpack collection");
+                var ItemView = new Market.Views.BackpackItem({model: person}); // Individual item view
+                this.$el.append(ItemView.render().el);
+            }, this);
+            return this;
+        }
+     });
+
     Market.Views.ItemSearchCollection = Market.Views.ItemCollection.extend({
         tagName: 'ul',
         initialize: function(){
@@ -221,7 +253,9 @@
         },
         addItemToSlot: function(itemId){
             console.log("we're in addItemtoSlots");
+            console.log(itemId);
             var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)}); // find model that was clicked
+            console.log(appendedItemModel);
             var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
             this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
         },
