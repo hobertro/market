@@ -106,7 +106,7 @@ describe User do
       end
 
       describe "#create_player_items" do
-        it "creates user_items based on how many items there are in #merge_items" do
+        it "creates user_items based on how many items there are in #merge_items"
       end
 
     end

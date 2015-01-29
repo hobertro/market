@@ -36,26 +36,26 @@ class UserListingsController < ApplicationController
     ################ Have to create method to create listings on the model
 
     def create
-        @user = User.find(params[:user_id])
-        @offered_items = JSON.parse(params[:offer])
-        @wanted_items = JSON.parse(params[:wanted])
-        @notes = params[:listnote]
-        @user_listings = @user.user_listings.create()
-        @offered_items.each do |item|
-          @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "offered"})
-        end
-        @wanted_items.each do |item|
-          @user_listings.item_listings.create({"item_id" => item.to_i, "status" => "wanted"})
-        end
-        @user_listings.comments.build({"user_listing_id" => @user_listings.id, "user_id" => @user.id, "description" => @notes}) #might be violating Rails Way here
-        if @user_listings.save
-          flash[:success] = "Your listing has been successfully created!!"
-          redirect_to([@user, @user_listings])
+        offered_items = JSON.parse(params[:offer])
+        wanted_items = JSON.parse(params[:wanted])
+        notes = params[:listnote]
+        user_listings = current_user.user_listings.new()
+        offered_items.each {|item| user_listings.item_listings.build({"item_id" =>
+          item.to_i, "status" =>"offered"})}
+        wanted_items.each {|item| user_listings.item_listings.build({"item_id" => 
+          item.to_i, "status" => "wanted"})}
+        user_listings.comments.build({"user_listing_id" => user_listings.id, "user_id" => 
+            current_user.id, "description" => notes})
+        if user_listings.save
+          flash[:success] = "Your listing has been successfully created!"
+          redirect_to([current_user, user_listings])
         else
-          flash[:notice] = "Oh no! Something went wrong, try again!"
-          redirect_to user_user_listings_path(@user)
+          puts user_listings.errors.inspect
+          flash[:danger] = "Oh no! Something went wrong, try again!"
+          redirect_to user_user_listings_path(current_user)
         end
     end
+
 
     def search
         search_params = params[:search]
