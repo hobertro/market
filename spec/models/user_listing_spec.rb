@@ -8,8 +8,7 @@ describe UserListing do
      
       it "is valid with both offered items and wanted items" do
         user_listing.item_listings << user_listing.item_listings.build({status: "offered"})
-        user_listing.item_listings << user_listing.item_listings.build({status: "wanted"})
-        user_listing.item_listings.each {|x| puts x.inspect }    
+        user_listing.item_listings << user_listing.item_listings.build({status: "wanted"})  
         user_listing.save
         expect(user_listing).to be_valid
       end

@@ -1,7 +1,6 @@
 class UserListing < ActiveRecord::Base
 
   belongs_to :user
-
   has_many :item_listings,  inverse_of: :user_listing, dependent: :destroy
   has_many :items, through: :item_listings
   has_many :items_wanted,
