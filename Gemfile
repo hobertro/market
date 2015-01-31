@@ -33,6 +33,7 @@ group :test do
   gem 'sqlite3'
   gem 'capybara', '~> 2.2.0'
   gem 'webmock'
+  gem 'shoulda-matchers', require: false
 end
 
 group :assets do
