@@ -11,8 +11,8 @@ class Message < ActiveRecord::Base
 
 
     belongs_to :recipient, 
-                class_name: "User",
-                foreign_key: "recipient_id"
+               class_name: "User",
+               foreign_key: "recipient_id"
 
     scope :unread, lambda { |user| where("status = ? AND recipient_id = ?", "unread", user)}
 

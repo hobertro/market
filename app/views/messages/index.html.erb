@@ -4,6 +4,7 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><a href="messages">Messages</a></li>
       <li><%= link_to "Sent Messages", sent_messages_user_messages_path %></li>
+      <li><%= link_to "Conversation", conversation_user_messages_path %></li>
     </ul>
     <% if @user.received_messages.blank? %>
        <div class="">

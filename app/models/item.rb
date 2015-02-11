@@ -13,13 +13,8 @@ class Item < ActiveRecord::Base
 
   has_many :user_items
   has_many :users, through: :user_items
-  
-  has_many :user_listings
-
   has_many :item_listings
   has_many :user_listings, through: :item_listings
-
-  #possibly need to add more attributes: attributes
 
   private
 
@@ -39,28 +34,12 @@ class Item < ActiveRecord::Base
     end
 
     self.all_dota_items.each do |item|
-      a = 0
       unless dict.include?(item["defindex"])
         new_item = Item.new(item)
-        puts new_item
-        puts a += 1
         new_item.save
       end
     end
-    return "hello moto"
   end
-
-## use for refactoring in the future
-
-=begin 
-  def self.item_checker(steam_item)
-    @dict = []
-    Item.all.each do |item|
-      @dict.push(item.defindex.to_i)
-    end
-    # return @dict
-  end
-=end
 
   def self.steam_id_count ## checks how many items are currently on the STEAM API
     steam_items = []
@@ -69,18 +48,6 @@ class Item < ActiveRecord::Base
     end
     puts steam_items.count
   end
-
-=begin ## will be used for future refactoring because hash > array in speed
-  def self.create_hash 
-    item_hash = {}
-    Item.all.each do |item|
-      item_hash["#{item.defindex}"] = item.name
-    end
-    return item_hash
-  end
-=end 
-
-## used in for getting item rarity
 
   def self.open_json_file_first(file_name)
     file = JSON.parse(File.read(file_name))

@@ -21,6 +21,7 @@ DotaMarket::Application.routes.draw do
         member do 
           get 'marked_as_read'
         end
+        get "conversation", :on => :collection
       end
   end
 

@@ -50,6 +50,11 @@ class MessagesController < ApplicationController
         @user = User.find(params[:user_id])
     end
 
+    def conversation
+        @user = current_user
+        @conversation = @user.messages
+    end
+
     def marked_as_read
         @message = Message.find(params[:id])
         if @message.set_status_to_read
