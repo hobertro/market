@@ -36,28 +36,33 @@ DotaMarket::Application.routes.draw do
   resources :items
   resources :sessions, only: [:create, :destroy]
 
+  # SESSIONS ROUTES START #
+
+  post 'auth/steam/callback' => 'sessions#create'
+  delete 'signout'           => 'sessions#destroy'
+  # match '/signout', to: 'sessions#destroy', via: :delete
+
+  # SESSIONS ROUTES END #
+
 
   #resources :user_listings
 
   root to: 'static_pages#home'
 
-  match "/faq", to: "static_pages#faq"
-  match "/about", to: "static_pages#about"
+  match "/faq", to: "static_pages#faq", via: :get
+  match "/about", to: "static_pages#about", via: :get
   # match "/contact", to: "static_pages#contact"
 
-  post 'auth/steam/callback' => 'sessions#create'
-  match '/signout', to: 'sessions#destroy', via: :delete
+  match '/searched-items', to: 'search#show', via: :get
+  match '/search', to: "user_listings#search", via: :get
+  match '/reload', to: "user_listings#reload", via: :post
 
-  match '/searched-items', to: 'search#show'
-  match '/search', to: "user_listings#search"
-  match '/reload', to: "user_listings#reload"
-
-  match '/contact', to: "contact_messages#new"
-  match '/signin', to: redirect('/auth/steam')
+  match '/contact', to: "contact_messages#new", via: :get
+  match '/signin', to: redirect('/auth/steam'), via: :get
   # match '/message_marked_as_read', to: "messages#marked_as_read"
-  match '/block_user', to: "relationships#create"
-  match '/unblock_user', to:  "relationships#update"
-  match '/update', to: "users#update"
+  match '/block_user', to: "relationships#create", via: :get
+  match '/unblock_user', to:  "relationships#update", via: :get
+  match '/update', to: "users#update", via: :get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

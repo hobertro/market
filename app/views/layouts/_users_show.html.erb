@@ -2,14 +2,11 @@
     <div class="user-stats-outside">
         <div class="user-stats-main">
             <div class="user-img col-xs-2">
-                <!--<div class="steam-name"><%= @user.steam_name %></div>-->
                 <img class="img-circle" src="<%= @user.avatar_full %>">
-                <!--<div class="item-count"><%= @user.items.count %> items</div>-->
             </div>
     
              <div class="user-stats-sub col-xs-6">
                  <p class="steam-name"><%= @user.steam_name %></p>
-            
                  <div class="row user-stats-options center">
                   <% unless current_user == @user %>
                      <div class="col-xs-3">
@@ -20,12 +17,13 @@
                      </div>
 
                       <div class="col-xs-3">
-                       <%= link_to user_relationships_path(current_user, {blocked_user: @user}), :data => {:type => "block", :toggle => "modal", :target => "#myModal"}, class: "blockButton" do %>
+                       <%= link_to user_relationships_path(current_user, {blocked_user: @user.id}), :data => {:type => "block", :toggle => "modal", :target => "#myModal"}, class: "blockButton" do %>
                           <i class="fa fa-ban"></i>
                           <p>Block User</p>
                         <% end %>
                      </div>
                   <% end %>
+
                   <% unless current_user.trade_url.blank? %>
                      <div class="col-xs-3">
                       <%= link_to current_user.trade_url do %>
@@ -34,7 +32,7 @@
                       <% end %>
                      </div>
                   <% end %>
-                 </div>
+                </div>
             </div>
         </div>
     </div>

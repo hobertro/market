@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   before_filter :blocked_relationships?
 
+
   def blocked_relationships?
     id = params[:user_id] || params[:id]
     user = User.find(id)

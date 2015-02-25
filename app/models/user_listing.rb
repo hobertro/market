@@ -19,17 +19,16 @@ class UserListing < ActiveRecord::Base
 
   accepts_nested_attributes_for :comments
 
-  validates_presence_of :item_listings, :message => "Item Listings are not present for some reason."
-  validates_associated  :item_listings, :message => "Something went wrong with associated listing items."
+  validates_presence_of :item_listings#, :message => "Item Listings are not present for some reason."
+  validates_associated  :item_listings#, :message => "Something went wrong with associated listing items."
   validate :has_items
-  validate :has_at_least_one_wanted_listing_item
-  validate :has_at_least_one_offered_listing_item
+  validate :has_at_least_one_wanted_listing_item#, :message => "Requires one wanted item_listing"
+  validate :has_at_least_one_offered_listing_item#, :message => "Requires one offered item_listing"
   validate :has_at_least_one_of_both_wanted_and_offered_item
-  validates_length_of   :item_listings, :minimum => 2, 
-                                        :message => "There needs to be at least one item listing with a status of 'wanted' and 'offered"
+  validates_length_of   :item_listings, :minimum => 2#, 
+                                        #:message => "There needs to be at least one item listing with a status of 'wanted' and 'offered"
 
   private 
-
 
   def has_items
     errors.add(:base, 'must add at least one listing item') if self.item_listings.blank?

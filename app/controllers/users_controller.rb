@@ -27,4 +27,6 @@ class UsersController < ApplicationController
     sign_in @user
     redirect_to edit_user_path
   end
+
+  helper_method :current_user
 end

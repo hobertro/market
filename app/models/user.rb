@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     # find a user by their UID (assigned by Steam) by using ActiveRecord dynamic finder
-    auth_user = self.find_by_steam_id(auth["uid"])
+    auth_user = self.find_by(steam_id: auth["uid"])
     ## create player in db unless they exist already
     if auth_user
       return auth_user

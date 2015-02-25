@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+ruby '2.1.2'
 
-gem 'rails', '3.2.7'
+gem 'rails'
 gem 'omniauth-steam'
 gem 'figaro'
 gem 'safe_attributes' # so I can use "attributes" attribute in the DB
 gem 'will_paginate', '> 3.0'
 gem 'will_paginate-bootstrap'
-# gem 'sendgrid'
-
+gem 'treetop', '>= 1.5.0'
 gem 'awesome_print'
 gem 'annotate'
 gem 'rails_12factor'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -36,13 +36,12 @@ group :test do
   gem 'shoulda-matchers', require: false
 end
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+
+  gem 'sass-rails',   '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.0.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
-end
+  gem 'uglifier', '>= 1.3.0'
 
 
 
