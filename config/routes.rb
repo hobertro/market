@@ -38,7 +38,9 @@ DotaMarket::Application.routes.draw do
 
   # SESSIONS ROUTES START #
 
+  get  'auth/steam/callback' => 'sessions#create' # for testing purposes (?)
   post 'auth/steam/callback' => 'sessions#create'
+  get 'auth/failure'         => redirect('/')
   delete 'signout'           => 'sessions#destroy'
   # match '/signout', to: 'sessions#destroy', via: :delete
 

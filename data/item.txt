@@ -1,0 +1,6 @@
+{
+	"result": {
+		"status": 1,
+		"items_game_url": "http://cdn.dota2.com/apps/570/scripts/items/items_game.c77ea2b2be56dd8913a0f59b6c9552b668e26140.txt"
+	}
+}

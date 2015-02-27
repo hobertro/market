@@ -1,14 +1,3 @@
- # == Schema Information
-#
-# Table name: users
-#
-#  id         :integer          not null, primary key
-#  steam_name :string(255)
-#  steam_id   :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 require 'get_data'
 
 class User < ActiveRecord::Base
@@ -20,7 +9,7 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
-  has_many :user_items, dependent: :destroy # foreign_key: "item_id",
+  has_many :user_items, dependent: :destroy
   has_many :items, through: :user_items
 
   has_many :user_listings, dependent: :destroy
@@ -148,4 +137,5 @@ class User < ActiveRecord::Base
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
   end
+
 end

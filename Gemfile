@@ -11,6 +11,7 @@ gem 'treetop', '>= 1.5.0'
 gem 'awesome_print'
 gem 'annotate'
 gem 'rails_12factor'
+gem 'vdf4r'
 
 gem 'protected_attributes'
 gem 'rails-observers'
@@ -34,6 +35,7 @@ group :test do
   gem 'capybara', '~> 2.2.0'
   gem 'webmock'
   gem 'shoulda-matchers', require: false
+  gem 'launchy'
 end
 
 

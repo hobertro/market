@@ -7,6 +7,7 @@ require 'capybara/rails'
 require 'webmock/rspec'
 require 'shoulda/matchers'
 
+
 WebMock.disable_net_connect!(allow_localhost: true)
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -31,4 +32,23 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  config.include IntegrationSpecHelper, :type => :feature
 end
+
+Capybara.default_host = 'http://localhost:3000'
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:steam] = OmniAuth::AuthHash.new({
+        :avatar            => "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ae/aefae2e5855b48bdc6ac522ca2bac705ad3e8930.jpg",
+        :avatarfull        => "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ae/aefae2e5855b48bdc6ac522ca2bac705ad3e8930_full.jpg",
+        :avatarmedium      => "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ae/aefae2e5855b48bdc6ac522ca2bac705ad3e8930_medium.jpg",
+        :commentpermission => 1,
+        :communityvisibilitystate => 3,
+        :profilestate => "who knows",
+        :last_logoff => "don't know",
+        :profile_url => "www.steam.com",
+        :steam_id => "steam_id",
+        :steam_name => "steam_name",
+        :primaryclanid => "1",
+        :timecreated => "forgot",
+        :person_state => "strangers in the fire"
+    })

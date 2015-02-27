@@ -10,9 +10,7 @@ describe User do
     avatar_full: "avy_full"
   }
 
-
   context "validations" do
-
     it "should be valid with a steam_id, steam_name, avatar, avatar_medium, and avatar_full" do
       user = User.new(valid_attributes)
       expect(user).to be_valid
@@ -60,16 +58,30 @@ describe User do
     end
 
     it "has a collection of listings" do 
-      User.new.user_listings.should be_kind_of Array
+      expect(User.new.user_listings).to be_kind_of Array
     end
   end
 
   context "methods" do
 
-    let(:user) { User.create(valid_attributes) }
+    let(:user) { User.new(valid_attributes) }
+
+    describe "#remember_token" do 
+      before { user.save }
+      it "responds to #remember_token", :focus => true do
+        expect(user).to respond_to(:remember_token)
+      end
+
+      it "contains a remember_token after being created" do
+        expect(user.remember_token).to_not be_blank
+      end
+
+    end
+
 
     describe "#has_items?" do 
       context "User does not have any items" do
+        before { user.save() }
         it "#has_items? returns true if player has no items" do
           user.user_items.create()
           expect(user.has_items?).to eq(true)
@@ -84,17 +96,16 @@ describe User do
     end
 
 
-      describe "#get_user_items" do
-        it "returns a user's items from Steam web api" do
-          stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
-           with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-           to_return(:status => 200, body: [valid_attributes.to_json], :headers => {})
-           expect(user.get_user_items(user.steam_id)).to eq([valid_attributes.to_json])
-        end
+    describe "#get_user_items" do
+      it "returns a user's items from Steam web api" do
+        stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
+         with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+         to_return(:status => 200, body: [valid_attributes.to_json], :headers => {})
+         expect(user.get_user_items(user.steam_id)).to eq([valid_attributes.to_json])
       end
+    end
 
     context "related to using Steam API for PLAYER ITEMS" do 
-
       before(:each) do
         stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
            with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
@@ -108,8 +119,8 @@ describe User do
       describe "#create_player_items" do
         it "creates user_items based on how many items there are in #merge_items"
       end
-
     end
+
 
   end
 
