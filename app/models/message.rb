@@ -14,7 +14,7 @@ class Message < ActiveRecord::Base
                class_name: "User",
                foreign_key: "recipient_id"
 
-    scope :unread, -> { where("status = ? AND recipient_id = ?", "unread", user) }
+    scope :unread, lambda { |user| where("status = ? AND recipient_id = ?", "unread", user)}
 
     def set_status_to_read
       self.status = "read"
