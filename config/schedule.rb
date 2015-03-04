@@ -19,4 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, "development"
+set :environment, "production"
+
+every 1.minute do
+  rake "hello"
+end
+
+every :sunday, :at => '12:00am' do
+  rake "parse_items"
+end

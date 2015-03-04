@@ -8,8 +8,12 @@ require File.expand_path('../config/application', __FILE__)
 
 DotaMarket::Application.load_tasks
 
-desc 'Say Hi'
+desc 'Parse Items from Item.txt'
+task :parse_items do
+  ItemParser.update_database
+end
+
+desc 'Say Hello'
 task :hello do
-  User.connection
   User.hi
 end
