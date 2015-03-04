@@ -8,7 +8,7 @@ class ItemParser
   extend GetData
 
   def self.get_item_schema_url
-    url = "http://api.steampowered.com/IEconItems_570/GetSchemaURL/v1?key=55BA1C088556CDF59A3B43120193700F"
+    url = "http://api.steampowered.com/IEconItems_570/GetSchemaURL/v1?key=#{ENV['STEAM_WEB_API_KEY']}"
     parsed_data(url)["result"]["items_game_url"]
   end
 
@@ -38,13 +38,16 @@ class ItemParser
     JSON.parse(file) 
   end
 
+  #item[0] represents the item KEY and is how it is parsed from the VDF_PARSER 
+  #item[1] represents the item VALUE and is how it is parsed from the VDF_PARSER 
+  #since IECON_570 is down, begin the method below for now
+
   def self.update_database
     # items = Item.where(:defindex => defindex_ids).to_a 
-    items = ItemParser.convert_json_to_ruby_hash
-    items["items_game"]["items"].each do |item|
-      if db_item = Item.find_by_defindex(item[0].to_i)
-        db_item.rarity = item[1]["item_rarity"]
-        puts "found"
+    items = ItemParser.convert_json_to_ruby_hash 
+    items["items_game"]["items"].each do |item| 
+      if db_item = Item.find_by_defindex(item[0].to_i) 
+        db_item.rarity = item[1]["item_rarity"] 
       else
         puts "not found"
         Item.create! do |new_item|
@@ -54,6 +57,9 @@ class ItemParser
         end
       end
     end
-    puts "hihi"
+  end
+
+  def self.update_img_url
+    # todo
   end
 end

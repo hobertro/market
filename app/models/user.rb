@@ -95,6 +95,10 @@ class User < ActiveRecord::Base
     return merged_items_array
   end
 
+  def self.hi
+    puts "hihi"
+  end
+
   private
 
   def player_item_hash

@@ -48,27 +48,4 @@ class Item < ActiveRecord::Base
     end
     puts steam_items.count
   end
-
-  def self.open_json_file_first(file_name)
-    file = JSON.parse(File.read(file_name))
-    Item.all.each do |item|
-      if file["items"].include?(item.defindex)
-        item.rarity = file["items"][item.defindex]["item_rarity"]
-        item.save
-      end
-    end
-    return "done"
-  end
-
-  def self.open_json_file(file_name)
-    file = JSON.parse(File.read(file_name))
-    Item.all.each do |item|
-      if file.include?(item.defindex) # include? wrapper for hash#has_key?
-        item.rarity = file[item.defindex]["item_rarity"]
-        item.save
-        puts item.rarity
-      end
-    end
-    return "done"
-  end
 end
