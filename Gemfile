@@ -20,6 +20,8 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'whenever', require: false
 
+gem 'faker'
+
 # Gems used only for assets and not required
 # in production environments by default.
 

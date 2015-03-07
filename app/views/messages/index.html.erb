@@ -3,7 +3,7 @@
     <h1>Messages</h1>
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><a href="messages">Messages</a></li>
-      <li><%= link_to "Sent Messages", sent_messages_user_messages_path %></li>
+      <li><%= link_to "Sent Messages", sent_messages_user_messages_path(@user, @message) %></li>
       <li><%= link_to "Conversation", conversation_user_messages_path %></li>
     </ul>
     <% if @user.received_messages.blank? %>
@@ -17,7 +17,7 @@
                     <%= link_to url_for(message.messenger) do %>
                       <div class="avatar col-xs-1">
                           <span>
-                              <img src="<%= message.messenger.avatar_medium %>">
+                              <img class="img-responsive" src="<%= message.messenger.avatar_medium %>">
                           </span>
                       </div>
                     <% end %>

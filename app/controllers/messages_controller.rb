@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 
     def index
         @user = current_user
-        @message = @user.messages
+        @message = @user.messages.paginate(:page => params[:page]).per_page(10)
     end
 
     def new

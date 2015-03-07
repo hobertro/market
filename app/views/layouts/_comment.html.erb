@@ -7,7 +7,7 @@
           <% else %>
             <div class="avatar col-xs-1">
               <%= link_to url_for(comment.user) do %>
-                <span><img src="<%= comment.user.avatar_medium %>"></span>
+                <span><img class="img-responsive" src="<%= comment.user.avatar_medium %>"></span>
               <% end %>
             </div>
           <% end %> 

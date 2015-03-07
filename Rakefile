@@ -12,8 +12,3 @@ desc 'Parse Items from Item.txt'
 task :parse_items do
   ItemParser.update_database
 end
-
-desc 'Say Hello'
-task :hello do
-  User.hi
-end
