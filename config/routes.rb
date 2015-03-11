@@ -1,7 +1,5 @@
 DotaMarket::Application.routes.draw do
-  get "search/new"
-  get "search/create"
-  get "search/show"
+
 
   concern :commentable do
     resources :comments
@@ -29,7 +27,7 @@ DotaMarket::Application.routes.draw do
 
   get  'auth/steam/callback' => 'sessions#create' # for testing purposes (?)
   post 'auth/steam/callback' => 'sessions#create'
-  get 'auth/failure'         => redirect('/')
+  get  'auth/failure'         => redirect('/')
   delete 'signout'           => 'sessions#destroy'
   # match '/signout', to: 'sessions#destroy', via: :delete
 
@@ -42,12 +40,16 @@ DotaMarket::Application.routes.draw do
 
   ### SHAMEFUL ROUTES BELOW ###
 
+  get "search/new"
+  get "search/create"
+  get "search/show"
+  match '/searched-items', to: 'search#show', via: :get
+  match '/search', to: "user_listings#search", via: :get
+
   match "/faq", to: "static_pages#faq", via: :get
   match "/about", to: "static_pages#about", via: :get
   # match "/contact", to: "static_pages#contact"
 
-  match '/searched-items', to: 'search#show', via: :get
-  match '/search', to: "user_listings#search", via: :get
   match '/reload', to: "user_listings#reload", via: :post
 
   match '/contact', to: "contact_messages#new", via: :get

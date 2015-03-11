@@ -1,18 +1,15 @@
-<!-- Conversation Section -->
 <div class="main-div">
-    <div class="row">
-        <div class="col-xs-12">
-        <%= render 'layouts/messages_side_bar' %>
+        <h1>Conversation with </h1>
         <% @conversation.each do |message| %>
             <% if message.messenger == current_user %>
             <div class="message-section row clearfix">
                 <div class="avatar col-xs-1">
                     <span class=>
-                        <img src="<%= message.messenger.avatar_medium %>">
+                        <img class="img-responsive" src="<%= message.messenger.avatar_medium %>">
                     </span>
                 </div>
 
-                <div class="comment-header group col-xs-9 clearfix">
+                <div class="comment-header group col-xs-10 clearfix">
                     <div class="title clearfix">
 
                         <span><%= message.messenger.steam_name %> Posted <%= time_ago_in_words(message.created_at) %> ago...</span>
@@ -41,11 +38,11 @@
              <div class="message-section row clearfix">
                 <div class="avatar col-xs-1">
                     <span class=>
-                        <img src="<%= message.messenger.avatar_medium %>">
+                        <img class="img-responsive" src="<%= message.messenger.avatar_medium %>">
                     </span>
                 </div>
 
-                <div class="comment-header group col-xs-11 clearfix">
+                <div class="comment-header group col-xs-10 clearfix">
                     <div class="title clearfix">
 
                         <span><%= message.messenger.steam_name %> Posted <%= time_ago_in_words(message.created_at) %> ago...</span>
@@ -74,6 +71,4 @@
             </div>
             <% end %>
         <% end %>
-        </div>
-    </div>
 </div>

@@ -52,7 +52,9 @@ class MessagesController < ApplicationController
 
     def conversation
         @user = current_user
-        @conversation = @user.messages
+        @message = Message.find(params[:id])
+        @recipient = User.find(@message.recipient.id)
+        @conversation = Conversation.new({messenger: current_user, recipient: @recipient})
     end
 
     def marked_as_read

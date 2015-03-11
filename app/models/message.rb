@@ -25,9 +25,15 @@ class Message < ActiveRecord::Base
       self.unread(user).count
     end
 
-    private
-
     def set_default_status
       self.status = "unread"
+    end
+
+    def self.conversation(users)
+      messenger = users[:messenger]
+      recipient = users[:recipient]
+      Message.where(["(messenger_id = ? AND recipient_id = ?) OR (messenger_id = ? AND recipient_id = ?)", 
+                                messenger.id, recipient.id, recipient.id, messenger.id])
+                                .order("created_at DESC")
     end
 end
