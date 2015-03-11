@@ -89,27 +89,16 @@
         model: Market.Models.Item,
 
         initialize: function(){
-            console.log(this.models);
             this.listenTo(appView, "createSearchCollection", this.addToCollection);
-            this.addStockItemURL();
-            console.log("created from search items!!!");
-
+            console.log("created from search items");
         },
         addToCollection: function(data){
             this.reset([]);
             this.add(JSON.parse(data));
         },
         addStockItemURL: function(){
-        console.log("in addstcomitemurl!!!");
-        console.log(this.models);
-        console.log('below this.models');
         this.models.forEach(function(model){
             if (model.image_url === ""){
-            console.log(model);
-            console.log("in for each");
-            console.log("hihi");
-            console.log(model.image_url);
-            console.log("need tests");
             model.image_url = "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png";
          }
         });
@@ -167,11 +156,7 @@
         className: "search-item-li item thumbnail",
         initialize: function(){
             console.log("search item created");
-            console.log(this.model.get("image_url"));
-            console.log("below thisssss");
-            this.addStockItemURL();
         }
-
     });
 
     Market.Views.BackpackItem = Market.Views.Item.extend({
