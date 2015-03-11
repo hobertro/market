@@ -16,9 +16,16 @@
             this.on("change", function(){
                 console.log("model changed");
             });
-            console.log(this);
+            this.addStockItemURL();
+        },
+        addStockItemURL: function(){
+            if(this.get("image_url") === "" || this.get("image_url" === null)){
+                this.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
+            }
         }
     });
+
+
 
     Market.Models.ItemSlot = Backbone.Model.extend({
 
@@ -49,15 +56,13 @@
         },
         model: Market.Models.Item,
 
-        url:  "new",
-
         addStockItemURL: function(){
-        this.models.forEach(function(model){
-            if (model.image_url === ""){
-            model.image_url = "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png";
-         }
-        });
-       }
+            this.models.forEach(function(model){
+                if (model.image_url === ""){
+                    model.image_url = "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png";
+                }
+            });
+        }
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
@@ -89,23 +94,18 @@
         model: Market.Models.Item,
 
         initialize: function(){
-            this.listenTo(appView, "createSearchCollection", this.addToCollection);
-            console.log("created from search items");
-        },
+
+            // this.listenTo(appView, "createSearchCollection", this.addToCollection);
+
+        }/*,
         addToCollection: function(data){
             this.reset([]);
+            console.log("in add to collection");
+            console.log(data);
+            console.log("in add data");
             this.add(JSON.parse(data));
-        },
-        addStockItemURL: function(){
-        this.models.forEach(function(model){
-            if (model.image_url === ""){
-            model.image_url = "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png";
-         }
-        });
-       }
+        }*/
     });
-
-
 
     /********************* Views ************************/
 
@@ -115,7 +115,7 @@
         className: "item-li item thumbnail",
 
         initialize: function(){
-            console.log(this);
+            
         },
 
         events: {
@@ -228,7 +228,6 @@
             // render and then append to the ul (unordered list)
             // populate backpack
             this.collection.each(function(person){
-                console.log("in item backpack collection");
                 var ItemView = new Market.Views.BackpackItem({model: person}); // Individual item view
                 this.$el.append(ItemView.render().el);
             }, this);
@@ -239,9 +238,14 @@
     Market.Views.ItemSearchCollection = Market.Views.ItemCollection.extend({
         tagName: 'ul',
         initialize: function(){
+            $that = this;
+            this.collection.forEach(function(model){
+              $that.addStockItemURL(model);
+            });
             $(".response").html(this.render().el);
             this.listenTo(appView, "search-item-li:click", this.addItemToSlot); // From addItemSearchSlot line 373
             this.listenTo(appView, "removeView:click", this.removeView);
+            console.log(this.collection);
         },
         render: function(){
             this.collection.each(function(item){
@@ -252,8 +256,6 @@
             return this;
         },
         addItemToSlot: function(itemId){
-            console.log("we're in addItemtoSlots");
-            console.log(itemId);
             var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)}); // find model that was clicked
             console.log(appendedItemModel);
             var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
@@ -262,6 +264,14 @@
         removeView: function(){
             this.remove(); // remove view
             this.unbind(); // unbind from model
+        },
+        addStockItemURL: function(model){
+            console.log("addStockItemURL");
+            console.log(model.get("image_url"));
+            if(model.get("image_url") === null){
+                console.log("in if state");
+                model.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
+            }
         }
     });
 
@@ -347,7 +357,14 @@
         },
         createSearchCollection: function(e, data, status, xhr){
             var searchItems = data;
+            console.log(data);
+            console.log("in createSearchCollection");
+            // 1. new search collection being created with data
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
+            // 2. new search collection view collection created with search collection
+            // The problem is that it does not use a Backbone.model
+            // Solution is to use a backbone model
+            console.log(newSearchCollection);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
             $('li').tooltip("hide");
         },
