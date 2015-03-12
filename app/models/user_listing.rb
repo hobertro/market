@@ -35,15 +35,15 @@ class UserListing < ActiveRecord::Base
   end
 
   def has_at_least_one_wanted_listing_item
-    errors.add(:base, "test1 failed") unless self.item_listings.any? {|item| item.status == "wanted" }
+    errors.add(:base, "User listing needs at least one wanted listing item") unless self.item_listings.any? {|item| item.status == "wanted" }
   end
 
   def has_at_least_one_offered_listing_item
-    errors.add(:base, "test2 failed") unless self.item_listings.any? {|item| item.status == "offered"}
+    errors.add(:base, "User listing needs at least one offered listing item") unless self.item_listings.any? {|item| item.status == "offered"}
   end
 
   def has_at_least_one_of_both_wanted_and_offered_item
-    errors.add(:base, "test3 failed") unless (self.item_listings.any? {|item| item.status == "wanted" }) && (self.item_listings.any? {|item| item.status == "offered"})
+    errors.add(:base, "User listing needs at least one of both wanted and offered items") unless (self.item_listings.any? {|item| item.status == "wanted" }) && (self.item_listings.any? {|item| item.status == "offered"})
   end
 
   
