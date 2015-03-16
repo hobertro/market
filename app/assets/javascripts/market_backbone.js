@@ -28,7 +28,7 @@
             this.addStockItemURL();
         },
         addStockItemURL: function(){
-            if(this.get("image_url") === "" || this.get("image_url" === null)){
+            if(this.get("image_url") === "" || this.get("image_url") === null){
                 this.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
             }
         }
@@ -72,6 +72,12 @@
 
     });
 
+    Market.Collections.SearchItems = Backbone.Collection.extend({
+
+        model: Market.Models.Item,
+
+    });
+
     Market.Collections.ItemSlots = Backbone.Collection.extend({
 
         model: Market.Models.ItemSlot,
@@ -85,12 +91,6 @@
                 this.add(model_item_Slot);
             }
         }
-    });
-
-    Market.Collections.SearchItems = Backbone.Collection.extend({
-
-        model: Market.Models.Item,
-
     });
 
     /********************* Views ************************/
@@ -137,7 +137,10 @@
     });
 
     Market.Views.SearchItem = Market.Views.Item.extend({
-        className: "search-item-li item thumbnail"
+        className: "search-item-li item thumbnail",
+        initialize: function(){
+            this.listenTo(appView, "search-item-li:click", this.addItemtoSlot);
+        }
     });
 
     Market.Views.ItemCollection = Backbone.View.extend({ // Backpack items view
@@ -148,7 +151,7 @@
             this.listenTo(appView, "item-li:click", this.addItemtoSlot);
         },
         render: function(){
-            this.addStockItemURL();
+
             // filter through all items in a collection
             // for each, create a new view
             // render and then append to the ul (unordered list)
@@ -159,19 +162,6 @@
                 this.$el.append(ItemView.render().el);
             }, this);
             return this;
-        },
-        addItemtoSlot: function(itemId){
-            // change itemId to a number
-            var appendedItemModel = this.collection.findWhere({item_id: parseInt(itemId, 10)});
-            var appendedItemView = new Market.Views.BackpackItem({model: appendedItemModel }); //Market.Views.Item line 113
-                this.addHighlightToNextClass(appendedItemView);
-        },
-        addStockItemURL: function(){
-        this.collection.models.forEach(function(model){
-            if (model.get("image_url") === null){
-            model.set("image_url", "http://cdn.dota2.com/apps/570/icons/econ/testitem_slot_empty.71716dc7a6b7f7303b96ddd15bbe904a772aa151.png");
-         }
-        });
         },
         addHighlightToNextClass: function(appendedItemView){
             $(".highlighted").html(appendedItemView.render().el);
@@ -188,7 +178,7 @@
 
      Market.Views.BackpackItemCollection = Market.Views.ItemCollection.extend({
         render: function(){
-            this.addStockItemURL(); // this method is from the super class
+            
             // filter through all items in a collection
             // for each, create a new view
             // render and then append to the ul (unordered list)
@@ -205,9 +195,6 @@
         tagName: 'ul',
         initialize: function(){
             $that = this;
-            this.collection.forEach(function(model){
-              $that.addStockItemURL(model);
-            });
             $(".response").html(this.render().el);
             this.listenTo(appView, "search-item-li:click", this.addItemToSlot); // From addItemSearchSlot line 373
             this.listenTo(appView, "removeView:click", this.removeView);
@@ -215,7 +202,6 @@
         },
         render: function(){
             this.collection.each(function(item){
-                this.addStockItemURL(item);
                 var ItemView = new Market.Views.SearchItem({model: item});
                 this.$el.append(ItemView.render().el); // append searched items
             }, this);
@@ -265,9 +251,7 @@
     Market.Views.ItemSlot = Backbone.View.extend({
 
         tagName: "li",
-
         className: "item-slot",
-
         render: function(){
             return this;
         },
@@ -301,7 +285,7 @@
         },
         addSearchItemToSlot: function(e){ // line 239
             e.preventDefault();
-            
+            console.log(e.currentTarget);
             var itemId = e.currentTarget.id;
             this.trigger("search-item-li:click", itemId);
         },
@@ -314,7 +298,6 @@
             // 2. new search collection view collection created with search collection
             // The problem is that it does not use a Backbone.model
             // Solution is to use a backbone model
-            console.log(newSearchCollection);
             var newSearchCollectionView = new Market.Views.ItemSearchCollection({collection: newSearchCollection});
             $('li').tooltip("hide");
         },
