@@ -92,8 +92,7 @@
 
     // creating the Backpack
 
-    var backpack  = new Market.Collections.Item();
+    var backpack  = new Market.Collections.BackpackItems();
         backpack.reset(<%= raw @user.user_items.to_json %>);
-        console.log(backpack);
     var backpackView = new Market.Views.BackpackItemCollection({collection: backpack});
 </script>

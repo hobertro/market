@@ -55,13 +55,21 @@ class User < ActiveRecord::Base
   ## need to work on reload_player_items
 
   def reload_player_items
+    # temporary solution
+    begin 
+      get_user_items
+    rescue SocketError => e 
+      puts e 
+      puts "There was a socket error, perhaps your are not connected to the internet?"
+      return 
+    end
     user_items.delete_all
     create_player_items
   end
 
   ## need to fix rescue, can't rescue all errors
 
-  def get_user_items(steam_id)
+  def get_user_items
     url = "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=" + steam_id + "&key=" + ENV["STEAM_WEB_API_KEY"]
     User.parsed_data(url)  # reading HTTP request using open-uri, returns a hash that is a parsed JSON object
   end
@@ -93,10 +101,6 @@ class User < ActiveRecord::Base
       end
     end
     return merged_items_array
-  end
-
-  def self.hi
-    puts "hihi"
   end
 
   private

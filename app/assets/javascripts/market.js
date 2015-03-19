@@ -19,6 +19,7 @@
     });
 
     /* Creating an listing function */
+
     $(".super-form").submit(function(e){
         var userID = $(".user-data").attr("data-user-id");
         var itemsOfferedArray = $('.items-offered .item-li');
@@ -50,6 +51,7 @@
         $(".item-slot").removeClass("highlighted");
         $(this).toggleClass("highlighted");
     });
+
 
 // User Listings 
 
@@ -131,7 +133,7 @@
     });
 
     $('body').tooltip({
-     selector: '[rel=tooltip]'
+      selector: '[rel=tooltip]'
     });
 
     $(".goodbye").fadeOut(7500);

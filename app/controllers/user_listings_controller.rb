@@ -67,6 +67,8 @@ class UserListingsController < ApplicationController
         render :json => item_results
     end
 
+    ## does this belong here? 3/18/15
+
     def reload
         current_user.reload_player_items
         render :json => current_user.user_items

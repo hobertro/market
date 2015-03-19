@@ -11,6 +11,17 @@
 -Switch to using defindexes for items instead of IDs
 */
 
+/* 
+1. When you click on an backpack item, add that item to the offered collection
+    a. Add that model to the offered items collection
+    b. Append the view to one of the offered collections slots
+2. When you click on an search item, add that item to the wanted collection.
+    a. add that model to the wanted items collection
+    b. Append the view to onf of the wanted items collections. 
+
+
+*/
+
 /*** END ***/
 
 // For namespacing
@@ -67,15 +78,15 @@
     /***************** Collections ******************/
 
     Market.Collections.Item = Backbone.Collection.extend({ // Collection only
-
         model: Market.Models.Item,
+    });
 
+    Market.Collections.BackpackItems = Market.Collections.Item.extend({
+       // empty 
     });
 
     Market.Collections.SearchItems = Backbone.Collection.extend({
-
-        model: Market.Models.Item,
-
+      // empty 
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
@@ -115,7 +126,6 @@
                 'data-placement': "bottom",
                 'title': this.capitalize(this.model.get("rarity")) + " " + this.model.get("name"),
                 'data-id': this.model.get("id")
-                //'data-rarity': this.model.get("rarity") || "common",
             };
         },
         capitalize: function(string){
@@ -129,17 +139,23 @@
 
     Market.Views.BackpackItem = Market.Views.Item.extend({
         itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
+        initialize: function(){
+            this.$el.click(this.addToWantedCollection);
+        },
         attributes: function(){
             return {
                 'id': this.model.get("item_id"),
             };
         },
+        addToWantedCollection: function(){
+            console.log(this.model);
+        }
     });
 
     Market.Views.SearchItem = Market.Views.Item.extend({
         className: "search-item-li item thumbnail",
         initialize: function(){
-            this.listenTo(appView, "search-item-li:click", this.addItemtoSlot);
+            console.log("search item click");
         }
     });
 
@@ -149,19 +165,6 @@
         initialize: function(){
             $(".backpack").html(this.render().el);
             this.listenTo(appView, "item-li:click", this.addItemtoSlot);
-        },
-        render: function(){
-
-            // filter through all items in a collection
-            // for each, create a new view
-            // render and then append to the ul (unordered list)
-            // populate backpack
-            this.collection.each(function(person){
-                console.log("in item collection");
-                var ItemView = new Market.Views.Item({model: person}); // Individual item view
-                this.$el.append(ItemView.render().el);
-            }, this);
-            return this;
         },
         addHighlightToNextClass: function(appendedItemView){
             $(".highlighted").html(appendedItemView.render().el);
@@ -177,14 +180,17 @@
     });
 
      Market.Views.BackpackItemCollection = Market.Views.ItemCollection.extend({
+        initialize: function(){
+            this.render();
+        },
         render: function(){
-            
+            console.log("in here");
             // filter through all items in a collection
             // for each, create a new view
             // render and then append to the ul (unordered list)
             // populate backpack
-            this.collection.each(function(person){
-                var ItemView = new Market.Views.BackpackItem({model: person}); // Individual item view
+            this.collection.each(function(item){
+                var ItemView = new Market.Views.BackpackItem({model: item}); // Individual item view
                 this.$el.append(ItemView.render().el);
             }, this);
             return this;
@@ -196,9 +202,9 @@
         initialize: function(){
             $that = this;
             $(".response").html(this.render().el);
-            this.listenTo(appView, "search-item-li:click", this.addItemToSlot); // From addItemSearchSlot line 373
-            this.listenTo(appView, "removeView:click", this.removeView);
-            console.log(this.collection);
+                this.listenTo(appView, "search-item-li:click", this.addItemToSlot); // From addItemSearchSlot line 373
+                this.listenTo(appView, "removeView:click", this.removeView);
+            
         },
         render: function(){
             this.collection.each(function(item){
@@ -209,9 +215,8 @@
         },
         addItemToSlot: function(itemId){
             var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)}); // find model that was clicked
-            console.log(appendedItemModel);
             var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
-            this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
+                this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
         },
         removeView: function(){
             this.remove(); // remove view
@@ -233,7 +238,6 @@
                 itemSlotView = new Market.Views.ItemSlot({model: itemslot});
                 this.$el.append(itemSlotView.render().el);
             }, this);
-
             return this;
         }
     });
@@ -275,7 +279,12 @@
             "click .search-item-li": "addSearchItemToSlot",
             "click .search-btn": "removeView",
             "ajax:success": "createSearchCollection",
-            "click #reload": "reloadItems"
+            "click #reload": "reloadItems",
+           // "click .super-form": "submitListing"
+        },
+
+        submitListing: function(){
+            console.log("hihi");
         },
 
         addItemToSlot: function(e){
@@ -291,8 +300,6 @@
         },
         createSearchCollection: function(e, data, status, xhr){
             var searchItems = data;
-            console.log(data);
-            console.log("in createSearchCollection");
             // 1. new search collection being created with data
             var newSearchCollection = new Market.Collections.SearchItems(searchItems);
             // 2. new search collection view collection created with search collection

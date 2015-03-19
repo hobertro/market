@@ -44,10 +44,7 @@
 .title,
 .menu {
     background-color: $color3;
-    /* min-width: 1000px; */
-    /*
-    max-width: 930px;
-    */
+
 }
 
 .title {
@@ -77,11 +74,7 @@
     @include borderBottom(3px);
 }   
 
-.items-wanted {
-    background-color: none;
-}
-
-.items-offered {
+.items-wanted, .items-offered {
     background-color: none;
 }
 
