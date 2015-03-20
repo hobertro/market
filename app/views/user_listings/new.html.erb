@@ -7,26 +7,26 @@
                     </div>
                     <div class="col-xs-6 items-offered">
                         <h5>Items Offered</h5>
-                        <ul class="clearfix">
+                        <ul class="clearfix item-offered-slots" id="items-offered">
                             <li class="highlighted item-slot"></li>
-                            <li class="item-slot"></li>
-                            <li class="item-slot"></li>
-                            <li class="item-slot"></li>
-                            <li class="item-slot"></li>
+                            <li class="item-slot offered-slot"></li>
+                            <li class="item-slot offered-slot"></li>
+                            <li class="item-slot offered-slot"></li>
+                            <li class="item-slot offered-slot"></li>
                             <li class="item-slot last-slot"></li>
                         </ul>
                     </div> 
                     <span class="offer-icon glyphicon glyphicon-transfer"></span>   
         
-                    <div class="col-xs-6 items-wanted">
+                    <div class="col-xs-6 items-wanted" id="items-wanted">
                         <h5>Items Wanted</h5>
-                        <ul class="clearfix">
-                           <li class="item-slot"></li>
-                           <li class="item-slot"></li>
-                           <li class="item-slot"></li>
-                           <li class="item-slot"></li>
-                           <li class="item-slot"></li>
-                           <li class="item-slot last-slot"></li>
+                        <ul class="clearfix item-wanted-slots">
+                           <li class="item-slot wanted-slot"></li>
+                           <li class="item-slot wanted-slot"></li>
+                           <li class="item-slot wanted-slot"></li>
+                           <li class="item-slot wanted-slot"></li>
+                           <li class="item-slot wanted-slot"></li>
+                           <li class="item-slot wanted-slot last-slot"></li>
                         </ul>
                     </div>
                 </div>
@@ -84,6 +84,12 @@
     </div>
 </div>
 
+<div>
+    <ul id="testView">
+        
+    </ul>
+</div>
+
 <script type="text/javascript">
 
     // AppView
@@ -95,4 +101,7 @@
     var backpack  = new Market.Collections.BackpackItems();
         backpack.reset(<%= raw @user.user_items.to_json %>);
     var backpackView = new Market.Views.BackpackItemCollection({collection: backpack});
+
+    var itemsWantedCollection = new  Market.Collections.WantedSlots();
+    var itemsWanted = new Market.Views.WantedSlots({collection: itemsWantedCollection });
 </script>

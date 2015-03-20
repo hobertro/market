@@ -59,7 +59,8 @@ class User < ActiveRecord::Base
     begin 
       get_user_items
     rescue SocketError => e 
-      puts e 
+      puts "in reload_player_items"
+      puts e
       puts "There was a socket error, perhaps your are not connected to the internet?"
       return 
     end

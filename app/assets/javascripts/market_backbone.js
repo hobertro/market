@@ -22,6 +22,20 @@
 
 */
 
+/*
+
+1. Create slots at designated areas
+2. Create one for items offered, one for items wanted
+3. Render slots when app is initialized
+
+*/
+
+/*
+
+If you are in the items wanted collection, you are appended to a slot
+
+*/
+
 /*** END ***/
 
 // For namespacing
@@ -49,6 +63,10 @@
 
     Market.Models.ItemSlot = Backbone.Model.extend({
 
+        events: {
+            "click": "addItemToSlot"
+        },
+
         defaults: {
             selectedValue: false
         },
@@ -59,9 +77,14 @@
         },
         setToFalse: function(){
             this.set("selectedValue", false);
+        },
+        addItemToSlot: function(){
+            console.log("hihi");
+            // this.child = new Market.Models.Item();
         }
 
     });
+
 
     Market.Models.ItemsWanted = Market.Models.ItemSlot.extend({
         defaults: {
@@ -75,6 +98,7 @@
           }
     });
 
+
     /***************** Collections ******************/
 
     Market.Collections.Item = Backbone.Collection.extend({ // Collection only
@@ -82,11 +106,17 @@
     });
 
     Market.Collections.BackpackItems = Market.Collections.Item.extend({
-       // empty 
+       // tempty
     });
 
     Market.Collections.SearchItems = Backbone.Collection.extend({
-      // empty 
+
+      initialize: function(){
+        console.log("hihi");
+      },
+      appendSearchItemView: function(){
+        console.log("test");
+      }
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
@@ -102,6 +132,10 @@
                 this.add(model_item_Slot);
             }
         }
+    });
+
+    Market.Collections.ItemsWanted = Market.Collections.ItemSlots.extend({
+        model: Market.Models.ItemsWanted
     });
 
     /********************* Views ************************/
@@ -140,7 +174,7 @@
     Market.Views.BackpackItem = Market.Views.Item.extend({
         itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
         initialize: function(){
-            this.$el.click(this.addToWantedCollection);
+            this.click(this.addToWantedCollection);
         },
         attributes: function(){
             return {
@@ -148,16 +182,22 @@
             };
         },
         addToWantedCollection: function(){
+            console.log("hihi");
             console.log(this.model);
         }
     });
 
     Market.Views.SearchItem = Market.Views.Item.extend({
         className: "search-item-li item thumbnail",
-        initialize: function(){
-            console.log("search item click");
+        events: {
+            "click": "addToOfferedCollection"
+        },
+        addToOfferedCollection: function(){
+            console.log("hihihi");
         }
     });
+
+    /*** Collection Views ***/
 
     Market.Views.ItemCollection = Backbone.View.extend({ // Backpack items view
         tagName: 'ul',
@@ -184,7 +224,6 @@
             this.render();
         },
         render: function(){
-            console.log("in here");
             // filter through all items in a collection
             // for each, create a new view
             // render and then append to the ul (unordered list)
@@ -268,6 +307,70 @@
         }
     });
 
+    Market.Views.ItemsWantedSlots = Backbone.View.extend({
+        el: "#items-wanted",
+        events: {
+            "click": "addItemToSlot"
+        },
+        addItemtoSlot: function(){
+            console.log("test");
+        }
+    });
+
+    /*  Test start here  */
+
+    // render a collection of items wanted
+
+    Market.Models.ItemSlot = Backbone.Model.extend({
+        defaults: {
+            "selected": false
+        }
+    });
+
+    Market.Views.ItemSlot = Backbone.View.extend({
+        model: Market.Models.ItemSlot,
+        tagName: "li",
+        className: "item-slot",
+        render: function(){
+            return this;
+        },
+        events: {
+            "click": "selectValue"
+        },
+        selectValue: function(){
+            console.log(this.model);
+            this.model.set("selected", !this.model.get("selected"));
+        }
+    });
+
+    Market.Collections.ItemSlots = Backbone.Collection.extend({
+        createItemSlots: function(){
+            for(i=0; i<6; i++){
+                model_item_Slot = new Market.Models.ItemSlot();
+                this.add(model_item_Slot);
+            }
+        }
+    });
+
+    Market.Collections.WantedSlots = Market.Collections.ItemSlots.extend({
+        initialize: function(){
+            this.createItemSlots();
+        }
+    });
+
+    Market.Views.WantedSlots = Backbone.View.extend({
+        el: "#testView",
+        initialize: function(){
+        var $that = this;
+          this.collection.each(function(slot){
+            ItemSlotView = new Market.Views.ItemSlot({model: slot});
+            $that.$el.append(ItemSlotView.render().el);
+          });
+        }
+    });
+
+    /* Test ends here */
+
     // global view
 
     Market.Views.App = Backbone.View.extend({
@@ -283,6 +386,10 @@
            // "click .super-form": "submitListing"
         },
 
+        initialize: function(){
+
+        },
+
         submitListing: function(){
             console.log("hihi");
         },
@@ -293,10 +400,13 @@
             this.trigger("item-li:click", itemId); // Market.Views.ItemCollection
         },
         addSearchItemToSlot: function(e){ // line 239
+    
             e.preventDefault();
-            console.log(e.currentTarget);
             var itemId = e.currentTarget.id;
+            console.log("above what i want");
+            console.log(e.currentTarget);
             this.trigger("search-item-li:click", itemId);
+
         },
         createSearchCollection: function(e, data, status, xhr){
             var searchItems = data;
@@ -337,3 +447,18 @@
         }
     });
 })();
+
+/* 
+
+Where does creating the search item begin?
+
+1. Line 305, createSearchCollection fxn:
+    Create a new collection with class Market.Collections.SearchItems with data
+2. Line 312, create a view for the Market.Collections.SearchItems view.
+    a. Market.Views.ItemSearchCollection can be found on line 205
+    b. The collection creates individual views using Market.Views.SearchItem (line 223)
+        which can be found on line 155
+    c. It used the backbone model ____ found on line ___
+3. Error is in ItemSearchCollection
+
+*/
