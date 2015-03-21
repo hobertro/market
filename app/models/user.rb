@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   private
 
   def player_item_hash
-    @player_item_hash ||= get_user_items(steam_id)["result"]["items"]
+    @player_item_hash ||= get_user_items["result"]["items"]
   end
 
   def defindex_ids

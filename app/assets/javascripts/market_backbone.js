@@ -50,6 +50,7 @@ If you are in the items wanted collection, you are appended to a slot
 
     Market.Models.Item = Backbone.Model.extend({
         initialize: function(){
+            console.log("hihi");
             this.addStockItemURL();
         },
         addStockItemURL: function(){
@@ -115,7 +116,7 @@ If you are in the items wanted collection, you are appended to a slot
         console.log("hihi");
       },
       appendSearchItemView: function(){
-        console.log("test");
+        
       }
     });
 
@@ -174,7 +175,7 @@ If you are in the items wanted collection, you are appended to a slot
     Market.Views.BackpackItem = Market.Views.Item.extend({
         itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
         initialize: function(){
-            this.click(this.addToWantedCollection);
+            
         },
         attributes: function(){
             return {
@@ -220,9 +221,6 @@ If you are in the items wanted collection, you are appended to a slot
     });
 
      Market.Views.BackpackItemCollection = Market.Views.ItemCollection.extend({
-        initialize: function(){
-            this.render();
-        },
         render: function(){
             // filter through all items in a collection
             // for each, create a new view
@@ -384,10 +382,6 @@ If you are in the items wanted collection, you are appended to a slot
             "ajax:success": "createSearchCollection",
             "click #reload": "reloadItems",
            // "click .super-form": "submitListing"
-        },
-
-        initialize: function(){
-
         },
 
         submitListing: function(){
