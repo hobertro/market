@@ -333,11 +333,12 @@ If you are in the items wanted collection, you are appended to a slot
             return this;
         },
         events: {
-            "click": "selectValue"
+            "click": "toggleSelectedValue"
         },
-        selectValue: function(){
+        toggleSelectedValue: function(){
             console.log(this.model);
-            this.model.set("selected", !this.model.get("selected"));
+            this.model.set("selected", true);
+            console.log(this.model.get("selected"));
         }
     });
 
@@ -347,6 +348,9 @@ If you are in the items wanted collection, you are appended to a slot
                 model_item_Slot = new Market.Models.ItemSlot();
                 this.add(model_item_Slot);
             }
+        },
+        toggleSelect: function(){
+            console.log("in item slots collection");
         }
     });
 
@@ -360,10 +364,23 @@ If you are in the items wanted collection, you are appended to a slot
         el: "#testView",
         initialize: function(){
         var $that = this;
-          this.collection.each(function(slot){
+        this.collection.each(function(slot){
             ItemSlotView = new Market.Views.ItemSlot({model: slot});
             $that.$el.append(ItemSlotView.render().el);
           });
+        },
+        events: {
+            "click": "toggleSelect"
+        },
+        toggleSelect: function(){
+            console.log("in item wanted slots view");
+            console.log(this.collection);
+            this.collection.each(function(slot){
+                slot.selected = false;
+            });
+            this.collection.each(function(slot){
+                console.log(slot.selected);
+            });
         }
     });
 
