@@ -322,6 +322,9 @@ If you are in the items wanted collection, you are appended to a slot
     Market.Models.ItemSlot = Backbone.Model.extend({
         defaults: {
             "selected": false
+        },
+        setValueToTrue: function(){
+            console.log("truetruetrue");
         }
     });
 
@@ -329,16 +332,15 @@ If you are in the items wanted collection, you are appended to a slot
         model: Market.Models.ItemSlot,
         tagName: "li",
         className: "item-slot",
+        initialize: function(){
+            this.listenTo(appView, "selectTrue", this.toggleSelectedValue);
+        },
         render: function(){
             return this;
         },
-        events: {
-            "click": "toggleSelectedValue"
-        },
         toggleSelectedValue: function(){
-            console.log(this.model);
-            this.model.set("selected", true);
-            console.log(this.model.get("selected"));
+            console.log("CHA CHING");
+            // this.model.set("selected", true);
         }
     });
 
@@ -349,14 +351,19 @@ If you are in the items wanted collection, you are appended to a slot
                 this.add(model_item_Slot);
             }
         },
-        toggleSelect: function(){
-            console.log("in item slots collection");
+        toggleSelectAllFalse: function(){
+            this.models.forEach(function(slot){
+                slot.set("selected", false);
+            });
         }
     });
 
     Market.Collections.WantedSlots = Market.Collections.ItemSlots.extend({
+        // 1. Create slot items
+        // 2. Set first slot item 'selected' value to true
         initialize: function(){
             this.createItemSlots();
+            this.at(0).set("selected", true);
         }
     });
 
@@ -366,21 +373,15 @@ If you are in the items wanted collection, you are appended to a slot
         var $that = this;
         this.collection.each(function(slot){
             ItemSlotView = new Market.Views.ItemSlot({model: slot});
+
             $that.$el.append(ItemSlotView.render().el);
           });
         },
         events: {
-            "click": "toggleSelect"
+            "click": "toggleSelectAllFalse",
         },
-        toggleSelect: function(){
-            console.log("in item wanted slots view");
-            console.log(this.collection);
-            this.collection.each(function(slot){
-                slot.selected = false;
-            });
-            this.collection.each(function(slot){
-                console.log(slot.selected);
-            });
+        toggleSelectAllFalse: function(){
+            this.collection.toggleSelectAllFalse();
         }
     });
 
@@ -399,10 +400,14 @@ If you are in the items wanted collection, you are appended to a slot
             "ajax:success": "createSearchCollection",
             "click #reload": "reloadItems",
            // "click .super-form": "submitListing"
+           "click .item-slot": "selectTrue"
+        },
+        selectTrue: function(){
+            this.trigger("selectTrue");
         },
 
         submitListing: function(){
-            console.log("hihi");
+            console.log("in submitListing");
         },
 
         addItemToSlot: function(e){
