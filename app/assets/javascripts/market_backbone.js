@@ -50,7 +50,6 @@ If you are in the items wanted collection, you are appended to a slot
 
     Market.Models.Item = Backbone.Model.extend({
         initialize: function(){
-            console.log("hihi");
             this.addStockItemURL();
         },
         addStockItemURL: function(){
@@ -63,6 +62,9 @@ If you are in the items wanted collection, you are appended to a slot
 
 
     Market.Models.ItemSlot = Backbone.Model.extend({
+        initialize: function(){
+            this.container = [];
+        },
 
         events: {
             "click": "addItemToSlot"
@@ -79,7 +81,7 @@ If you are in the items wanted collection, you are appended to a slot
         setToFalse: function(){
             this.set("selectedValue", false);
         },
-        addItemToSlot: function(){
+        addItemToSlot: function(model){
             console.log("hihi");
             // this.child = new Market.Models.Item();
         }
@@ -111,13 +113,7 @@ If you are in the items wanted collection, you are appended to a slot
     });
 
     Market.Collections.SearchItems = Backbone.Collection.extend({
-
-      initialize: function(){
-        console.log("hihi");
-      },
-      appendSearchItemView: function(){
-        
-      }
+        // empty
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
@@ -148,6 +144,10 @@ If you are in the items wanted collection, you are appended to a slot
 
         itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
 
+        events: {
+            'click': 'addModelToItemSlot'
+        },
+
         render: function(){
             this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
             return this;
@@ -169,22 +169,19 @@ If you are in the items wanted collection, you are appended to a slot
             } else {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
+        },
+        addModelToItemSlot: function(){
+            var selectedItemSlot = itemsWanted.collection.findWhere({selected: true});
+            selectedItemSlot.addModelToItemSlot(this.model);
         }
     });
 
     Market.Views.BackpackItem = Market.Views.Item.extend({
         itemTemplate: _.template("<a href='/items/<%= item_id %>'><img class='item-img' src='<%= image_url %>''></a>"),
-        initialize: function(){
-            
-        },
         attributes: function(){
             return {
                 'id': this.model.get("item_id"),
             };
-        },
-        addToWantedCollection: function(){
-            console.log("hihi");
-            console.log(this.model);
         }
     });
 
@@ -192,9 +189,6 @@ If you are in the items wanted collection, you are appended to a slot
         className: "search-item-li item thumbnail",
         events: {
             "click": "addToOfferedCollection"
-        },
-        addToOfferedCollection: function(){
-            console.log("hihihi");
         }
     });
 
@@ -309,9 +303,6 @@ If you are in the items wanted collection, you are appended to a slot
         el: "#items-wanted",
         events: {
             "click": "addItemToSlot"
-        },
-        addItemtoSlot: function(){
-            console.log("test");
         }
     });
 
@@ -319,28 +310,51 @@ If you are in the items wanted collection, you are appended to a slot
 
     // render a collection of items wanted
 
+    /* To do:
+        1. When an item is clicked
+        2. Append that item to the item slot that has a value of 'true' for
+           its 'selected' value. 
+        3. 
+    */
+
     Market.Models.ItemSlot = Backbone.Model.extend({
+        initialize: function(){
+            this.container = [];
+           
+        },
         defaults: {
             "selected": false
         },
-        setValueToTrue: function(){
-            console.log("truetruetrue");
-        }
+        addModelToItemSlot: function(model){
+            this.container = [];
+            this.container.push(model);
+            this.trigger("addedModel");
+        },
     });
 
     Market.Views.ItemSlot = Backbone.View.extend({
         model: Market.Models.ItemSlot,
         tagName: "li",
         className: "item-slot",
+        events: {
+            "click": "toggleSelectedValue"
+        },
         initialize: function(){
-            this.listenTo(appView, "selectTrue", this.toggleSelectedValue);
+            this.listenTo(this.model, "addedModel", this.appendView);
         },
         render: function(){
             return this;
         },
+        appendView: function(){
+            var modelView = new Market.Views.BackpackItem({model: this.model.container[0]});
+            this.$el.html(modelView.render().el);
+            var trashView = new Market.Views.Trash();
+                trashView.parentView = this;
+                this.$el.append(trashView.render().el);
+        },
         toggleSelectedValue: function(){
-            console.log("CHA CHING");
-            // this.model.set("selected", true);
+            this.parentView.toggleSelectAllFalse();
+            this.model.set("selected", true);
         }
     });
 
@@ -348,13 +362,9 @@ If you are in the items wanted collection, you are appended to a slot
         createItemSlots: function(){
             for(i=0; i<6; i++){
                 model_item_Slot = new Market.Models.ItemSlot();
+                model_item_Slot.parentView = this;
                 this.add(model_item_Slot);
             }
-        },
-        toggleSelectAllFalse: function(){
-            this.models.forEach(function(slot){
-                slot.set("selected", false);
-            });
         }
     });
 
@@ -373,16 +383,32 @@ If you are in the items wanted collection, you are appended to a slot
         var $that = this;
         this.collection.each(function(slot){
             ItemSlotView = new Market.Views.ItemSlot({model: slot});
-
+            ItemSlotView.parentView = $that;
             $that.$el.append(ItemSlotView.render().el);
           });
         },
-        events: {
-            "click": "toggleSelectAllFalse",
-        },
         toggleSelectAllFalse: function(){
-            this.collection.toggleSelectAllFalse();
+            this.collection.forEach(function(itemSlot){
+                itemSlot.set("selected", false);
+            });
         }
+    });
+
+    Market.Views.Trash = Backbone.View.extend({
+        className: "trash-view",
+        trashTpl: _.template("<a><i class='glyphicon glyphicon-trash'></i></a>"),
+        events: {
+            "click": "deleteView"
+        },
+        render: function(){
+            this.$el.html(this.trashTpl());
+            return this;
+        },
+        deleteView: function(){
+            this.parentView.model.container = [];
+            this.parentView.$el.html("");
+        }
+
     });
 
     /* Test ends here */
@@ -400,10 +426,6 @@ If you are in the items wanted collection, you are appended to a slot
             "ajax:success": "createSearchCollection",
             "click #reload": "reloadItems",
            // "click .super-form": "submitListing"
-           "click .item-slot": "selectTrue"
-        },
-        selectTrue: function(){
-            this.trigger("selectTrue");
         },
 
         submitListing: function(){
