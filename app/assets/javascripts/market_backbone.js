@@ -1,45 +1,5 @@
 (function(){
 
-/*** THINGS TO DO ***/
-
-/* 
--Refactor Backbone code 
--Split items wanted and items offered section into two different classes
--Do not allow items offered section to use searched items 
--Integrate market.js code into this file
--Migrate to requireJS
--Switch to using defindexes for items instead of IDs
-*/
-
-/* 
-1. When you click on an backpack item, add that item to the offered collection
-    a. Add that model to the offered items collection
-    b. Append the view to one of the offered collections slots
-2. When you click on an search item, add that item to the wanted collection.
-    a. add that model to the wanted items collection
-    b. Append the view to onf of the wanted items collections. 
-
-
-*/
-
-/*
-
-1. Create slots at designated areas
-2. Create one for items offered, one for items wanted
-3. Render slots when app is initialized
-
-*/
-
-/*
-
-If you are in the items wanted collection, you are appended to a slot
-
-*/
-
-/*** END ***/
-
-// For namespacing
-
     window.Market = {
         Models: {},
         Collections: {},
@@ -59,49 +19,6 @@ If you are in the items wanted collection, you are appended to a slot
         }
     });
 
-
-
-    Market.Models.ItemSlot = Backbone.Model.extend({
-        initialize: function(){
-            this.container = [];
-        },
-
-        events: {
-            "click": "addItemToSlot"
-        },
-
-        defaults: {
-            selectedValue: false
-        },
-        // change target model.selectedValue to true
-        toggleSelect: function(){
-            this.collection.allModelsFalse();
-            this.set("selectedValue", !this.get("selectedValue"));
-        },
-        setToFalse: function(){
-            this.set("selectedValue", false);
-        },
-        addItemToSlot: function(model){
-            console.log("hihi");
-            // this.child = new Market.Models.Item();
-        }
-
-    });
-
-
-    Market.Models.ItemsWanted = Market.Models.ItemSlot.extend({
-        defaults: {
-            type: "wanted",
-          }
-    });
-
-    Market.Models.ItemsOffered = Market.Models.ItemSlot.extend({
-        defaults: {
-            type: "offered",
-          }
-    });
-
-
     /***************** Collections ******************/
 
     Market.Collections.Item = Backbone.Collection.extend({ // Collection only
@@ -109,30 +26,11 @@ If you are in the items wanted collection, you are appended to a slot
     });
 
     Market.Collections.BackpackItems = Market.Collections.Item.extend({
-       // tempty
+       // empty
     });
 
-    Market.Collections.SearchItems = Backbone.Collection.extend({
+    Market.Collections.SearchItems = Market.Collections.Item.extend({
         // empty
-    });
-
-    Market.Collections.ItemSlots = Backbone.Collection.extend({
-
-        model: Market.Models.ItemSlot,
-        
-        initialize: function(){
-           this.createItemSlots();
-        },
-        createItemSlots: function(){
-            for(i=0; i<6; i++){
-                model_item_Slot = new Market.Models.ItemSlot();
-                this.add(model_item_Slot);
-            }
-        }
-    });
-
-    Market.Collections.ItemsWanted = Market.Collections.ItemSlots.extend({
-        model: Market.Models.ItemsWanted
     });
 
     /********************* Views ************************/
@@ -143,10 +41,6 @@ If you are in the items wanted collection, you are appended to a slot
         className: "item-li item thumbnail",
 
         itemTemplate: _.template("<a href='/items/<%= id %>'><img class='item-img' src='<%= image_url %>''></a>"),
-
-        events: {
-            'click': 'addModelToItemSlot'
-        },
 
         render: function(){
             this.$el.addClass(this.model.get("rarity")).html(this.itemTemplate(this.model.toJSON()));
@@ -169,10 +63,6 @@ If you are in the items wanted collection, you are appended to a slot
             } else {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-        },
-        addModelToItemSlot: function(){
-            var selectedItemSlot = itemsWanted.collection.findWhere({selected: true});
-            selectedItemSlot.addModelToItemSlot(this.model);
         }
     });
 
@@ -182,13 +72,27 @@ If you are in the items wanted collection, you are appended to a slot
             return {
                 'id': this.model.get("item_id"),
             };
+        },
+        events: {
+            "click": "addModelToItemSlot"
+        },
+        addModelToItemSlot: function(e){
+            e.preventDefault();
+            var itemsOfferedSlotModel = itemsOffered.collection.findWhere({selected: true});
+            itemsOfferedSlotModel.addModelToItemSlot(this.model);
         }
     });
 
     Market.Views.SearchItem = Market.Views.Item.extend({
         className: "search-item-li item thumbnail",
         events: {
-            "click": "addToOfferedCollection"
+            "click": "addModelToItemSlot"
+        },
+        addModelToItemSlot: function(e){
+            e.preventDefault();
+            // implicit call to a model that is not explicitly known
+            var itemsWantedSlotModel = itemsWanted.collection.findWhere({selected: true});
+            itemsWantedSlotModel.addModelToItemSlot(this.model);
         }
     });
 
@@ -200,6 +104,13 @@ If you are in the items wanted collection, you are appended to a slot
         initialize: function(){
             $(".backpack").html(this.render().el);
             this.listenTo(appView, "item-li:click", this.addItemtoSlot);
+        },
+        render: function(){
+            this.collection.forEach(function(item){
+                var ItemView = new Market.Views.Item({model: item});
+                this.$el.append(ItemView.render().el);
+            }, this);
+            return this;
         },
         addHighlightToNextClass: function(appendedItemView){
             $(".highlighted").html(appendedItemView.render().el);
@@ -240,25 +151,21 @@ If you are in the items wanted collection, you are appended to a slot
         render: function(){
             this.collection.each(function(item){
                 var ItemView = new Market.Views.SearchItem({model: item});
-                this.$el.append(ItemView.render().el); // append searched items
+                this.$el.append(ItemView.render().el);
             }, this);
             return this;
         },
         addItemToSlot: function(itemId){
-            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)}); // find model that was clicked
-            var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel }); // Line 155 create new view
-                this.addHighlightToNextClass(appendedItemView); // append this view to highlighted class
+            var appendedItemModel = this.collection.findWhere({id: parseInt(itemId, 10)});
+            var appendedItemView = new Market.Views.SearchItem({model: appendedItemModel });
+                this.addHighlightToNextClass(appendedItemView);
         },
         removeView: function(){
-            this.remove(); // remove view
-            this.unbind(); // unbind from model
+            this.remove();
+            this.unbind();
         }
     });
 
-    // Refactor here <-- 
-
-    // Market.Views.ItemWantedCollection just creates the ItemsWantedCollection view
-    // Basically, those six blank boxes
     Market.Views.ItemsWantedCollection = Backbone.View.extend({
         tagName: 'ul',
         initialize: function(){
@@ -273,8 +180,6 @@ If you are in the items wanted collection, you are appended to a slot
         }
     });
 
-     // Market.Views.ItemWantedCollection just creates the ItemsOfferedCollection view
-    // Basically, those six blank boxes
     Market.Views.ItemsOfferedCollection = Market.Views.ItemsWantedCollection.extend({
         tagName: 'ul',
         initialize: function(){
@@ -303,19 +208,11 @@ If you are in the items wanted collection, you are appended to a slot
         el: "#items-wanted",
         events: {
             "click": "addItemToSlot"
-        }
+        },
+
     });
 
-    /*  Test start here  */
-
-    // render a collection of items wanted
-
-    /* To do:
-        1. When an item is clicked
-        2. Append that item to the item slot that has a value of 'true' for
-           its 'selected' value. 
-        3. 
-    */
+    /*** Item Slots ***/
 
     Market.Models.ItemSlot = Backbone.Model.extend({
         initialize: function(){
@@ -346,7 +243,7 @@ If you are in the items wanted collection, you are appended to a slot
             return this;
         },
         appendView: function(){
-            var modelView = new Market.Views.BackpackItem({model: this.model.container[0]});
+            var modelView = new Market.Views.Item({model: this.model.container[0]});
             this.$el.html(modelView.render().el);
             var trashView = new Market.Views.Trash();
                 trashView.parentView = this;
@@ -359,6 +256,10 @@ If you are in the items wanted collection, you are appended to a slot
     });
 
     Market.Collections.ItemSlots = Backbone.Collection.extend({
+        initialize: function(){
+            this.createItemSlots();
+            this.at(0).set("selected", true);
+        },
         createItemSlots: function(){
             for(i=0; i<6; i++){
                 model_item_Slot = new Market.Models.ItemSlot();
@@ -368,17 +269,15 @@ If you are in the items wanted collection, you are appended to a slot
         }
     });
 
-    Market.Collections.WantedSlots = Market.Collections.ItemSlots.extend({
-        // 1. Create slot items
-        // 2. Set first slot item 'selected' value to true
-        initialize: function(){
-            this.createItemSlots();
-            this.at(0).set("selected", true);
-        }
+    Market.Collections.OfferedSlots = Market.Collections.ItemSlots.extend({
+        // empty
     });
 
-    Market.Views.WantedSlots = Backbone.View.extend({
-        el: "#testView",
+    Market.Collections.WantedSlots = Market.Collections.ItemSlots.extend({
+        // empty
+    });
+
+    Market.Views.ItemSlots = Backbone.View.extend({
         initialize: function(){
         var $that = this;
         this.collection.each(function(slot){
@@ -392,6 +291,14 @@ If you are in the items wanted collection, you are appended to a slot
                 itemSlot.set("selected", false);
             });
         }
+    });
+
+    Market.Views.OfferedSlots = Market.Views.ItemSlots.extend({
+        el: "#itemsOffered"
+    });
+
+    Market.Views.WantedSlots = Market.Views.ItemSlots.extend({
+        el: "#itemsWanted"
     });
 
     Market.Views.Trash = Backbone.View.extend({
@@ -408,7 +315,6 @@ If you are in the items wanted collection, you are appended to a slot
             this.parentView.model.container = [];
             this.parentView.$el.html("");
         }
-
     });
 
     /* Test ends here */
@@ -421,28 +327,48 @@ If you are in the items wanted collection, you are appended to a slot
 
         events: {
             "click .item-li": "addItemToSlot",
-            "click .search-item-li": "addSearchItemToSlot",
+            //"click .search-item-li": "addSearchItemToSlot",
             "click .search-btn": "removeView",
             "ajax:success": "createSearchCollection",
             "click #reload": "reloadItems",
            // "click .super-form": "submitListing"
+           "click .submit-button": "submitListing"
         },
 
-        submitListing: function(){
-            console.log("in submitListing");
+        submitListing: function(e){
+            $(".super-form").submit(function(e){
+                var itemsWantedSubmitted = [];
+                var itemsOfferedSubmitted = [];
+                var notes = $(".notes-input").val();
+
+                itemsWanted.collection.forEach(function(slot){
+                    if(slot.container.length){
+                        itemsWantedSubmitted.push(slot.container[0].get("defindex"));
+                    }
+                });
+
+                itemsOffered.collection.forEach(function(slot){
+                    if(slot.container.length){
+                        itemsOfferedSubmitted.push(slot.container[0].get("defindex"));
+                    }
+                });
+
+                var offer = JSON.stringify(itemsOfferedSubmitted);
+                var wanted = JSON.stringify(itemsWantedSubmitted);
+                $("#offer").val(offer);
+                $("#wanted").val(wanted);
+                $("#listnote").val(notes);
+            });
         },
 
         addItemToSlot: function(e){
             e.preventDefault();
             var itemId = e.currentTarget.id;
-            this.trigger("item-li:click", itemId); // Market.Views.ItemCollection
+            this.trigger("item-li:click", itemId);
         },
-        addSearchItemToSlot: function(e){ // line 239
-    
+        addSearchItemToSlot: function(e){
             e.preventDefault();
             var itemId = e.currentTarget.id;
-            console.log("above what i want");
-            console.log(e.currentTarget);
             this.trigger("search-item-li:click", itemId);
 
         },
@@ -469,10 +395,10 @@ If you are in the items wanted collection, you are appended to a slot
             });
             request.done(function(response, textStatus, jqXHR){
                 // Re-render the backpack
-                var backpack  = new Market.Collections.Item();
+                var backpack = new Market.Collections.Item();
                 backpackView.unbind();
                 backpackView.remove();
-                backpack.set(response); // set() vs reset() ?
+                backpack.set(response);
                 backpackView = new Market.Views.ItemCollection({collection: backpack});
                 $("#reload").prop("disabled", false);
                 $("#reload").html("Reload backpack");
@@ -485,18 +411,3 @@ If you are in the items wanted collection, you are appended to a slot
         }
     });
 })();
-
-/* 
-
-Where does creating the search item begin?
-
-1. Line 305, createSearchCollection fxn:
-    Create a new collection with class Market.Collections.SearchItems with data
-2. Line 312, create a view for the Market.Collections.SearchItems view.
-    a. Market.Views.ItemSearchCollection can be found on line 205
-    b. The collection creates individual views using Market.Views.SearchItem (line 223)
-        which can be found on line 155
-    c. It used the backbone model ____ found on line ___
-3. Error is in ItemSearchCollection
-
-*/

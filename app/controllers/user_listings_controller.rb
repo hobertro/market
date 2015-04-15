@@ -40,10 +40,17 @@ class UserListingsController < ApplicationController
         wanted_items = JSON.parse(params[:wanted])
         notes = params[:listnote]
         user_listings = current_user.user_listings.new()
-        offered_items.each {|item| user_listings.item_listings.build({"item_id" =>
-          item.to_i, "status" =>"offered"})}
-        wanted_items.each {|item| user_listings.item_listings.build({"item_id" => 
-          item.to_i, "status" => "wanted"})}
+
+        offered_items.each do |item|
+            original_item = Item.find_by_defindex(item)
+            user_listings.item_listings.build({"item_id" => original_item.id, "status" =>"offered"})
+        end
+
+        wanted_items.each do |item|
+            original_item = Item.find_by_defindex(item)
+            user_listings.item_listings.build({"item_id" => original_item.id, "status" => "wanted"})
+        end
+
         user_listings.comments.build({"user_listing_id" => user_listings.id, "user_id" => 
             current_user.id, "description" => notes})
         if user_listings.save

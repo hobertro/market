@@ -7,26 +7,30 @@
                     </div>
                     <div class="col-xs-6 items-offered">
                         <h5>Items Offered</h5>
-                        <ul class="clearfix item-offered-slots" id="items-offered">
+                        <ul class="clearfix item-offered-slots" id="itemsOffered">
+                            <!-- 
                             <li class="highlighted item-slot"></li>
                             <li class="item-slot offered-slot"></li>
                             <li class="item-slot offered-slot"></li>
                             <li class="item-slot offered-slot"></li>
                             <li class="item-slot offered-slot"></li>
                             <li class="item-slot last-slot"></li>
+                        -->
                         </ul>
                     </div> 
                     <span class="offer-icon glyphicon glyphicon-transfer"></span>   
         
                     <div class="col-xs-6 items-wanted" id="items-wanted">
                         <h5>Items Wanted</h5>
-                        <ul class="clearfix item-wanted-slots">
+                        <ul class="clearfix item-wanted-slots" id="itemsWanted">
+                            <!--
                            <li class="item-slot wanted-slot"></li>
                            <li class="item-slot wanted-slot"></li>
                            <li class="item-slot wanted-slot"></li>
                            <li class="item-slot wanted-slot"></li>
                            <li class="item-slot wanted-slot"></li>
                            <li class="item-slot wanted-slot last-slot"></li>
+                            -->
                         </ul>
                     </div>
                 </div>
@@ -103,6 +107,9 @@
         backpack.reset(<%= raw @user.user_items.to_json %>);
     var backpackView = new Market.Views.BackpackItemCollection({collection: backpack});
 
-    var itemsWantedCollection = new  Market.Collections.WantedSlots();
+    var itemsOfferedCollection = new Market.Collections.OfferedSlots();
+    var itemsOffered = new Market.Views.OfferedSlots({collection: itemsOfferedCollection});
+
+    var itemsWantedCollection = new Market.Collections.WantedSlots();
     var itemsWanted = new Market.Views.WantedSlots({collection: itemsWantedCollection });
 </script>
