@@ -399,7 +399,7 @@
                 backpackView.unbind();
                 backpackView.remove();
                 backpack.set(response);
-                backpackView = new Market.Views.ItemCollection({collection: backpack});
+                backpackView = new Market.Views.BackpackItemCollection({collection: backpack});
                 $("#reload").prop("disabled", false);
                 $("#reload").html("Reload backpack");
             });
