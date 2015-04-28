@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     def index
         @user = current_user
         @message = @user.messages.paginate(:page => params[:page]).per_page(10)
-        
+        @received_messages = @user.received_messages
     end
 
     def new
@@ -52,6 +52,7 @@ class MessagesController < ApplicationController
     end
 
     def conversation
+        puts params
         @user = current_user
         @message = Message.find(params[:id])
         @recipient = User.find(@message.recipient.id)

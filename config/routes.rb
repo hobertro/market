@@ -6,7 +6,6 @@ DotaMarket::Application.routes.draw do
   end
 
   resources :users, concerns: :commentable do
-
     resources :messages do
       get "sent_messages", on: :collection
       get "conversation",  on: :collection

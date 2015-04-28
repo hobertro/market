@@ -4,14 +4,13 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><a href="messages">Messages</a></li>
       <li><%= link_to "Sent Messages", sent_messages_user_messages_path(@user, @message) %></li>
-      <li><%= link_to "Conversation", conversation_user_messages_path %></li>
     </ul>
-    <% if @user.received_messages.blank? %>
+    <% if @received_messages.blank? %>
        <div class="">
            <span>You don't have any messages yet. Message someone! :D</span>
        </div>
     <% else %>
-        <% @user.received_messages.each do |message| %>
+        <% @received_messages.each do |message| %>
             <% unless @user.blocked_users.include?(message.messenger) %>
                 <%= render "layouts/messages/message", { message: message } %>
             <% end %>
