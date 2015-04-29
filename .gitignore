@@ -8,6 +8,8 @@
 /.bundle
 /market
 /*.pub
+market
+*.pub
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

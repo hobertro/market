@@ -184,7 +184,6 @@
         tagName: 'ul',
         initialize: function(){
            $(".items-offered").html(this.render().el);
-           console.log("in items offerred collection view");
         }
     });
 
