@@ -14,7 +14,7 @@ DotaMarket::Application.routes.draw do
       end
     end
    resources :user_listings
-   resources :relationships, only: [:new, :create, :edit, :destroy]
+   resources :relationships, only: [:new, :create, :edit, :update, :destroy]
  end
 
   resources :user_listings, concerns: :commentable
@@ -24,7 +24,7 @@ DotaMarket::Application.routes.draw do
 
   # SESSIONS ROUTES START #
 
-  get  'auth/steam/callback' => 'sessions#create' # for testing purposes (?)
+  get  'auth/steam/callback' => 'sessions#create'
   post 'auth/steam/callback' => 'sessions#create'
   get  'auth/failure'         => redirect('/')
   delete 'signout'           => 'sessions#destroy'

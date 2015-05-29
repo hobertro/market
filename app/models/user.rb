@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :received_messages, 
            class_name: "Message",
            foreign_key: "recipient_id"
+
   has_many :relationships, dependent: :destroy
   has_many :other_users,  :through => :relationships,
                           :source  => :other_user

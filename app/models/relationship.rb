@@ -24,4 +24,4 @@ class Relationship < ActiveRecord::Base
   def self.unblock_relationship(user_id, other_user_id)
     self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
   end
-end 
+end
