@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def self.is_relationship_blocked?(user, other_user)
-    Relationship.is_blocked_relationship?(user, other_user)
+    Relationship.any_blocked_relationship?(user, other_user)
   end
 
   ## start testing here

@@ -3,17 +3,19 @@ class Relationship < ActiveRecord::Base
   belongs_to :user
   belongs_to :other_user, class_name: "User"
 
-  after_create :be_friendly_to_friend
-
-
-  def be_friendly_to_friend
-    other_user.other_users << user unless other_user.other_users.include?(user)
-    self.save
+  def self.get_blocked_users(current_user_id)
+    where({user_id: current_user_id, status: "blocked"})
+      .map { |relationship| relationship.other_user_id }
   end
 
-  def self.is_blocked_relationship?(user, other_user)
+  def self.get_blocking_users(current_user_id)
+    where({other_user_id: current_user_id, status: "blocked"})
+     .map { |relationship| relationship.user_id }
+  end
+
+  def self.any_blocked_relationships?(user, other_user)
     exists?(user_id: user, other_user_id: other_user, status: "blocked") ||
-    exists?(user_id: other_user, other_user_id: user, status: "default")
+    exists?(user_id: other_user, other_user_id: user, status: "blocked")
   end
 
   def self.blocked_relationships(user_id, other_user_id)
