@@ -12,12 +12,12 @@ describe User do
 
   context "validations" do
     it "should be valid with a steam_id, steam_name, avatar, avatar_medium, and avatar_full" do
-      user = User.new(valid_attributes)
+      user = FactoryGirl.build(:user)
       expect(user).to be_valid
     end
 
     it "should be invalid without a steam_id" do
-      user = User.new(valid_attributes.merge({steam_id: ""}))
+      user = FactoryGirl.build(:user, steam_id: nil)
       user.valid?
       expect(user.errors[:steam_id]).to include("can't be blank")
     end
@@ -75,9 +75,7 @@ describe User do
       it "contains a remember_token after being created" do
         expect(user.remember_token).to_not be_blank
       end
-
     end
-
 
     describe "#has_items?" do 
       context "User does not have any items" do
@@ -101,7 +99,7 @@ describe User do
         stub_request(:get, "http://api.steampowered.com/IEconItems_570/GetPlayerItems/v0001?SteamID=12345&key=55BA1C088556CDF59A3B43120193700F").
          with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
          to_return(:status => 200, body: [valid_attributes.to_json], :headers => {})
-         expect(user.get_user_items(user.steam_id)).to eq([valid_attributes.to_json])
+         expect(user.get_user_items).to eq([valid_attributes.to_json])
       end
     end
 

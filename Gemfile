@@ -12,7 +12,6 @@ gem 'awesome_print'
 gem 'annotate'
 gem 'rails_12factor'
 gem 'vdf4r'
-
 gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
@@ -20,13 +19,12 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'whenever', require: false
 
-gem 'faker'
-
 # Gems used only for assets and not required
 # in production environments by default.
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem "factory_girl_rails", '~> 4.4.1'
 end
 
 group :development, :production do
@@ -39,6 +37,9 @@ group :test do
   gem 'webmock'
   gem 'shoulda-matchers', require: false
   gem 'launchy'
+  gem 'faker'
+  gem "database_cleaner", "~> 1.3.0"
+  gem "selenium-webdriver", "~> 2.43.0"
 end
 
 
