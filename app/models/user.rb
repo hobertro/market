@@ -115,6 +115,10 @@ class User < ActiveRecord::Base
     player_item_hash.map { |item| item["defindex"].to_s }
   end
 
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
+
   def self.from_omniauth(auth)
     # find a user by their UID (assigned by Steam) by using ActiveRecord dynamic finder
     auth_user = self.find_by(steam_id: auth["uid"])
@@ -142,10 +146,6 @@ class User < ActiveRecord::Base
       u.time_created         = info["timecreated"]
       u.person_state         = info["person_state"]
     end
-  end
-
-  def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
   end
 
 end

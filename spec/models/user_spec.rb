@@ -68,7 +68,7 @@ describe User do
 
     describe "#remember_token" do 
       before { user.save }
-      it "responds to #remember_token", :focus => true do
+      it "responds to #remember_token" do
         expect(user).to respond_to(:remember_token)
       end
 

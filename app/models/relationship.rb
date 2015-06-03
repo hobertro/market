@@ -1,5 +1,6 @@
 class Relationship < ActiveRecord::Base
   attr_accessible :other_user_id, :status, :user_id
+  
   belongs_to :user
   belongs_to :other_user, class_name: "User"
 

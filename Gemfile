@@ -18,6 +18,8 @@ gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'whenever', require: false
+gem 'pry'
+gem 'pry-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
