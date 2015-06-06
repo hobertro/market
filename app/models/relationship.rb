@@ -4,6 +4,23 @@ class Relationship < ActiveRecord::Base
   belongs_to :user
   belongs_to :other_user, class_name: "User"
 
+  validates :user_id, presence: true
+  validates :other_user_id, presence: true
+  validates :status, presence: true
+  
+
+
+  def self.create_blocked_relationship(user_id, blocked_user_id)
+    relationship = find_by_user_id_and_other_user_id(user_id, blocked_user_id)
+    if relationship.present?
+      relationship.status = "blocked"
+      relationship.save
+      return relationship
+    else 
+      create({user_id: user_id, other_user_id: blocked_user_id, status: "blocked"})
+    end
+  end
+
   def self.get_blocked_users(current_user_id)
     where({user_id: current_user_id, status: "blocked"})
       .map { |relationship| relationship.other_user_id }

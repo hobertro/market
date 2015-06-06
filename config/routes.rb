@@ -14,7 +14,7 @@ DotaMarket::Application.routes.draw do
       end
     end
    resources :user_listings
-   resources :relationships, only: [:new, :create, :edit, :update, :destroy]
+   resources :relationships, only: [:create, :update] #[:new, :create, :edit, :update, :destroy]
  end
 
   resources :user_listings, concerns: :commentable
