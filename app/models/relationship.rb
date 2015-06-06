@@ -7,7 +7,7 @@ class Relationship < ActiveRecord::Base
   validates :user_id, presence: true
   validates :other_user_id, presence: true
   validates :status, presence: true
-  
+
 
 
   def self.create_blocked_relationship(user_id, blocked_user_id)
@@ -31,17 +31,34 @@ class Relationship < ActiveRecord::Base
      .map { |relationship| relationship.user_id }
   end
 
+# need to fix below and test
+
   def self.any_blocked_relationships?(user, other_user)
     exists?(user_id: user, other_user_id: other_user, status: "blocked") ||
     exists?(user_id: other_user, other_user_id: user, status: "blocked")
   end
+
+# need to fix below and test
 
   def self.blocked_relationships(user_id, other_user_id)
     where("(user_id = ? AND other_user_id = ?) OR (user_id = ? AND other_user_id = ?)", 
                               user_id, other_user_id, other_user_id, user_id)
   end
 
+# need to fix below and test
+ 
+  #def self.unblock_relationship(user_id, other_user_id)
+  #  self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
+  #end
+
+  # need to unblock relationship
+
+
   def self.unblock_relationship(user_id, other_user_id)
-    self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
+    relationship = find_by_user_id_and_other_user_id(user_id, other_user_id)
+    relationship.status = "default"
+    relationship.save
+    relationship 
   end
+
 end

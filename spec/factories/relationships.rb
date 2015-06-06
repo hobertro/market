@@ -9,5 +9,10 @@ FactoryGirl.define do
         other_user_id 2
         status "blocked"
     end
+    factory :blocking_relationship do
+        user_id 2
+        other_user_id 1
+        status "blocked"
+    end
   end
 end

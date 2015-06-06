@@ -14,9 +14,6 @@ class ApplicationController < ActionController::Base
   def all_blocked_users
     blocking_users = Relationship.get_blocking_users(current_user)
     blocked_users = Relationship.get_blocked_users(current_user)
-    #blocked_users = current_user.relationships
-    #                            .where("status = ?", "blocked")
-    #                            .map { |relationship| relationship.other_user_id }
     @blocked_users = blocked_users.concat(blocking_users).uniq
   end
 
