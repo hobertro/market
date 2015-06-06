@@ -8,8 +8,6 @@ class Relationship < ActiveRecord::Base
   validates :other_user_id, presence: true
   validates :status, presence: true
 
-
-
   def self.create_blocked_relationship(user_id, blocked_user_id)
     relationship = find_by_user_id_and_other_user_id(user_id, blocked_user_id)
     if relationship.present?
@@ -19,6 +17,13 @@ class Relationship < ActiveRecord::Base
     else 
       create({user_id: user_id, other_user_id: blocked_user_id, status: "blocked"})
     end
+  end
+
+  def self.unblock_relationship(user_id, other_user_id)
+    relationship = find_by_user_id_and_other_user_id(user_id, other_user_id)
+    relationship.status = "default"
+    relationship.save
+    return relationship 
   end
 
   def self.get_blocked_users(current_user_id)
@@ -50,15 +55,5 @@ class Relationship < ActiveRecord::Base
   #def self.unblock_relationship(user_id, other_user_id)
   #  self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
   #end
-
-  # need to unblock relationship
-
-
-  def self.unblock_relationship(user_id, other_user_id)
-    relationship = find_by_user_id_and_other_user_id(user_id, other_user_id)
-    relationship.status = "default"
-    relationship.save
-    relationship 
-  end
 
 end
