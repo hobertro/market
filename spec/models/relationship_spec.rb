@@ -30,7 +30,6 @@ describe Relationship do
   end
 
   context "methods" do
-
     context "create_blocked_relationship method" do
       before :each do
         @user = create(:user)

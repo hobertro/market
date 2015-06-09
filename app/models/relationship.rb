@@ -26,6 +26,12 @@ class Relationship < ActiveRecord::Base
     return relationship 
   end
 
+  def self.get_all_block_or_blocking_users(current_user_id)
+    blocked_users = get_blocked_users(current_user_id)
+    blocking_users = get_blocking_users(current_user_id)
+    @blocked_susers = blocked_users.concat(blocking_users)
+  end
+
   def self.get_blocked_users(current_user_id)
     where({user_id: current_user_id, status: "blocked"})
       .map { |relationship| relationship.other_user_id }
@@ -37,23 +43,9 @@ class Relationship < ActiveRecord::Base
   end
 
 # need to fix below and test
-
   def self.any_blocked_relationships?(user, other_user)
     exists?(user_id: user, other_user_id: other_user, status: "blocked") ||
     exists?(user_id: other_user, other_user_id: user, status: "blocked")
   end
-
-# need to fix below and test
-
-  def self.blocked_relationships(user_id, other_user_id)
-    where("(user_id = ? AND other_user_id = ?) OR (user_id = ? AND other_user_id = ?)", 
-                              user_id, other_user_id, other_user_id, user_id)
-  end
-
-# need to fix below and test
- 
-  #def self.unblock_relationship(user_id, other_user_id)
-  #  self.blocked_relationships(user_id, other_user_id).each { |relationship| relationship.destroy }
-  #end
 
 end

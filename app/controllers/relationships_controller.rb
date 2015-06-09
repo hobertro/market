@@ -2,9 +2,6 @@ class RelationshipsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy, :new, :edit]
   before_filter :correct_user, only: [:create, :destroy, :new, :edit]
 
-  def new
-  end
-
   def create
     blocked_user = User.find(params[:blocked_user])
     Relationship.create_blocked_relationship(params[:user_id], blocked_user)    

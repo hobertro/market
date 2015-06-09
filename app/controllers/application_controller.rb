@@ -3,5 +3,4 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include RelationshipsHelper
   before_filter :blocked_relationships?
-
 end
